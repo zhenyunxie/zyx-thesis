@@ -1,15 +1,28 @@
-% Author: Zhenyun Xie
+%--------------------
+% Packages
+% -------------------
+\documentclass{article}
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\setlength{\parindent}{0pt}
+%-----------------------
+% Begin document
+%-----------------------
+\begin{document} %All text i dokumentet hamnar mellan dessa taggar, allt ovanför är formatering av dokumentet
+\title{Advanced programming methodologies for photonic processors}
+\author{zhenyun xie}
+\maketitle
 
-\chapter{Introduction} \label{chap:intro}
+\section{Introduction}
 
-\section{Motivation} \label{sec:motivation}
+\subsection*{Motivation}
 Talk about limitations of electrical integration circuit and challenges in the post-moore's law era:
 \begin{itemize}
     \item Explosive growth in data transmission demand due to AI, ML..., Electronic processor reaches it's limitations, slow moore low, power, bandwidth, I/O bottle neck
     \item Requirements of new paradigm AI data center: energy efficiency, low latency, interconnect bandwidth, dynamic...
 \end{itemize}
 
-Talk about the state of the art introduce OCS
+Talk about the state of the art to introduce OCS.
 These leading industry demonstrate that OCS become a strategic technology choice for overcoming performance and energy efficiency bottlenecks in AI data centers.
 \begin{itemize}
     \item google palomar, spine replacement, dynamic network
@@ -30,9 +43,7 @@ Talk about the importance of photonic hardware programming:
     \item Missing an application oriented programming abstractions for photonic processor design and controlling
 \end{itemize}
 
-
-
-\section{Objectives} \label{sec:objectives}
+\subsection*{Objectives}
 Research objectives:
 \begin{itemize}
     \item Provide an advanced, efficient, and universal programming methodology for programmable photonic processors in AI data centers
@@ -48,7 +59,7 @@ Key contributions:
     \item SDN control system for Optical Circuit Switch
 \end{itemize}
 
-\section{Structure of the thesis} \label{sec:structure}
+\subsection*{Structure of the thesis}
 Chapter 2: Theoretical and Programming Methodologies of Photonic Integrated Circuits
 \begin{itemize}
     \item talk about phase shifter / MMI / MZI
@@ -79,7 +90,7 @@ Chapter 5: software defined network for OCS
     \item gnmi
 \end{itemize}
 
-Chapter 6: discussions and conclusions
+Chapter 6: discussions
 \begin{itemize}
     \item address large-scale ocs (losses / crossing) problem
     \item ocs datacenter use cases maturity (reconfigurable topologies challenging to implement)
@@ -93,3 +104,4 @@ Chapter 6: discussions and conclusions
               \item multicore approaches
           \end{itemize}
 \end{itemize}
+\end{document}
