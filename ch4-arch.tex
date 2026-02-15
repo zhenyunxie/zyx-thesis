@@ -1,13 +1,303 @@
 % Author: Zhenyun Xie
 
-\chapter{Optical Circuit Switch Architectures for Datacenter Applications}\label{chap:ocs_archs} % (fold)
+\chapter{Silicon Photonics Optical Circuit Switch Architectures}\label{chap:ocs_archs} % (fold)
+% Motivation of this chapter
+Optical circuit switches enables more efficient communication across network tiers by reducing latency through the elimination of electrical conversion, increasing available bandwidth, and lowering energy consumption.
+Silicon photonics OCS leverages its speed, reliability and compactness to become a promising solution for next-generation data center networks [CITE].
+However, realizing high-radix configurations remains challenging due to hardware complexity, optical performance, and blocking.
+% Objective of this chapter
+In this chapter, we introduce a graph-theory-based framework to model, analyze, and benchmark multiple silicon photonics optical circuit switch architectures,
+including Benes, Dilated Benes, Double Dilated Benes, PILOSS, and Dilated Banyan networks.
+We evaluate hardware requirements, optical loss, signal-to-noise ratio, and blocking probability under asynchronous switching with two routing strategies.
 
+\section{Graph-based modelling of photonic switches}\label{sec:graph_modelling} % (fold)
+Photonic switches consist of arrangements of basic tunable switching cells, where an input array of signals can be spatially or spectrally routed to an array of optical outputs.
+To study their properties, photonic circuits can be modeled based on the graph graph layer presented previous chapter.
+This mathematical representation facilitates the analysis of switching networks and their blocking probabilities by applying pathfinding algorithms directly to the graph.
+The performance of the switch strongly depends on its architecture, which ultimately dictates the number of switching and crossing cells, stages to go through, crosstalk and blocking type.
+% figure architectures
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics{figures/ch4-archs.pdf}
+    \end{center}
+    \caption{Graph representation of different 4x4 photonic switching networks.
+    }\label{fig:ch4-archs}
+\end{figure}
 
-\section{SAX simulations}\label{sec:sax_simulations} % (fold)
+Figure~\ref{fig:ch4-archs} depicts the different network architectures under study, which are commonly used in photonic switching [CITE], [CITE].
+The Benes network requires the lowest number of switch cells and stages; however, it exhibits first-order crosstalk and is rearrangeable non-blocking (RNB), meaning that accommodating a new port request may require rearranging existing connections.
+The Dilated Benes network introduces additional switching cells to ensure that only a single signal traverses each node, resulting in second-order crosstalk, while remaining RNB.
+In this study, we also consider a vertically stacked network [CITE], [CITE] composed of two Dilated Benes cores, forming a Doubled Dilated Benes architecture.
+The motivation is to investigate the impact on performance and blocking probability of adding a second core in parallel.
+For the sake of comparison, two additional networks are also considered.
+The PILOSS network, derived from the crossbar, provides balanced loss across all possible paths and is wide-sense non-blocking (WSNB), meaning that any new connection can be established provided the network is routed using an appropriate algorithm.
+The final network considered is the Dilated Banyan, which completely suppresses crosstalk and is strictly non-blocking (SNB); this network does not require any specific routing algorithm, as there exists a single disjoint path between each input and output port.
+\subsection{Network conflicts} \label{sub:network_conflicts} % (fold)
+We define two types of conflicts that can occur in the network.
+The first captures the blocking that arises when an input port cannot be connected to an output port due to the absence of available paths.
+In this study, rearrangement is not allowed, so even RNB networks may experience blocking.
+This is because interrupting already established connections can significantly impact the network performance in modern applications, such as data centers with AI workloads, and is therefore inefficient [CITE], [CITE], [CITE].
+The second type of conflict occurs when a single node in the network is shared by two signals, resulting in first-order crosstalk.
+In silicon photonics, 2x2 MZI leakage to the undesired output port is strongly wavelength-dependent and can be relatively high, which affects the signal-to-noise ratio (SNR) and overall link performance.
 
+Figure~\ref{fig:ch4-routing} illustrates how these conflicts can arise in an 8x8 Dilated Benes network.
+In this example, input port 5 is intended to connect to output port 7, with up to four paths available to establish the interconnect (Figure~\ref{fig:ch4-routing}(a)).
+After selecting one path, a new port request—from input 7 to output 5—arises.
+A conflict occurs between the two paths shown in blue and yellow in Figure~\ref{fig:ch4-routing}(b), as both attempt to exit through the same output and share the same edge, marked with a red cross.
+This is physically impossible and is classified as conflict 1, due to blocking.
+The second type of conflict is illustrated in Figure~\ref{fig:ch4-routing}(c), where another path in yellow—from input 7 to output 3—shares a node marked with a red cross.
+While two signals can cross in a 2x2 MZI in a photonic circuit, this generates first-order crosstalk, identified as conflict 2.
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics{figures/ch4-routing.pdf}
+    \end{center}
+    \caption{Routing conflicts within the graph.
+        (a) Available paths for connecting input port 5 to output port 7, ordered from top to bottom.
+        (b) Conflict 1, occurring when two paths share the same edge, corresponding to an optical waveguide segment.
+        (c) Conflict 2, occurring when two signals traverse the same node, resulting in first-order crosstalk.
+    }\label{fig:ch4-routing}
+\end{figure}
+\subsection{Routing algorithms} \label{sub:routing_algorithms} % (fold)
+As illustrated in Figure~\ref{fig:ch4-routing}, the RNB architecture provides multiple connectivity paths between an input-output (IO) pair; and thus, the routing algorithm plays a crucial role in determining the blocking rate.
+In this study, simulations are based on a sequential routing scheme, where connection requests are provisioned serially without knowledge of future demands.
+Consequently, suboptimal path selection for an early request may block subsequent connections, making the path selection strategy critical.
 
-\section{Optical link simulations}\label{sec:optical_link_simulations} % (fold)
+In this work, we investigated two routing strategies: a random strategy, which selects a path randomly from the pool of available candidates, and a sorted strategy, which systematically prioritizes the uppermost available path within the topology—ranging from Path 1 to Path 4 in Figure~\ref{fig:ch4-routing}(a).
+These two algorithms generate different routing patterns within the network when the switch is fully occupied.
+The random strategy distributes paths uniformly across the network, whereas the sorted strategy populates the upper paths first, leaving the lower paths idle.
 
+It is also worth noting that, beyond sequential routing, the full set of IO pairs can be configured simultaneously in RNB networks using synchronous switching [CITE], [CITE], [CITE], allowing global optimization of the routing and the establishment of non-blocking connections for the requested IO pairs.
+However, in this study we focus on asynchronous switching, reflecting the non-fully scheduled traffic of real-world use cases, which generates unpredictable IO requests over time.
 
-\section{Blocking performance}\label{sec:blocking_performance} % (fold)
+Therefore, in asynchronous switching, different network architectures exhibit distinct blocking characteristics.
+WSNB and SNB topologies, such as the PILOSS and Dilated Banyan networks, guarantee that any idle IO pair can be connected without blocking or the need to rearrange established paths.
+In contrast, RNB topologies, such as the Benes and Dilated Benes networks, may experience blocking, as they provide multiple shared paths for each IO pair, which can lead to both types of conflict.
+\section{Hardware complexity}\label{sec:hardware_complexity} % (fold)
+Figure~\ref{fig:ch4-hw-complexity} shows the hardware utilization of the networks considered in this study, in terms of the number of switching cells, stages, and crossings.
+For Benes-like networks, the number of cells approximately doubles when the number of ports is doubled, whereas for the PILOSS and Dilated Banyan networks, the number of switching cells increases by a factor of four.
+As previously noted, the Benes network has the lowest number of switching cells, since all paths are occupied when the switch is fully loaded.
+Beyond this, the other networks require an increasing number of switching cells, with the Dilated Banyan network having the highest count—over 32,000 cells for a 128x128 configuration (Figure~\ref{fig:ch4-hw-complexity}(a)).
 
+In terms of stages—defined as the number of switching cells a signal traverses from an input to an output port—Benes-like and Dilated Banyan networks scale logarithmically with the number of ports, whereas the PILOSS network scales linearly, with a 1:1 ratio.
+This represents a significant difference compared to the other network types: for a 128x128 switch, the PILOSS network traverses 128 switching cells, whereas Benes-like networks require only 12-16 stages.
+
+Conversely, PILOSS is the network with the fewest crossings that a signal traverses from an input to an output port, and this value is the same for any IO pair.
+In contrast, Benes-like and Dilated Banyan networks exhibit a roughly normal distribution of crossings (from 0 to hundreds) per path connecting an IO pair, resulting in imbalanced behavior.
+The 128x128 Double Dilated Benes network has the highest number of crossings—almost 700 in the worst-case path (from input 1 to output 128)—with a mean of approximately 360 crossings.
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics{figures/ch4-hardware-complexity.pdf}
+    \end{center}
+    \caption{Hardware complexity.
+        (a) Bar chart showing the number of switching cells (left graph) and stages (right graph) per network for radices ranging from 8 to 128 ports.
+        (b) Histogram of the number of waveguide crossings traversed per path, normalized to the maximum value for each network and radix.
+    }\label{fig:ch4-hw-complexity}
+\end{figure}
+\section{Optical performance}\label{sec:optical_performance} % (fold)
+For the optical performance shown in Figure~\ref{fig:ch4-optical-performance}, we simulated the photonic circuits based on the network graphs, incorporating the S-parameters of the switching cells and crossings at each node.
+The transfer-matrix method [CITE] was applied to the complete switch matrices to simulate crosstalk at the undesired ports.
+By summing the crosstalk across all ports and normalizing to the loss, the SNR was computed as a function of wavelength, with the leakage of the switching and crossing cells derived from typical extinction ratio (ER) values, using standard silicon photonic components and thermo-optic phase shifting [CITE] (see Figure~\ref{fig:ch4-optical-performance}(a)).
+
+The crosstalk in the switching cells is strongly dependent on the spectral response in the O-band region, reaching approximately -40 dB at center wavelengths and -20 dB at corner wavelengths.
+This is mainly due to the thermo-optic phase shifter response of the 2x2 MZI considered in this study, which produces the exact phase for maximum extinction ratio (ER) at a given central point in the spectrum, but the ER decreases outside this wavelength due to phase tuning inaccuracies.
+In contrast, the ER for the crossings remains below -60 dB and flat across the entire O-band, as they are passive components.
+
+Figure 4b shows the SNR for the different architectures and radices, up to 64 ports; results for 128 ports could not be obtained due to the large computational resources required to calculate the transfer matrix for such a large number of elements and radix.
+To enable consistent SNR comparison, all networks were configured following an identity port mapping (\textbf{\textit{In\_1-Out\_1, In\_2-Out\_2, \dots, In\_N-Out\_N}}), using the sorted routing strategy to establish the network paths.
+The Benes network exhibits the lowest SNR for low-radix switches (below 32 ports), reaching values around 10 dB at corner wavelengths.
+The Dilated Banyan network shows the highest SNR, above 40 dB across the entire O-band, including for high-radix switches of 64 ports.
+Dilated networks present relatively good SNR values, ranging between 20 and 60 dB depending on the wavelength.
+In contrast, the PILOSS SNR deteriorates significantly for high radix switches due to the large number of stages and the resulting increase in crosstalk sources, which lowers the overall SNR.
+
+For the loss simulations, we considered the values reported in Table~\ref{tab:ch4-sota-bb} for state-of-the-art building blocks.
+In addition, to calculate the overall photonic integrated circuit (PIC) loss, we included other components such as edge couplers, polarization elements, and propagation loss.
+In this case, computing the full matrix of the entire architecture was not necessary; instead, losses were calculated along individual paths by concatenating the corresponding switching and crossing elements.
+The results are shown in Figure~\ref{fig:ch4-optical-performance}(c) for all networks considered in this study.
+Boxplots illustrate the probability distribution of the loss, reflecting the imbalance among IO pairs due to variations in the number of crossings.
+The Benes network exhibits the lowest loss, owing to its reduced number of stages and crossings.
+The Dilated Banyan network also maintains very low loss, with values below 6 dB for a 128x128 radix and a variability of approximately 1 dB between the lowest- and highest-loss paths.
+Dilated architectures show losses below 7 dB with variability under 2 dB for the 128x128 radix.
+In contrast, the PILOSS network experiences a dramatic increase in loss for high-radix switches—above 25 dB for the 128x128—, primarily due to the large number of stages, which is the main source of loss and limits scalability.
+Only the 32x32 configuration remains with relatively good values below 10 dB.
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics{figures/ch4-optical-performance.pdf}
+    \end{center}
+    \caption{Optical performance.
+        (a) Extinction ratio of the switching cell (left) and the waveguide crossing (right), representing  the power leakage at the undesired output port and representing crosstalk.
+        (b) Signal-to-noise ratio as a function of wavelength and radix for the five network architectures considered in this study.
+        (c) Optical loss of the photonic circuit as a function of radix and network topology. Boxplots represent the statistical distribution of loss across the different path combinations within each network.
+    }\label{fig:ch4-optical-performance}
+\end{figure}
+\begin{table}[htbp]
+    \centering
+    \caption{Extracted physical layer parameters}
+    \begin{tabular}{ll}
+        \hline\hline
+        \textbf{Parameters}         & \textbf{Value}        \\ [0.5ex]
+        \hline\hline
+        Switching cell loss         & 0.2 dB [CITE], [CITE] \\ [2ex]
+        \hline
+        Crossing loss               & 0.002 dB [CITE]       \\ [2ex]
+        \hline
+        Edge coupler loss           & 0.5 dB [CITE]         \\ [2ex]
+        \hline
+        Polarization component loss & 0.4 dB [CITE]         \\ [2ex]
+        \hline
+        Waveguide propagation loss  & 0.5 dB/cm [CITE]      \\ [1ex]
+        \hline
+    \end{tabular}
+    \label{tab:ch4-sota-bb}
+\end{table}
+\section{Blocking probability}\label{sec:blocking_probability} % (fold)
+In this section we simulated the blocking rate of the given architectures under asynchronous switching, i.e., receiving sequential one-by-one port requests.
+We designed two different experiments: the first, referred to as the incremental experiment, evaluates blocking as the switch is loaded from 0 to 1, representing 0\% to 100\% utilization of the switch radix.
+The second, referred to as the dynamic experiment, assigns a lifetime to each port request and includes both the arrival and departure of connections.
+These experimental setups are aligned with approaches commonly used in the literature to characterize blocking behavior in switching networks [CITES].
+
+The pseudocode of the incremental experiment is shown in Algorithm~\ref{alg:incremental_experiment}.
+First, the algorithm computes the switch state matrix, which defines the set of all possible paths between all possible input-output pairs (line 1).
+During each iteration, the set of established paths $\mathbf{\mathit{P}}_{\mathrm{est}}$ is initialized (line 3) and a set of port requests $\mathbf{\mathit{P}}$ is generated according to the load, each request $\mathbf{\mathit{r}} \in \mathbf{\mathit{R}}$ corresponds to a single connection request with a specific I/O port pair.
+For each request, the algorithm retrieves all candidate paths and invokes the \textit{RearrangePaths} function to prioritize them according to the selected routing strategy.
+This step constitutes the core of the algorithm: the strategy can either select the uppermost path in the topology (referred to sorted) or choose a path randomly (referred to random).
+During the collision-checking phase (lines 9-15), the algorithm sequentially traverses the reordered paths and uses the \textit{CheckConflict} function to determine whether the current path conflicts with any path in $\mathbf{\mathit{P}}_{\mathrm{est}}$.
+Once a conflict-free path is found, it is immediately assigned to the current request, and the inner loop is terminated.
+If no available path is found after all candidate paths have been evaluated, the current iteration is marked as blocked, and the algorithm proceeds to the next iteration.
+Consequently, the blocking rate per iteration (PI) is computed as the ratio of the number of blocked iterations to the total number of iterations:
+\begin{equation}
+    \mathbf{\mathit{BR~(per~iteration) = \frac{blocked~iterations}{total~iterations}}}
+\end{equation}
+% Incremental algorithm
+\begin{algorithm}[h]
+    \caption{Incremental experiment of blocking rate}
+    \label{alg:incremental_experiment}
+    \begin{algorithmic}[1]
+        \Require $G$ (Switch graph topology), $Type$ (strategy), $Load$ (Int), $TrafficIterations$ (Int)
+
+        \State $M \gets \Call{GetSwitchMatrix}{G}$
+
+        \For{each $iteration$ in $TrafficIterations$}
+        \State $P_{est} \gets \emptyset$
+        \State $R \gets \Call{RqstGenerator}{Load}$
+
+        \For{each request pair $r$ in $R$}
+        \State $blocking \gets \text{true}$
+        \State $Paths \gets M[r]$
+        \State $SortedPaths \gets \Call{RearrangePaths}{Paths, Type}$
+
+        \For{each path $p$ in $SortedPaths$}
+        \If{$\Call{CheckConflict}{p, P_{est}}$ is \textbf{false}}
+        \State $P_{est}[r] \gets p$
+        \State $blocking \gets \text{false}$
+        \State \textbf{break}
+        \EndIf
+        \EndFor
+
+        \If{$blocking$ is \textbf{true}}
+        \State \textbf{Mark} $iteration$ as blocked
+        \State \textbf{break}
+        \EndIf
+        \EndFor
+        \EndFor
+    \end{algorithmic}
+\end{algorithm}
+
+Figure~\ref{fig:ch4-incremental-exp} shows the simulation results for the incremental experiments.
+A total of 10 million iterations were simulated to evaluate the blocking rate as a function of switch load.
+The upper panels (Figure~\ref{fig:ch4-incremental-exp}(a)) depict the blocking rate for the random routing strategy, while the lower panels (Figure~\ref{fig:ch4-incremental-exp}(b)) correspond to the sorted routing strategy.
+The sorted algorithm yields lower blocking rates than the random strategy, as it tends to concentrate connections, effectively reserving free regions of the switch for future port requests and highlighting the importance of intelligent routing algorithms for hardware scalability.
+Both conflict types are shown, with conflict 2 being more restrictive, as it does not allow node sharing between signals and therefore results in higher blocking rates than conflict 1.
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics{figures/ch4-incremental-exp.pdf}
+    \end{center}
+    \caption{Blocking behavior for the incremental experiment.
+        Blocking rate as a function of switch load under the random and sorted routing strategy, (a) and (b), respectively.
+        Different network architectures and radices are indicated using distinct colors and markers.
+    }\label{fig:ch4-incremental-exp}
+\end{figure}
+
+Across all architectures, blocking increases with both radix and load, since a larger number of established paths increases the likelihood of conflicts.
+The standard Benes architecture exhibits high blocking probabilities in all scenarios, even under low load conditions (<0.1).
+As the radix increases to 128, the blocking probability rapidly approaches unity, confirming that, without dilation, this architecture is not suitable for blocking-sensitive applications.
+Introducing dilation significantly reduces the blocking rate.
+The Dilated Benes architecture substantially lowers blocking for conflict 1 across all radices.
+However, under the stricter conflict 2 constraint, its limitations become evident, particularly at large radix (N = 128), where the blocking threshold is markedly reduced compared to the conflict 1 case.
+Notably, the Double Dilated Benes architecture exhibits zero blocking for conflict 1 and shows low blocking values under conflict 2.
+Even at high load, the Double Dilated Benes network, under the sorted strategy and the more restrictive conflict model, maintains a blocking rate below $\mathbf{10^{-1}}$ for all radices, significantly outperforming the other Benes-based architectures.
+
+Algorithm~\ref{alg:dynamic_experiment} outlines the dynamic experiment, which calculates blocking rates by assigning a finite lifetime to each port request and subsequently releasing the associated connections in the switch.
+The lifetime of each input-output request is modeled by the following exponential distribution [CITE]
+\begin{equation}
+    \mathbf{\mathit{f(t) = \mu e^{-\mu t}, \quad t \ge 0}}
+\end{equation}
+where $\mathbf{\mathit{μ}}$ is the life-time parameter, and its inverse determines the mean duration of each connection.
+This distribution is memory-less and is consistent with Poisson traffic in classical switching theory [CITE].
+For example, $\mathbf{\mathit{μ=0.1}}$ corresponds to a connection that lasts, on average, 10 iterations.
+The request intensity is managed by the arrival rate $\mathbf{\mathit{λ}}$, defined as the probability of a request arriving at each available port.
+This parameter controls the input load by determining how many available ports will generate new requests.
+For instance, an arrival rate of 0.5 implies that each idle port has a 50\% probability of receiving a request in an iteration.
+During each iteration, the request generator produces a set of port requests $\mathbf{\mathit{R}}$ based on the available ports, the arrival rate $\mathbf{\mathit{λ}}$ and the lifetime parameter $\mathbf{\mathit{μ}}$ (line 6).
+The subsequent procedure follows the incremental experiment, where a conflict-free interconnect path is selected according to the defined routing strategy.
+If no valid path is found, the request is marked as blocked, and the blocking rate per request (PR) is computed:
+\begin{equation}
+    \mathbf{\mathit{BR~(per~request) = \frac{blocked~requests}{total~requests}}}
+\end{equation}
+
+The dynamic experiment was conducted under the most restrictive conditions: an arrival rate equal to 1 (i.e., the switch is attempted to be fully loaded at each iteration), conflict 2, and the sorted routing strategy.
+The blocking performance is evaluated using two metrics: the PI blocking, shown in Figure~\ref{fig:ch4-dynamic-exp}(a) to maintain consistency with the incremental experiment, and the PR, presented in Figure~\ref{fig:ch4-dynamic-exp}(b).
+A key observation is that the dynamic experiment yields higher blocking rates than the incremental experiment.
+This behavior arises because, when connections are removed, the sorted routing strategy becomes less effective than in the incremental case, where only new connections are added after each iteration.
+Blocking results are presented as a function of the mean holding time of each port request, expressed in iterations.
+For the PI blocking metric, the Double Dilated Benes architecture exhibits a maximum blocking rate between 2 and 3 iterations, reaching approximately 0.5 for the 128x128 radix.
+In contrast, the Benes and Dilated Benes architectures remain almost fully blocked across all radices and holding times.
+The PR blocking metric is less restrictive, as it is evaluated on a per-request basis.
+Under this metric, the Benes and Dilated Benes networks exhibit blocking probabilities in the ranges of 0.8-0.9 and 0.4-0.8, respectively, whereas the Double Dilated Benes architecture maintains a low blocking probability below 0.04 for the 128x128 radix.
+Overall, these results demonstrate that, under dynamic traffic conditions, the Double Dilated Benes architecture provides significantly better blocking performance than classical Benes-based networks.
+% Dynamic algorithm
+\begin{algorithm}[h]
+    \caption{Dynamic experiment of blocking rate}
+    \label{alg:dynamic_experiment}
+    \begin{algorithmic}[1]
+        \Require $G$ (Switch graph topology), $Type$ (strategy), $\mu$ (holding time), $\lambda$ (arrival rate), $TrafficIterations$ (Int)
+
+        \State $M \gets \Call{GetSwitchMatrix}{G}$
+        \State $P_{est} \gets \emptyset$
+
+        \For{each $iteration$ in $TrafficIterations$}
+        \State $AvailablePorts \gets \Call{GetAvailabePorts}{}$
+        \State $R \gets \Call{RqstGenerator}{AvailablePorts, \mu, \lambda}$
+
+        \For{each request pair $r$ in $R$}
+        \State $blocking \gets \text{True}$
+        \State $Paths \gets M[r]$
+        \State $SortedPaths \gets \Call{RearrangePaths}{Paths, Type}$
+
+        \For{each path $p$ in $SortedPaths$}
+        \If{$\Call{CheckConflict}{p, P_{est}}$ is \textbf{false}}
+        \State $P_{est}[r] \gets p$
+        \State $blocking \gets \text{False}$
+        \State \textbf{break}
+        \EndIf
+        \EndFor
+
+        \If{$blocking$ is \textbf{True}}
+        \State \textbf{Mark} request $r$ as blocked
+        \State \textbf{Mark} $iteration$ as blocked
+        \EndIf
+        \EndFor
+
+        \State \Call{UpdateSwitch}{} \Comment{Update lifetime and disconnect expired connections}
+        \EndFor
+    \end{algorithmic}
+\end{algorithm}
+% Fig dynamic experiment
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics{figures/ch4-dynamic-exp.pdf}
+    \end{center}
+    \caption{Blocking behavior for the dynamic experiment.
+        Blocking rate per iteration (PI) and per request (PR) as a function of the connection lifetime (in iterations) for each individual port, (a) and (b), respectively.
+        Different network architectures and radices are indicated using distinct colors and markers.
+    }\label{fig:ch4-dynamic-exp}
+\end{figure}
