@@ -1,18 +1,28 @@
 % Author: Zhenyun Xie
 
-\chapter{Theoretical and Programming Methodologies of Photonics Integrated Circuit} \label{chap:fundamentals}
+\chapter{Theoretical and Programming Methodologies of Photonic Integrated Circuits} \label{chap:fundamentals}
+The rapid advancement of silicon photonics has transitioned integrated optical systems from application-specific, static designs toward versatile, software-defined architectures.
+This shift enables the dynamic manipulation of light, allowing a single hardware platform to support reconfigure networking functions and connections.
+This chapter introduces the theoretical foundations and programming methodologies required to understand and control programmable PICs.
+It begins with the fundamental building blocks, including 50:50 splitters, waveguide crossings, phase shifters, and 2x2 programmable unit cells (PUCs).
+The transfer-matrix models of these components are presented to describe how optical signals are manipulated within the circuit.
+The discussion then extends to circuit topologies constructed from these unit cells, including feedforward mesh architectures and recirculating mesh architectures.
+Building on these physical structures, a graph-theoretic abstraction is developed to model photonic circuits as nodes and edges, enabling automated routing and configuration synthesis.
+Finally, the chapter introduces the principles of Software-Defined Networking (SDN) to establish a control layer that connects low-level photonic hardware with higher-level network management.
+
+\section{Building blocks} \label{sec:functional_blocks} % (fold)
 
 
-\section{Functional blocks} \label{sec:functional_blocks} % (fold)
+\subsection{50:50 splitter} \label{sub:splitter} % (fold)
 
 
-\subsection{Multimode interference coupler} \label{sub:coupler} % (fold)
+\subsection{Phase shifter} \label{sub:phase_shifter} % (fold)
 
 
-\subsection{Phase shifters}\label{sub:phase_shifters} % (fold)
+\subsection{Crossing}\label{sub:crossing} % (fold)
 
 
-\subsection{The Mach-Zehnder interferometer}\label{sub:the_mach-zehnder-interferometer} % (fold)
+\subsection{2x2 programmable unit cells}\label{sub:pucs} % (fold)
 
 
 \section{Photonics mesh architectures}\label{sec:mesh_architectures}
@@ -24,7 +34,7 @@
 \subsection{Circular mesh}\label{sub:circular} % (fold)
 
 
-\section{Graph theory}\label{sec:graph}
+\section{Graph-Theoretic Modeling of Photonic Circuits}\label{sec:graph}
 
 
 \section{Software-Defined Network (SDN)}\label{sec:sdn}
