@@ -47,7 +47,7 @@ A conflict occurs between the two paths shown in blue and yellow in Figure~\ref{
 This is physically impossible and is classified as conflict 1, due to blocking.
 The second type of conflict is illustrated in Figure~\ref{fig:ch4-routing}(c), where another path in yellow—from input 7 to output 3—shares a node marked with a red cross.
 While two signals can cross in a 2x2 MZI in a photonic circuit, this generates first-order crosstalk, identified as conflict 2.
-\begin{figure}[h]
+\begin{figure}[t]
     \begin{center}
         \includegraphics{figures/ch4-routing.pdf}
     \end{center}
@@ -119,7 +119,7 @@ The Dilated Banyan network also maintains very low loss, with values below 6 dB 
 Dilated architectures show losses below 7 dB with variability under 2 dB for the 128x128 radix.
 In contrast, the PILOSS network experiences a dramatic increase in loss for high-radix switches—above 25 dB for the 128x128—, primarily due to the large number of stages, which is the main source of loss and limits scalability.
 Only the 32x32 configuration remains with relatively good values below 10 dB.
-\begin{figure}[h]
+\begin{figure}[t]
     \begin{center}
         \includegraphics{figures/ch4-optical-performance.pdf}
     \end{center}
@@ -155,6 +155,7 @@ We designed two different experiments: the first, referred to as the incremental
 The second, referred to as the dynamic experiment, assigns a lifetime to each port request and includes both the arrival and departure of connections.
 These experimental setups are aligned with approaches commonly used in the literature to characterize blocking behavior in switching networks [CITES].
 
+\subsection{Incremental experiment}\label{subsection:incremental_experiment}
 The pseudocode of the incremental experiment is shown in Algorithm~\ref{alg:incremental_experiment}.
 First, the algorithm computes the switch state matrix, which defines the set of all possible paths between all possible input-output pairs (line 1).
 During each iteration, the set of established paths $\mathbf{\mathit{P}}_{\mathrm{est}}$ is initialized (line 3) and a set of port requests $\mathbf{\mathit{P}}$ is generated according to the load, each request $\mathbf{\mathit{r}} \in \mathbf{\mathit{R}}$ corresponds to a single connection request with a specific I/O port pair.
@@ -226,6 +227,7 @@ However, under the stricter conflict 2 constraint, its limitations become eviden
 Notably, the Double Dilated Benes architecture exhibits zero blocking for conflict 1 and shows low blocking values under conflict 2.
 Even at high load, the Double Dilated Benes network, under the sorted strategy and the more restrictive conflict model, maintains a blocking rate below $\mathbf{10^{-1}}$ for all radices, significantly outperforming the other Benes-based architectures.
 
+\subsection{Dynamic experiment}\label{subsection:dynamic_experiment}
 Algorithm~\ref{alg:dynamic_experiment} outlines the dynamic experiment, which calculates blocking rates by assigning a finite lifetime to each port request and subsequently releasing the associated connections in the switch.
 The lifetime of each input-output request is modeled by the following exponential distribution [CITE]
 \begin{equation}
@@ -243,17 +245,6 @@ If no valid path is found, the request is marked as blocked, and the blocking ra
 \begin{equation}
     \mathbf{\mathit{BR~(per~request) = \frac{blocked~requests}{total~requests}}}
 \end{equation}
-
-The dynamic experiment was conducted under the most restrictive conditions: an arrival rate equal to 1 (i.e., the switch is attempted to be fully loaded at each iteration), conflict 2, and the sorted routing strategy.
-The blocking performance is evaluated using two metrics: the PI blocking, shown in Figure~\ref{fig:ch4-dynamic-exp}(a) to maintain consistency with the incremental experiment, and the PR, presented in Figure~\ref{fig:ch4-dynamic-exp}(b).
-A key observation is that the dynamic experiment yields higher blocking rates than the incremental experiment.
-This behavior arises because, when connections are removed, the sorted routing strategy becomes less effective than in the incremental case, where only new connections are added after each iteration.
-Blocking results are presented as a function of the mean holding time of each port request, expressed in iterations.
-For the PI blocking metric, the Double Dilated Benes architecture exhibits a maximum blocking rate between 2 and 3 iterations, reaching approximately 0.5 for the 128x128 radix.
-In contrast, the Benes and Dilated Benes architectures remain almost fully blocked across all radices and holding times.
-The PR blocking metric is less restrictive, as it is evaluated on a per-request basis.
-Under this metric, the Benes and Dilated Benes networks exhibit blocking probabilities in the ranges of 0.8-0.9 and 0.4-0.8, respectively, whereas the Double Dilated Benes architecture maintains a low blocking probability below 0.04 for the 128x128 radix.
-Overall, these results demonstrate that, under dynamic traffic conditions, the Double Dilated Benes architecture provides significantly better blocking performance than classical Benes-based networks.
 % Dynamic algorithm
 \begin{algorithm}[h]
     \caption{Dynamic experiment of blocking rate}
@@ -291,6 +282,17 @@ Overall, these results demonstrate that, under dynamic traffic conditions, the D
         \EndFor
     \end{algorithmic}
 \end{algorithm}
+
+The dynamic experiment was conducted under the most restrictive conditions: an arrival rate equal to 1 (i.e., the switch is attempted to be fully loaded at each iteration), conflict 2, and the sorted routing strategy.
+The blocking performance is evaluated using two metrics: the PI blocking, shown in Figure~\ref{fig:ch4-dynamic-exp}(a) to maintain consistency with the incremental experiment, and the PR, presented in Figure~\ref{fig:ch4-dynamic-exp}(b).
+A key observation is that the dynamic experiment yields higher blocking rates than the incremental experiment.
+This behavior arises because, when connections are removed, the sorted routing strategy becomes less effective than in the incremental case, where only new connections are added after each iteration.
+Blocking results are presented as a function of the mean holding time of each port request, expressed in iterations.
+For the PI blocking metric, the Double Dilated Benes architecture exhibits a maximum blocking rate between 2 and 3 iterations, reaching approximately 0.5 for the 128x128 radix.
+In contrast, the Benes and Dilated Benes architectures remain almost fully blocked across all radices and holding times.
+The PR blocking metric is less restrictive, as it is evaluated on a per-request basis.
+Under this metric, the Benes and Dilated Benes networks exhibit blocking probabilities in the ranges of 0.8-0.9 and 0.4-0.8, respectively, whereas the Double Dilated Benes architecture maintains a low blocking probability below 0.04 for the 128x128 radix.
+Overall, these results demonstrate that, under dynamic traffic conditions, the Double Dilated Benes architecture provides significantly better blocking performance than classical Benes-based networks.
 % Fig dynamic experiment
 \begin{figure}[h]
     \begin{center}

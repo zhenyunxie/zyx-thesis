@@ -1,12 +1,175 @@
 % Author: Zhenyun Xie
+\definecolor{yangrw}{RGB}{0,102,204}
+\definecolor{yangro}{RGB}{180,0,0}
+\definecolor{yangtype}{RGB}{0,128,0}
+\definecolor{yangref}{RGB}{150,0,150}
+
+\lstdefinelanguage{yangtree}{
+    morekeywords=[1]{rw,ro},
+    morekeywords=[2]{string,int32,decimal64,enumeration},
+    sensitive=true
+}
+
+\lstset{
+    language=yangtree,
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=[1]\color{yangrw}\bfseries,
+    keywordstyle=[2]\color{yangtype},
+    commentstyle=\color{gray},
+    breaklines=true,
+    columns=fullflexible,
+    frame=none,
+    xleftmargin=5pt,
+    xrightmargin=5pt,
+}
 
 \chapter{Software Defined Network for OCS}\label{chap:sdn_for_ocs} % (fold)
+% Motivation of this chapter
+Optical circuit switching has emerged as a promising approach for data center interconnects.
+As discussed in Section~\ref{sec:sdn} of Chapter~\ref{chap:fundamentals}, SDN enables centralized and programmable control of network resources by decoupling the control plane from the data plane.
+When controlled by a centralized SDN controller, OCS facilitates dynamic topology reconfiguration, allowing the physical layer to adapt to different AI workloads.
+% Objective of this chapter
+In this chapter, we introduce an SDN-based control architecture for silicon photonic OCS.
+A custom YANG data model is designed to represent the switching resources and connection configurations of the OCS device.
+Based on this model, a controller using the gNMI protocol is implemented to provide programmable and efficient control of the switching fabric within an SDN framework.
+We further present experimental results demonstrating the complete gNMI-controlled operational workflow.
+\section{Custom Yang Model}\label{sec:yang} % (fold)
+In SDN architectures, device configuration and state management are typically realized through standardized data models.
+Among them, YANG has become a widely adopted modeling language for representing network device capabilities and operational states, enabling programmable control via protocols such as gNMI.
+However, while YANG models have been extensively developed for EPS and optical transport equipments, a unified data model for OCS has not yet been established.
+In particular, YANG models specifically designed for silicon photonic switching systems have not been previously proposed.
 
+As discussed in earlier chapters, silicon photonic OCS devices differ from other optical switching tech platforms.
+Figure~\ref{fig:ch5-ocs-tech} illustrates the SiPh OCS technology stack, which consists of multiple functional layers.
+At the bottom layer, the programmable silicon photonic subassembly comprising a polarization controller, a monitoring array for optical power per set channels, a switching core to handle optical interconnection routing.
+A Semiconductor Optical Amplifier (SOA) array subsystem is integrated to provide necessary power to compensate the insertion losses of each channel.
+The electronic layer exposes device control and monitoring capabilities to the software layer, which communicates with the centralized SDN controller through a northbound interface.
+As showcase in the system architecture, multiple OCS devices can be managed simultaneously by a centralized SDN controller via southbound interfaces, enabling topology reconfiguration across the switching fabric.
 
-\section{Customer Yang model}\label{sec:yang_model} % (fold)
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics{figures/ch5-ocs-tech.pdf}
+    \end{center}
+    \caption{Architecture of the SDN-controlled OCS system and the OCS technology stack.
+    }\label{fig:ch5-ocs-tech}
+\end{figure}
 
+To support programmable control of the silicon photonic OCS, we design a custom YANG data model that abstracts the device resources and operational states, see Figure~\ref{fig:yang_tree}.
+For hardware abstraction, the model defines a \textit{ports} list where each port is identified by a \textit{port-id} and characterized by attributes such as \textit{type} and \textit{number}.
+To support telemetry, each port includes a read-only \textit{power} node that reports optical power measurements together with a \textit{timestamp}, allowing the controller to monitor optical signal.
+A unique feature of our system, not present in other OCSs is the SOA, which is controlled from the \textit{SOA} container.
+Each SOA entry is associated with a \textit{port} identifier and provides read-only telemetry nodes for input and output optical power.
+In addition, a configurable \textit{setting} allows the controller to configure the gain \textit{mode} and \textit{value}, which enables the SDN controller to maintain a stable power budget across different optical paths.
+The model includes a \textit{pca} node for polarization controller adjustments.
+Connection management is implemented through the \textit{connections} node.
+Each interconnection is identified by a unique \textit{uid}.
+Unlike other models that may rely on unidirectional port-pairing, our model supports three different connection types for different traffic scenarios.
+The \textit{simplex} type provides a standard one-to-one mapping, while the \textit{duplex} type allows for the simultaneous management of bidirectional port pairs (e.g., In1 -> Out2 and In2 -> Out1) under a single uid.
+Notably, we introduce a \textit{bulk} connection type, which enables the multiple input and output port groups (e.g., In1,2,3 to Out2,3,5) within a single uid.
+This bulk operation is advantageous for AI workload, as it reduces the control plane overhead and the number of transactions required to establish links.
 
-\section{NETCONF}\label{sec:netconf} % (fold)
+\section{gNMI Operation Flow}\label{sec:yang_model} % (fold)
+In this OCS system, we adopt a solution based on the OpenConfig gNMI framework to perform device control and state monitoring.
+The gNMI protocol provides a unified interface for communication between the SDN controller and the hardware devices.
+In this section, we describe the gNMI operation workflow in detail.
 
+To better understand the sequence of actions, we refer to the gNMI operation flow diagram (Figure~\ref{fig:ch5-gnmi-flow}), which illustrates the interactions between the SDN controller, gNMI server, datastore, and internal API during various operations.
+The SDN controller begins the status monitoring process by sending GET requests.
+These requests are processed by the gNMI server, which retrieves real-time data from a YANG-model based datastore.
+When configuration changes, such as establishing or modifying switching interconnects, the controller sends a SET request.
+The gNMI server processes the request by invoking the internal API, which applies the configuration changes, and then sends an OK to the datastore to ensure consistency of the system states.
+A background process periodically monitors relevant operational parameters and keeps the datastore up to date with the hardware state.
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics{figures/ch5-gnmi-flow.pdf}
+    \end{center}
+    \caption{Operational flow of gNMI management.
+        The left side shows the GET and SET operations, followed by the subscription process on the right side.
+    }\label{fig:ch5-gnmi-flow}
+\end{figure}
 
-\section{gNMI}\label{sec:gnmi} % (fold)
+In addition to GET and SET operations, gNMI supports subscriptions, which allow the SDN controller to receive real-time updates about changes in the system's state.
+To initiate a subscription, the SDN controller sends a Subscription request to the gNMI server.
+This request specifies the data nodes the controller wants to monitor, such as port power levels, switching state, or other relevant metrics.
+Once the server receives this request, it responds with a Subscription OK message, confirming that the subscription has been established successfully.
+After the subscription is established, the gNMI server begins to monitor the specified data nodes continuously.
+The server then starts sending periodic updates or event-driven notifications to the SDN controller.
+These updates are sent as Data for Subscription and are delivered at the defined intervals or when there are changes in the subscribed data.
+Each update includes the relevant data along with a timestamp, allowing the controller to keep track of the system's state over time.
+To ensure that the system remains in sync, the gNMI server operates in parallel with an Subscribe Thread.
+This thread is responsible for managing the delivery of periodic updates or notifications triggered by data changes.
+The controller can also cancel or modify the subscription by sending a SET request to update the subscription parameters or terminate the monitoring.
+\section{Experimental Validation}\label{sec:experimental} % (fold)
+To validate the proposed SDN control architecture, experiments were conducted to demonstrate the complete operational workflow of the gNMI-based control interface.
+In particular, the experiments focus on verifying the three fundamental gNMI operations introduced in the previous section.
+Through these experiments, we demonstrate that the silicon photonic OCS can be dynamically configured and monitored by the SDN controller within the proposed control framework.
+
+\subsection{Experimental Setup}
+Figure~\ref{fig:ch5-exp-setup}(a) illustrates the experimental platform used to evaluate the SDN-controlled OCS system.
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics{figures/ch5-experimental-setup.pdf}
+    \end{center}
+    \caption{Experimental setup of the gNMI-controlled OCS system
+        (a) Photograph of the experimental platform.
+        (b) Logical connectivity between the devices.
+    }\label{fig:ch5-exp-setup}
+\end{figure}
+The setup consists of a 32$\times$32 optical circuit switch, two 1$\times$32 MEMs optical switches, a variable optical attenuator (VOA), a 400\,G LWDM optical transceiver, a bit-error-rate (BER) tester, and a controller running gNMI CLI client and component control software.
+At the center of the setup is the 32$\times$32 silicon photonic OCS, which provides 32 input ports and 32 output ports that can be dynamically interconnected under the control of the gNMI CLI client.
+Two external 1$\times$32 optical switches are used to selectively connect optical signals to different input and output ports of the OCS.
+This configuration enables automated testing of multiple switching paths without manual fiber reconnection.
+A VOA is inserted in the optical path to control the received optical power and ensure that it remains within the dynamic range of the transceiver receiver.
+This prevents receiver saturation when high optical power is present due to short fiber links or optical amplification.
+A 400\,G LWDM optical transceiver generates the optical data signal that is injected into the switching fabric.
+The output signal is connected to a BER tester to evaluate the transmission performance of the configured optical paths.
+The controller can configure switching connections, retrieve device states, and subscribe to telemetry data such as optical power measurements.
+The logical connectivity of the experimental setup is illustrated in Figure~\ref{fig:exp_setup}(b).
+
+\subsection{Results}
+\begin{figure}[t]
+    \centering
+    \begin{lstlisting}
+module: swtchd
+  +--rw swtchd
+     +--rw ports
+     |  +--rw port* [port-id]
+     |     +--rw port-id    string
+     |     +--rw type?      enumeration
+     |     +--rw number?    int32
+     |     +--ro power
+     |        +--ro timestamp?   yang:date-and-time
+     |        +--ro value?       decimal64
+     +--rw connections
+     |  +--rw connection* [uid]
+     |     +--rw uid          string
+     |     +--rw type?        enumeration
+     |     +--rw ports-in*    -> /swtchd/ports/port/number
+     |     +--rw ports-out*   -> /swtchd/ports/port/number
+     +--rw stats
+     |  +--ro pucs-power
+     |  |  +--ro timestamp?   yang:date-and-time
+     |  |  +--ro value?       decimal64
+     |  +--ro config-time
+     |     +--ro timestamp?   yang:date-and-time
+     |     +--ro value?       decimal64
+     +--rw soas
+     |  +--rw soa* [port-id]
+     |     +--rw port-id      string
+     |     +--ro power-in
+     |     |  +--ro timestamp?   yang:date-and-time
+     |     |  +--ro value?       decimal64
+     |     +--ro power-out
+     |     |  +--ro timestamp?   yang:date-and-time
+     |     |  +--ro value?       decimal64
+     |     +--rw setting
+     |        +--rw mode?    enumeration
+     |        +--rw value?   decimal64
+     +--rw pca
+        +--rw pc* [port-id]
+           +--rw port-id    string
+           +--rw mode?      enumeration
+\end{lstlisting}
+    \caption{YANG tree representation of the \texttt{swtchd} module.}
+    \label{fig:yang_tree}
+\end{figure}
