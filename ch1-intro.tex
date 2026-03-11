@@ -73,9 +73,10 @@ Although AI training traffic is typically predictable, switching between differe
 Performing such reconfiguration through the traditional one-by-one sequential tuning of actuators can introduce significant delay, making it operationally impractical for large switching fabrics and potentially disrupting cluster scheduling and training efficiency.
 Without a software-defined tool to instantly map logical interconnect requests into hardware states, the potential for microsecond switching remains locked behind the inability to manage the hardware's complexity in real-time.
 Moreover, a major gap exists in system-level SDN integration.
-Currently, AI networking stacks are optimized for electronic packet switching, leaving Layer-1 optical resources without a standardized management interface.
-Integrating OCS into existing data centers requires a robust Software-Defined Networking (SDN) framework that can translate high-level application demands into specific optical configurations.
-This controller plane must be protocol-aware and capable of managing optical resources as a transparent, programmable layer of the overall cluster.
+Currently, AI networking stacks are primarily optimized for electronic packet switching.
+While standardized management interfaces exist for some Layer-1 optical components (such as ROADMs), the unified, software-defined control of Layer-1 optical resources in AI data center environments remains less mature compared to electronic and higher-layer network management.
+This represents a broad and complex challenge in integrating optical circuit switches into modern data centers.
+Within this context, it is important to focus on approaches that allow Layer-1 optical resources to be more easily interfaced with SDN frameworks, addressing part of this integration gap.
 
 \subsection*{Objectives}
 Considering the critical role of programmable photonic integrated circuits (PICs) in scaling AI data center interconnects, this thesis is framed around the development of a comprehensive, software-defined ecosystem for large-scale integrated photonic switching.
