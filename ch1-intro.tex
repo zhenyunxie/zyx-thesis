@@ -4,11 +4,11 @@
 
 \subsection*{Interconnects in Network Infrastructure} \label{sec:background}
 % background: development of AI
-In the past several years, the rapid rise of AI has shifted computing from simple neural networks to trillion-parameter models.
+In the past several years, the rapid rise of AI has shifted computing from relatively small neural network to trillion-parameter models.
 Since the introduction of the Transformer in 2017, training demand has grown exponentially, doubling roughly every six months—far beyond Moore's Law.
 This gap between silicon capability and AI requirements has driven a transition from single-chip optimization to massive distributed computing, which means the computing paradigm is no longer confined to a single device or system boundary.
 % How AI reshaped interconnect
-Modern data centers (DCs) infrastructures are increasingly organized as hierarchical systems in which the distinction between between on-chip communication and network-level communication is becoming less clearly defined.
+Modern data centers (DCs) infrastructures are increasingly organized as hierarchical systems in which the distinction between on-chip communication and network-level communication is becoming less clearly defined.
 At the lowest level, intra-package integration enables communication among chiplets, processor cores, and high-bandwidth memory through advanced technologies such as silicon interposers.
 At the server level, multiple accelerators within a single chassis are interconnected using high-bandwidth links such as NVLink to support tightly coupled scale-up computing.
 Beyond the server boundary, large numbers of nodes are connected across racks within a data center using high-performance networking technologies such as InfiniBand or Ethernet, enabling distributed scale-out workloads.
@@ -28,15 +28,16 @@ In parallel, electronic switch ASICs (Application-Specific Integrated Circuits) 
 In addition, the store-and-forward model introduces buffering and queuing delays, leading to variable latency.
 For tightly synchronized large-scale AI training, even small network delays can reduce overall system efficiency.
 
-\subsection*{Toward Integrated Photonic Switching} \label{sec:toc}
+\subsection*{Toward Optical Circuit Switching} \label{sec:toc}
 % Motivates OCS
 These limitations indicate that purely electronic packet switching may not scale efficiently for future AI infrastructures.
 Unlike traditional internet traffic, AI training involves large, structured, and persistent data exchanges among fixed node groups.
-Processing every packet individually therefore introduces unnecessary overhead. This motivates Optical Circuit Switching (OCS).
+Processing every packet individually therefore introduces unnecessary overhead.
+This motivates Optical Circuit Switching (OCS).
 % OCS introduction
 OCS establishes dedicated physical-layer connections between endpoints instead of routing packets hop by hop.
 Optical signals are directly steered from input to output ports through free-space optics or integrated photonic circuits, forming transparent paths without intermediate electronic processing.
-Because switching occurs entirely in the optical domain, OCS is largely protocol and rate transparent.
+Because switching occurs entirely in the optical domain, OCS is protocol and rate transparent.
 A deployed fabric can support higher data rates without redesigning switch ASICs.
 In addition, once a circuit is configured, data remains optical, avoiding repeated O-E-O conversion and significantly reducing steady-state power consumption.
 
@@ -47,11 +48,11 @@ NVIDIA has also explored OCS for failure resilience and dynamic network rewiring
 In scale-up architectures, OCS supports hardware disaggregation by connecting compute nodes to shared memory or storage pools through dedicated optical circuits, improving resource utilization.
 It has further been investigated for high-bandwidth GPU interconnects beyond the limits of electrical links, extending direct, traffic-aware connections across larger physical domains.
 \begin{figure}[h]
-    \begin{center}
-        \includegraphics{figures/ch1-ocs-applications.pdf}
-    \end{center}
-    \caption{Optical circuit switch application in scale-out and scale-up network.
-    }\label{fig:ch1-ocs-apps}
+      \begin{center}
+            \includegraphics{figures/ch1-ocs-applications.pdf}
+      \end{center}
+      \caption{Optical circuit switch application in scale-out and scale-up network.
+      }\label{fig:ch1-ocs-apps}
 \end{figure}
 
 % integrated photonic ocs
@@ -68,46 +69,47 @@ First, high-radix scaling and architecture design present significant difficulti
 At this density, cumulative insertion loss and crosstalk become substantial, and conventional circuit topologies are insufficient, designing these systems demands a careful balance between port count, signal integrity, physical footprint, etc,.
 The most critical operational bottleneck, however, is the large-scale control and configuration of these actuators.
 In a high-radix switch matrix, establishing a data path or reconfiguring the entire network fabric requires the precise coordination of thousands of integrated actuators.
-Because AI traffic patterns are highly dynamic, the traditional "one-by-one" sequential configuration of actuators is far too slow and operationally impractical.
-There is an urgent need for an automated control application capable of rapid, parallelized programming of the switch matrix.
+Although AI training traffic is typically predictable, switching between different communication patterns or workload configurations still requires reconfiguring the optical switch fabric.
+Performing such reconfiguration through the traditional one-by-one sequential tuning of actuators can introduce significant delay, making it operationally impractical for large switching fabrics and potentially disrupting cluster scheduling and training efficiency.
 Without a software-defined tool to instantly map logical interconnect requests into hardware states, the potential for microsecond switching remains locked behind the inability to manage the hardware's complexity in real-time.
-Finally, a major gap exists in system-level SDN integration.
+Moreover, a major gap exists in system-level SDN integration.
 Currently, AI networking stacks are optimized for electronic packet switching, leaving Layer-1 optical resources without a standardized management interface.
 Integrating OCS into existing data centers requires a robust Software-Defined Networking (SDN) framework that can translate high-level application demands into specific optical configurations.
 This controller plane must be protocol-aware and capable of managing optical resources as a transparent, programmable layer of the overall cluster.
 
 \subsection*{Objectives}
-Considering the critical role of reconfigurable photonic integrated circuits (PICs) in scaling AI data center interconnects, this thesis is framed around the development of a comprehensive, software-defined ecosystem for large-scale optical circuit switching.
+Considering the critical role of programmable photonic integrated circuits (PICs) in scaling AI data center interconnects, this thesis is framed around the development of a comprehensive, software-defined ecosystem for large-scale integrated photonic switching.
 The primary aim is to establish a vertically integrated technology stack that spans architectural design, physical-layer circuit synthesis, and system-level control, thereby enabling programmable photonic processors to be seamlessly integrated into modern AI infrastructures.
-Specifically, the global objective of this thesis is to contribute to the development of a scalable and manageable OCS solution that can ultimately be deployed in data center interconnects.
+Specifically, the global objective of this thesis is to contribute to the development of a scalable and manageable silicon photonic OCS solution that can ultimately be deployed in data center interconnects.
 This project begins with the development of a graph-based programming framework to automate the synthesis and mapping of photonic circuits, bridging the gap between high-level logic and physical actuator configurations.
-It then investigates scalable OCS architectures, aiming to resolve the trade-offs between port count and signal integrity.
+It then investigates scalable photonic switching architectures, aiming to resolve the trade-offs between port count and signal integrity.
 This includes conducting in-depth blocking analysis and physical-layer simulations to evaluate insertion loss (IL) and signal-to-noise ratio (SNR) in data center environments.
-Finally, an integrated gNMI-based control system is implemented for Layer-1 OCS, enabling standardized, software-defined reconfiguration and management within AI data center networks.
+Finally, an integrated gNMI-based control system is implemented for Layer-1 SiPh OCS, enabling standardized, software-defined reconfiguration and management within AI data center networks.
 
 \subsection*{Structure of the thesis}
 The thesis is organized to offer a comprehensive account of the theoretical background, methodological developments, and experimental validation associated with the research contributions.
 The remainder of this document is structured into the following chapters:
 
 \begin{itemize}
-    \item Chapter 1: \nameref{chap:intro} This chapter provides the the research background and motivation, focusing on the transition from traditional electronic interconnects to integrated photonic switching.
-          It reviews the architecture of modern AI data centers and highlights the increasing demand for scalable for optical circuit switching. The chapter then defines the research objectives and outlines
-          the main contributions of the thesis, providing an overview of the structure of the subsequent chapters.
-    \item Chapter 2: \nameref{chap:fundamentals} This chapter presents the theoretical foundations for photonic integrated circuits.
-          It introduces key photonic components and circuit topologies, then develops a graph-theory-based framework for circuit modeling and routing, which enables automated control and programming at the photonic layer.
-          It also outlines Software-Defined Networking (SDN) principles to support the design of an SDN-based control layer for integrating optical circuit switching into data center networks.
-    \item Chapter 3: \nameref{chap:applications_on_pip} This chapter demonstrates optical networking applications implemented on hexagonal programmable photonic processors.
-          By applying graph-theory-based routing algorithms, the work replaces manual and sequential tuning procedures with automated programming methods.
-          The chapter presents implementations of optical interconnects, circuit switching, and multicasting functions, followed by a systematic evaluation of performance metrics.
-    \item Chapter 4: \nameref{chap:ocs_archs}} This chapter develops a graph-theory-based modeling and benchmarking framework for high-radix silicon photonic switch architectures, including Benes, Dilated Benes, and PILOSS topologies.
-          It analyzes hardware complexity and optical performance by evaluating metrics such as component count, insertion loss, and signal-to-noise ratio.
-          Blocking probability under different routing strategies is also investigated. The chapter provides design guidelines for scalable and efficient optical switching fabrics suitable for data center applications.
-    \item Chapter 5: \nameref{chap:sdn_for_ocs} This chapter presents the experimental demonstration of a silicon photonic switch managed via a gNMI-controlled in SDN.
-          It introduces a custom YANG model designed to minimize control overhead while optimizing hardware performance across diverse connection types.
-          The chapter validates the operational flow, showcasing near zero insertion loss through integrated SOA compensation and exceptionally low crosstalk,
-          establishing a standardized pathway for integrating OCS into AI infrastructures.
-    \item Chapter 6: \nameref{chap:discussion_and_conclusions} The final chapter synthesizes the research findings, discussing critical challenges such as scalability, optical losses, and the maturity of reconfigurable topologies for industrial use cases.
-          It addresses the ongoing efforts toward SDN standardization and the current gaps in AI network optimization software. Finally, the chapter outlines the necessary developments for the commercialization and large-scale deployment of optical circuit switching systems.
+      \item Chapter 1: \nameref{chap:intro} This chapter provides the the research background and motivation, focusing on the transition from traditional electronic interconnects to integrated photonic switching.
+            It reviews the architecture of modern AI data centers network and highlights the increasing demand for scalable for silicon photonic optical circuit switching.
+            The chapter then defines the research objectives and outlines the main contributions of the thesis, providing an overview of the structure of the subsequent chapters.
+      \item Chapter 2: \nameref{chap:fundamentals} This chapter presents the theoretical foundations for photonic integrated circuits.
+            It introduces key photonic components and circuit topologies, then develops a graph-theory-based framework for circuit modeling and routing, which enables automated control and programming at the photonic layer.
+            It also outlines Software-Defined Networking (SDN) principles to support the design of an SDN-based control layer for integrating optical circuit switching into data center networks.
+      \item Chapter 3: \nameref{chap:applications_on_pip} This chapter demonstrates optical networking applications implemented on hexagonal programmable photonic processors.
+            By applying graph-theory-based routing algorithms, the work replaces manual and sequential tuning procedures with automated programming methods.
+            The chapter presents implementations of optical interconnects, multicasting and circuit switching functions, followed by a systematic evaluation of performance metrics.
+      \item Chapter 4: \nameref{chap:ocs_archs} This chapter develops a graph-theory-based modeling and benchmarking framework for high-radix silicon photonic switch architectures, including Benes-like, PILOSS and Dilated banyan topologies.
+            It analyzes hardware complexity and optical performance by evaluating metrics such as component count, insertion loss, and signal-to-noise ratio.
+            Blocking probability under different routing strategies is also investigated.
+            The chapter provides design guidelines for scalable and efficient optical switching fabrics suitable for data center applications.
+      \item Chapter 5: \nameref{chap:sdn_for_ocs} This chapter presents the experimental demonstration of a silicon photonic switch managed via a gNMI-controlled in SDN.
+            It introduces a custom YANG model designed to minimize control overhead while optimizing hardware performance across diverse connection types.
+            The chapter validates the operational flow, showcasing lossless performance through integrated SOA compensation and exceptionally low crosstalk,
+            establishing a standardized pathway for integrating OCS into AI infrastructures.
+      \item Chapter 6: \nameref{chap:discussion_and_conclusions} The final chapter synthesizes the research findings, discussing critical challenges such as scalability, optical losses, and the maturity of reconfigurable topologies for industrial use cases.
+            It addresses the ongoing efforts toward SDN standardization and the current gaps in AI network optimization software. Finally, the chapter outlines the necessary developments for the commercialization and large-scale deployment of optical circuit switching systems.
 \end{itemize}
 
 At the end of the thesis, a section is provided with a complete list of the Author's merits and contributions to scientific journals and conferences.

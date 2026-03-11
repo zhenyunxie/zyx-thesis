@@ -8,7 +8,7 @@ It begins with the fundamental building blocks, including 50:50 splitters, waveg
 The transfer-matrix models of these components are presented to describe how optical signals are manipulated within the circuit.
 The discussion then extends to circuit topologies constructed from these unit cells, including feedforward mesh architectures and recirculating mesh architectures.
 Building on these physical structures, a graph-theoretic abstraction is developed to model photonic circuits as nodes and edges, enabling automated routing and configuration synthesis.
-Finally, the chapter introduces the principles of Software-Defined Networking (SDN) to establish a control layer that connects low-level photonic hardware with higher-level network management.
+Finally, the chapter introduces the principles of Software-Defined Networking (SDN) to provide a foundation for the control implementation presented in later chapters.
 
 \section{Basic building blocks} \label{sec:functional_blocks} % (fold)
 \subsection{50:50 splitter} \label{sub:splitter} % (fold)
@@ -275,17 +275,28 @@ while northbound interfaces expose abstracted network capabilities to applicatio
     \label{fig:ch2-sdn-architecture}
 \end{figure}
 
-\subsection{Models and Protocols}\label{sub:models_and_protocol}
+\subsection{Data Models and Control Protocols}\label{sub:models_and_protocol}
 To implement these interfaces in practice, structured and vendor-neutral data models are required.
 YANG has become a widely adopted modeling language, providing formal representations of device configuration, operational state, and notifications across different network devices and services.
 Controllers manipulate YANG-defined data using management protocols.
+
 NETCONF, an early southbound protocol, operates over secure channels and supports transactional configuration and rollback, improving reliability compared to traditional command-line based management.
 More recently, gRPC-based frameworks have been adopted for higher efficiency and scalability.
-In particular, gNMI (gRPC Network Management Interface) enables both configuration and streaming telemetry, supporting frequent updates with low processing overhead, which is critical for modern data center and optical networks.
+In particular, gNMI (gRPC Network Management Interface) enables model-driven configuration and high-frequency telemetry using a set of RPC operations, including \textit{Get}, \textit{Set}, and \textit{Subscribe}.
+The \textit{Get} operation retrieves operational or configuration data, while \textit{Set} allows controllers to modify configuration parameters defined in YANG models.
+The \textit{Subscribe} operation supports streaming telemetry, allowing controllers to continuously monitor selected data nodes in network devices.
+Subscriptions can operate in several modes.
+In the \textit{ONCE} mode, the server returns the current value of the requested data and then terminates the session, effectively providing a snapshot of the device state.
+The \textit{POLL} mode enables the controller to periodically request updates on demand.
+More commonly, the \textit{STREAM} mode establishes a persistent telemetry stream in which updates are delivered continuously.
+Within the STREAM mode, different update mechanisms can be specified to control how telemetry data is reported.
+In the \textit{SAMPLE} mode, the device periodically reports the value of the subscribed data nodes at a specified sampling interval, which is useful for monitoring metrics such as optical power.
+Alternatively, the \textit{ON\_CHANGE} mode generates updates only when the value of a monitored parameter changes, reducing redundant telemetry traffic and improving scalability in large networks.
+These mechanisms enable flexible trade-offs between monitoring accuracy, responsiveness, and control-plane overhead.
 
 Northbound interfaces complement these southbound mechanisms by offering applications and orchestration systems simplified access to network functions.
 REST APIs and the Transport API (TAPI) for transport networks are common examples, providing standardized ways to query network state, request services, and orchestrate resources across multiple devices and vendors.
-To further support multi-vendor interoperability and operational consistency, operator led initiatives such as OpenConfig provide vendor neutral YANG models for configuration and telemetry.
+To further support multi-vendor interoperability and operational consistency, operator-led initiatives such as OpenConfig provide vendor-neutral YANG models for configuration and telemetry.
 Open-source platforms like SONiC (Software for Open Networking in the Cloud) demonstrate these concepts in production, running on merchant switches with YANG- and gNMI-based management to realize programmable, model-driven networks.
 \subsection{Optical SDN}\label{sub:optical_sdn}
 Building on the layered architecture and model-driven management described above, SDN concepts have been extended from packet networks to optical networks, giving rise to Optical SDN.
