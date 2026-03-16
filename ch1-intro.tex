@@ -1,12 +1,13 @@
 % Author: Zhenyun Xie
 
-\chapter{Introduction} \label{chap:intro}
+\chapter{Introduction and Objectives} \label{chap:intro}
 
-\subsection*{Interconnects in Network Infrastructure} \label{sec:background}
+\section{Interconnects in Network Infrastructure} \label{sec:background}
 % background: development of AI
-In the past several years, the rapid rise of AI has shifted computing from relatively small neural network to trillion-parameter models.
-Since the introduction of the Transformer in 2017, training demand has grown exponentially, doubling roughly every six months—far beyond Moore's Law.
-This gap between silicon capability and AI requirements has driven a transition from single-chip optimization to massive distributed computing, which means the computing paradigm is no longer confined to a single device or system boundary.
+Over the past decade, the rapid rise of artificial intelligence (AI) has driven computing systems from relatively small neural networks toward models containing trillions of parameters.
+Since the introduction of the Transformer architecture in 2017, the computational demand for training large models has grown exponentially, doubling approximately every six months—far beyond Moore's Law.
+This gap between silicon capability and AI requirements has driven a transition from single-chip optimization to massive distributed computing.
+As a result, computing paradigm is no longer confined to a single device or system boundary.
 % How AI reshaped interconnect
 Modern data centers (DCs) infrastructures are increasingly organized as hierarchical systems in which the distinction between on-chip communication and network-level communication is becoming less clearly defined.
 At the lowest level, intra-package integration enables communication among chiplets, processor cores, and high-bandwidth memory through advanced technologies such as silicon interposers.
@@ -18,7 +19,7 @@ In contemporary systems, the energy cost associated with data movement often exc
 
 % EPS as current datacenter solution
 Most data center networks have been predominantly built upon electronic packet switching (EPS).
-Although transmission uses optical fiber, each switch still performs optical-electrical-optical (O-E-O) conversion.
+Although transmission uses optical fiber, each switch still performs optical-electrical-optical (O-E-O) conversions.
 Incoming optical signals are converted to electrical form, buffered and processed, and then retransmitted optically.
 This architecture offers flexibility and compatibility with existing protocols.
 % EPS problem
@@ -28,7 +29,7 @@ In parallel, electronic switch ASICs (Application-Specific Integrated Circuits) 
 In addition, the store-and-forward model introduces buffering and queuing delays, leading to variable latency.
 For tightly synchronized large-scale AI training, even small network delays can reduce overall system efficiency.
 
-\subsection*{Toward Optical Circuit Switching} \label{sec:toc}
+\section{Toward Optical Circuit Switching} \label{sec:toc}
 % Motivates OCS
 These limitations indicate that purely electronic packet switching may not scale efficiently for future AI infrastructures.
 Unlike traditional internet traffic, AI training involves large, structured, and persistent data exchanges among fixed node groups.
@@ -36,7 +37,7 @@ Processing every packet individually therefore introduces unnecessary overhead.
 This motivates Optical Circuit Switching (OCS).
 % OCS introduction
 OCS establishes dedicated physical-layer connections between endpoints instead of routing packets hop by hop.
-Optical signals are directly steered from input to output ports through free-space optics or integrated photonic circuits, forming transparent paths without intermediate electronic processing.
+Optical signals are directly routed from input to output ports through free-space optics or integrated photonic circuits, forming transparent paths without intermediate electronic processing.
 Because switching occurs entirely in the optical domain, OCS is protocol and rate transparent.
 A deployed fabric can support higher data rates without redesigning switch ASICs.
 In addition, once a circuit is configured, data remains optical, avoiding repeated O-E-O conversion and significantly reducing steady-state power consumption.
@@ -57,15 +58,15 @@ It has further been investigated for high-bandwidth GPU interconnects beyond the
 
 % integrated photonic ocs
 Most current deployments rely on MEMS mirrors to steer light.
-While reliable and low-loss, MEMS switches are bulky and operate at millisecond timescales, limiting responsiveness to dynamic AI workloads.
+While reliable and low-loss, MEMS switches are relatively bulky and operate on millisecond timescales, limiting responsiveness to dynamic AI workloads.
 Silicon photonics (SiPh) addresses these issues by integrating optical components such as Mach-Zehnder interferometers or microring resonators onto CMOS-compatible (Complementary Metal-Oxide-Semiconductor) chips.
 These solid-state devices enable microsecond-scale reconfiguration, higher integration density, and co-packaged deployment with GPUs or CPUs, reducing footprint and electrical loss.
-Benefiting from wafer-scale fabrication and the absence of moving parts, SiPh offers improved scalability, robustness, and suitability for next-generation AI data centers.
+Benefiting from wafer-scale fabrication and the absence of mechanical moving parts, SiPh offers improved scalability, robustness, and suitability for next-generation AI data centers.
 
-\subsection*{Challenges} \label{sec:challenges}
-Despite the advantages of silicon photonics for optical circuit switching, deploying large-scale SiPh-based switches in hyperscale AI data centers still face complexity that has not yet to be fully addresses.
+\section{Challenges} \label{sec:challenges}
+Despite the advantages of silicon photonics for optical circuit switching, deploying large-scale SiPh-based switches in hyperscale AI data centers still faces complexity that has not yet been fully addresses.
 While small-scale switches have been proven, scaling these systems to meet industrial demands introduces fundamental challenges that necessitate new research.
-First, high-radix scaling and architecture design present significant difficulties. Supporting modern clusters may require switches with 128x128, 256x256 or even higher ports, involving tens of thousands of integrated actuator on a single chip.
+First, high-radix scaling and architecture design present significant difficulties. Supporting modern clusters may require switches with 128×128, 256×256 or even higher ports, involving tens of thousands of integrated actuators on a single chip.
 At this density, cumulative insertion loss and crosstalk become substantial, and conventional circuit topologies are insufficient, designing these systems demands a careful balance between port count, signal integrity, physical footprint, etc,.
 The most critical operational bottleneck, however, is the large-scale control and configuration of these actuators.
 In a high-radix switch matrix, establishing a data path or reconfiguring the entire network fabric requires the precise coordination of thousands of integrated actuators.
@@ -74,26 +75,26 @@ Performing such reconfiguration through the traditional one-by-one sequential tu
 Without a software-defined tool to instantly map logical interconnect requests into hardware states, the potential for microsecond switching remains locked behind the inability to manage the hardware's complexity in real-time.
 Moreover, a major gap exists in system-level SDN integration.
 Currently, AI networking stacks are primarily optimized for electronic packet switching.
-While standardized management interfaces exist for some Layer-1 optical components (such as ROADMs), the unified, software-defined control of Layer-1 optical resources in AI data center environments remains less mature compared to electronic and higher-layer network management.
+While standardized management interfaces exist for some Layer-1 optical components (such as ROADMs), the unified, software-defined control of Layer-1 optical resources in AI data center environments remains less mature than electronic switching infrastructures and higher-layer network management frameworks.
 This represents a broad and complex challenge in integrating optical circuit switches into modern data centers.
 Within this context, it is important to focus on approaches that allow Layer-1 optical resources to be more easily interfaced with SDN frameworks, addressing part of this integration gap.
 
-\subsection*{Objectives}
+\section{Objectives} \label{sec:objective}
 Considering the critical role of programmable photonic integrated circuits (PICs) in scaling AI data center interconnects, this thesis is framed around the development of a comprehensive, software-defined ecosystem for large-scale integrated photonic switching.
-The primary aim is to establish a vertically integrated technology stack that spans architectural design, physical-layer circuit synthesis, and system-level control, thereby enabling programmable photonic processors to be seamlessly integrated into modern AI infrastructures.
+The primary aim is to establish a vertically integrated technological stack that spans architectural design, physical-layer circuit synthesis, and system-level control, thereby enabling programmable photonic processors to be seamlessly integrated into modern AI infrastructures.
 Specifically, the global objective of this thesis is to contribute to the development of a scalable and manageable silicon photonic OCS solution that can ultimately be deployed in data center interconnects.
 This project begins with the development of a graph-based programming framework to automate the synthesis and mapping of photonic circuits, bridging the gap between high-level logic and physical actuator configurations.
 It then investigates scalable photonic switching architectures, aiming to resolve the trade-offs between port count and signal integrity.
 This includes conducting in-depth blocking analysis and physical-layer simulations to evaluate insertion loss (IL) and signal-to-noise ratio (SNR) in data center environments.
 Finally, an integrated gNMI-based control system is implemented for Layer-1 SiPh OCS, enabling standardized, software-defined reconfiguration and management within AI data center networks.
 
-\subsection*{Structure of the thesis}
+\section{Structure of the thesis} \label{sec:structure}
 The thesis is organized to offer a comprehensive account of the theoretical background, methodological developments, and experimental validation associated with the research contributions.
 The remainder of this document is structured into the following chapters:
 
 \begin{itemize}
-      \item Chapter 1: \nameref{chap:intro} This chapter provides the the research background and motivation, focusing on the transition from traditional electronic interconnects to integrated photonic switching.
-            It reviews the architecture of modern AI data centers network and highlights the increasing demand for scalable for silicon photonic optical circuit switching.
+      \item Chapter 1: \nameref{chap:intro} This chapter provides the research background and motivation, focusing on the transition from traditional electronic interconnects to integrated photonic switching.
+            It reviews the architecture of modern AI data centers networks and highlights the increasing demand for scalable silicon-photonic optical circuit switching.
             The chapter then defines the research objectives and outlines the main contributions of the thesis, providing an overview of the structure of the subsequent chapters.
       \item Chapter 2: \nameref{chap:fundamentals} This chapter presents the theoretical foundations for photonic integrated circuits.
             It introduces key photonic components and circuit topologies, then develops a graph-theory-based framework for circuit modeling and routing, which enables automated control and programming at the photonic layer.
