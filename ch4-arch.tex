@@ -1,14 +1,23 @@
 % Author: Zhenyun Xie
 
-\chapter{Silicon Photonics Optical Circuit Switch Architectures}\label{chap:ocs_archs} % (fold)
+\chapter{Scalability Analysis of Silicon Photonics Optical Circuit Switch Architectures}\label{chap:ocs_archs} % (fold)
 % Motivation of this chapter
-Optical circuit switches enables more efficient communication across network tiers by reducing latency through the elimination of electrical conversion, increasing available bandwidth, and lowering energy consumption.
-Silicon photonics OCS leverages its speed, reliability and compactness to become a promising solution for next-generation data center networks [CITE].
-However, realizing high-radix configurations remains challenging due to hardware complexity, optical performance, and blocking.
+In the previous chapter, optical networking functionalities were demonstrated on a programmable integrated photonic processor based on a hexagonal mesh topology.
+By properly configuring the PUCs, various optical circuits, including optical interconnects, multicasting, and optical circuit switching (OCS), were implemented within a single reconfigurable platform.
+Such programmable photonic meshes provide high flexibility for realizing different optical signal processing and networking functions, enabling rapid prototyping of diverse photonic circuits on a general-purpose chip.
+
+However, the scalability of this approach becomes limited when implementing large-scale optical circuit switches.
+As the switch radix increases, the number of required programmable elements grows significantly, leading to increased hardware complexity, accumulated optical loss, and higher control overhead.
+These factors make it challenging to efficiently realize high-radix switching fabrics using a fully programmable photonic mesh architecture.
+To address these challenges, a variety of dedicated silicon photonics OCS architectures have been proposed to construct scalable switching fabrics.
+Different network topologies offer different trade-offs in terms of switching elements, optical loss, signal-to-noise ratio, and blocking characteristics.
+Understanding these trade-offs is essential for selecting and designing architectures suitable for large-scale optical circuit switching.
+
 % Objective of this chapter
 In this chapter, we introduce a graph-theory-based framework to model, analyze, and benchmark multiple silicon photonics optical circuit switch architectures,
 including Benes, Dilated Benes, Double Dilated Benes, PILOSS, and Dilated Banyan networks.
 We evaluate hardware requirements, optical loss, signal-to-noise ratio, and blocking probability under asynchronous switching with two routing strategies.
+The analysis provides a systematic benchmark of these architectures and offers insights into their suitability for scalable silicon photonics OCS implementations.
 
 \section{Graph-based modelling of photonic switches}\label{sec:graph_modelling} % (fold)
 Photonic switches consist of arrangements of basic tunable switching cells, where an input array of signals can be spatially or spectrally routed to an array of optical outputs.
@@ -47,7 +56,7 @@ A conflict occurs between the two paths shown in blue and yellow in Figure~\ref{
 This is physically impossible and is classified as conflict 1, due to blocking.
 The second type of conflict is illustrated in Figure~\ref{fig:ch4-routing}(c), where another path in yellow—from input 7 to output 3—shares a node marked with a red cross.
 While two signals can cross in a 2x2 MZI in a photonic circuit, this generates first-order crosstalk, identified as conflict 2.
-\begin{figure}[h]
+\begin{figure}[t]
     \begin{center}
         \includegraphics{figures/ch4-routing.pdf}
     \end{center}
@@ -102,13 +111,23 @@ The crosstalk in the switching cells is strongly dependent on the spectral respo
 This is mainly due to the thermo-optic phase shifter response of the 2x2 MZI considered in this study, which produces the exact phase for maximum extinction ratio (ER) at a given central point in the spectrum, but the ER decreases outside this wavelength due to phase tuning inaccuracies.
 In contrast, the ER for the crossings remains below -60 dB and flat across the entire O-band, as they are passive components.
 
-Figure 4b shows the SNR for the different architectures and radices, up to 64 ports; results for 128 ports could not be obtained due to the large computational resources required to calculate the transfer matrix for such a large number of elements and radix.
+Figure~\ref{fig:ch4-optical-performance}(b) shows the SNR for the different architectures and radices, up to 64 ports; results for 128 ports could not be obtained due to the large computational resources required to calculate the transfer matrix for such a large number of elements and radix.
 To enable consistent SNR comparison, all networks were configured following an identity port mapping (\textbf{\textit{In\_1-Out\_1, In\_2-Out\_2, \dots, In\_N-Out\_N}}), using the sorted routing strategy to establish the network paths.
 The Benes network exhibits the lowest SNR for low-radix switches (below 32 ports), reaching values around 10 dB at corner wavelengths.
 The Dilated Banyan network shows the highest SNR, above 40 dB across the entire O-band, including for high-radix switches of 64 ports.
 Dilated networks present relatively good SNR values, ranging between 20 and 60 dB depending on the wavelength.
 In contrast, the PILOSS SNR deteriorates significantly for high radix switches due to the large number of stages and the resulting increase in crosstalk sources, which lowers the overall SNR.
 
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics{figures/ch4-optical-performance.pdf}
+    \end{center}
+    \caption{Optical performance.
+        (a) Extinction ratio of the switching cell (left) and the waveguide crossing (right), representing  the power leakage at the undesired output port and representing crosstalk.
+        (b) Signal-to-noise ratio as a function of wavelength and radix for the five network architectures considered in this study.
+        (c) Optical loss of the photonic circuit as a function of radix and network topology. Boxplots represent the statistical distribution of loss across the different path combinations within each network.
+    }\label{fig:ch4-optical-performance}
+\end{figure}
 For the loss simulations, we considered the values reported in Table~\ref{tab:ch4-sota-bb} for state-of-the-art building blocks.
 In addition, to calculate the overall photonic integrated circuit (PIC) loss, we included other components such as edge couplers, polarization elements, and propagation loss.
 In this case, computing the full matrix of the entire architecture was not necessary; instead, losses were calculated along individual paths by concatenating the corresponding switching and crossing elements.
@@ -119,16 +138,6 @@ The Dilated Banyan network also maintains very low loss, with values below 6 dB 
 Dilated architectures show losses below 7 dB with variability under 2 dB for the 128x128 radix.
 In contrast, the PILOSS network experiences a dramatic increase in loss for high-radix switches—above 25 dB for the 128x128—, primarily due to the large number of stages, which is the main source of loss and limits scalability.
 Only the 32x32 configuration remains with relatively good values below 10 dB.
-\begin{figure}[h]
-    \begin{center}
-        \includegraphics{figures/ch4-optical-performance.pdf}
-    \end{center}
-    \caption{Optical performance.
-        (a) Extinction ratio of the switching cell (left) and the waveguide crossing (right), representing  the power leakage at the undesired output port and representing crosstalk.
-        (b) Signal-to-noise ratio as a function of wavelength and radix for the five network architectures considered in this study.
-        (c) Optical loss of the photonic circuit as a function of radix and network topology. Boxplots represent the statistical distribution of loss across the different path combinations within each network.
-    }\label{fig:ch4-optical-performance}
-\end{figure}
 \begin{table}[htbp]
     \centering
     \caption{Extracted physical layer parameters}
@@ -155,6 +164,7 @@ We designed two different experiments: the first, referred to as the incremental
 The second, referred to as the dynamic experiment, assigns a lifetime to each port request and includes both the arrival and departure of connections.
 These experimental setups are aligned with approaches commonly used in the literature to characterize blocking behavior in switching networks [CITES].
 
+\subsection{Incremental experiment}\label{subsection:incremental_experiment}
 The pseudocode of the incremental experiment is shown in Algorithm~\ref{alg:incremental_experiment}.
 First, the algorithm computes the switch state matrix, which defines the set of all possible paths between all possible input-output pairs (line 1).
 During each iteration, the set of established paths $\mathbf{\mathit{P}}_{\mathrm{est}}$ is initialized (line 3) and a set of port requests $\mathbf{\mathit{P}}$ is generated according to the load, each request $\mathbf{\mathit{r}} \in \mathbf{\mathit{R}}$ corresponds to a single connection request with a specific I/O port pair.
@@ -226,6 +236,7 @@ However, under the stricter conflict 2 constraint, its limitations become eviden
 Notably, the Double Dilated Benes architecture exhibits zero blocking for conflict 1 and shows low blocking values under conflict 2.
 Even at high load, the Double Dilated Benes network, under the sorted strategy and the more restrictive conflict model, maintains a blocking rate below $\mathbf{10^{-1}}$ for all radices, significantly outperforming the other Benes-based architectures.
 
+\subsection{Dynamic experiment}\label{subsection:dynamic_experiment}
 Algorithm~\ref{alg:dynamic_experiment} outlines the dynamic experiment, which calculates blocking rates by assigning a finite lifetime to each port request and subsequently releasing the associated connections in the switch.
 The lifetime of each input-output request is modeled by the following exponential distribution [CITE]
 \begin{equation}
@@ -243,17 +254,6 @@ If no valid path is found, the request is marked as blocked, and the blocking ra
 \begin{equation}
     \mathbf{\mathit{BR~(per~request) = \frac{blocked~requests}{total~requests}}}
 \end{equation}
-
-The dynamic experiment was conducted under the most restrictive conditions: an arrival rate equal to 1 (i.e., the switch is attempted to be fully loaded at each iteration), conflict 2, and the sorted routing strategy.
-The blocking performance is evaluated using two metrics: the PI blocking, shown in Figure~\ref{fig:ch4-dynamic-exp}(a) to maintain consistency with the incremental experiment, and the PR, presented in Figure~\ref{fig:ch4-dynamic-exp}(b).
-A key observation is that the dynamic experiment yields higher blocking rates than the incremental experiment.
-This behavior arises because, when connections are removed, the sorted routing strategy becomes less effective than in the incremental case, where only new connections are added after each iteration.
-Blocking results are presented as a function of the mean holding time of each port request, expressed in iterations.
-For the PI blocking metric, the Double Dilated Benes architecture exhibits a maximum blocking rate between 2 and 3 iterations, reaching approximately 0.5 for the 128x128 radix.
-In contrast, the Benes and Dilated Benes architectures remain almost fully blocked across all radices and holding times.
-The PR blocking metric is less restrictive, as it is evaluated on a per-request basis.
-Under this metric, the Benes and Dilated Benes networks exhibit blocking probabilities in the ranges of 0.8-0.9 and 0.4-0.8, respectively, whereas the Double Dilated Benes architecture maintains a low blocking probability below 0.04 for the 128x128 radix.
-Overall, these results demonstrate that, under dynamic traffic conditions, the Double Dilated Benes architecture provides significantly better blocking performance than classical Benes-based networks.
 % Dynamic algorithm
 \begin{algorithm}[h]
     \caption{Dynamic experiment of blocking rate}
@@ -291,6 +291,17 @@ Overall, these results demonstrate that, under dynamic traffic conditions, the D
         \EndFor
     \end{algorithmic}
 \end{algorithm}
+
+The dynamic experiment was conducted under the most restrictive conditions: an arrival rate equal to 1 (i.e., the switch is attempted to be fully loaded at each iteration), conflict 2, and the sorted routing strategy.
+The blocking performance is evaluated using two metrics: the PI blocking, shown in Figure~\ref{fig:ch4-dynamic-exp}(a) to maintain consistency with the incremental experiment, and the PR, presented in Figure~\ref{fig:ch4-dynamic-exp}(b).
+A key observation is that the dynamic experiment yields higher blocking rates than the incremental experiment.
+This behavior arises because, when connections are removed, the sorted routing strategy becomes less effective than in the incremental case, where only new connections are added after each iteration.
+Blocking results are presented as a function of the mean holding time of each port request, expressed in iterations.
+For the PI blocking metric, the Double Dilated Benes architecture exhibits a maximum blocking rate between 2 and 3 iterations, reaching approximately 0.5 for the 128x128 radix.
+In contrast, the Benes and Dilated Benes architectures remain almost fully blocked across all radices and holding times.
+The PR blocking metric is less restrictive, as it is evaluated on a per-request basis.
+Under this metric, the Benes and Dilated Benes networks exhibit blocking probabilities in the ranges of 0.8-0.9 and 0.4-0.8, respectively, whereas the Double Dilated Benes architecture maintains a low blocking probability below 0.04 for the 128x128 radix.
+Overall, these results demonstrate that, under dynamic traffic conditions, the Double Dilated Benes architecture provides significantly better blocking performance than classical Benes-based networks.
 % Fig dynamic experiment
 \begin{figure}[h]
     \begin{center}
@@ -301,3 +312,61 @@ Overall, these results demonstrate that, under dynamic traffic conditions, the D
         Different network architectures and radices are indicated using distinct colors and markers.
     }\label{fig:ch4-dynamic-exp}
 \end{figure}
+
+\section{Comparative analysis of architecture}\label{sec:architecture_comparison} % (fold)
+Table~\ref{tab:ch4-summary-metrics} presents the overall comparison in terms of hardware complexity, optical performance, and blocking behavior for the networks considered.
+To assess the integration density of photonic components, an additional metric based on the total number of crossings and the corresponding die size is introduced, assuming footprints of 250×100 $um^{2}$ and 25×25 $um^{2}$ for the switching cell and the crossing cell, respectively.
+Loss and SNR values correspond to the worst-case path and wavelength, using the component-level parameters reported in Table~\ref{tab:ch4-sota-bb}, while blocking is categorized as low, medium, or high relative to the other architectures.
+As shown, Benes-like networks offer reduced hardware utilization—even a high-radix 128×128 switch can be integrated within a 20×20 $mm^{2}$ die—together with relatively low optical loss.
+However, these architectures are RNB, and their blocking probability limits their applicability in scenarios where wide-sense or strictly non-blocking operation is required.
+Notably, Double Dilated Benes improves the SNR to values above 45 dB and reduces blocking, while still maintaining a substantially lower component count compared to other architectures, which facilitates integration within constrained design areas.
+The Dilated Banyan architecture exhibits excellent optical performance and SNB behavior, but at the cost of very large space utilization.
+For a 128×128 radix, the required die size reaches approximately 850 $mm^{2}$, exceeding the reticle limits of most standard silicon photonics foundries CITE[].
+In contrast, the PILOSS network is wide-sense non-blocking (WSNB) but shows poor scalability beyond a 32×32 radix in terms of optical loss, SNR, and integration capability, which remains inferior to that of Benes-like configurations.
+However, it is worth noting that significant efforts have been made to improve the SNR performance of the PILOSS network by implementing switching elements based on dual Mach–Zehnder structures, suppressing first-order crosstalk without increasing network loss, at the expense of approximately doubling the number of MZIs.
+The required SNR of a switching network naturally depends on the application. Focusing on datacenter interconnects, transceivers are predominantly based on intensity modulation and direct detection (IMDD). For a typical PAM-4 format at 100Gbps per lane, an optical SNR (OSNR) above 30 dB is generally needed to achieve a BER below 1×$10^{-4}$.
+Although this threshold does not directly apply to our reported SNRs, which quantify crosstalk rather than white noise, it provides a useful benchmark for the performance a network must achieve.
+\begin{table*}[!t]
+    \renewcommand{\arraystretch}{1.3}
+    \caption{Summary metrics of all the architectures}
+    \label{tab:ch4-summary-metrics}
+    \centering
+    \begin{tabular}{l c ccc cc ll}
+        \hline
+        \textbf{Architecture} & \textbf{Radix} & \multicolumn{3}{c}{\textbf{Hardware complexity}} & \multicolumn{2}{c}{\textbf{Optical performance}} & \multicolumn{2}{c}{\textbf{Blocking}}                                        \\
+        \hline \noalign{\smallskip} \hline
+        (Type)                & (N)            & Cells                                            & Cross.                                           & Die (mm$^2$)                          & Loss       & SNR       & Type & Rate \\
+        \hline
+        % --- Benes ---
+                              & 32             & 144                                              & 416                                              & 5                                     & $<$ 4 dB   &           &      &      \\
+        Benes                 & 64             & 352                                              & 1824                                             & 10                                    & $<$ 4.5 dB & $>$ 20 dB & RNB  & High \\
+                              & 128            & 832                                              & 7680                                             & 25                                    & $<$ 5 dB   &           &      &      \\
+        \hline
+        % --- Dilated Benes ---
+                              & 32             & 320                                              & 1808                                             & 10                                    & $<$ 4.5 dB &           &      &      \\
+        Dilated Benes         & 64             & 768                                              & 7648                                             & 25                                    & $<$ 5 dB   & $>$ 45 dB & RNB  & Mid  \\
+                              & 128            & 1792                                             & 31552                                            & 60                                    & $<$ 6 dB   &           &      &      \\
+        \hline
+        % --- Double Dilated Benes ---
+                              & 32             & 704                                              & 4608                                             & 20                                    & $<$ 5 dB   &           &      &      \\
+        Double Dilated Benes  & 64             & 1664                                             & 19328                                            & 50                                    & $<$ 5.5 dB & $>$ 45 dB & RNB  & Low  \\
+                              & 128            & 3840                                             & 79360                                            & 150                                   & $<$ 7 dB   &           &      &      \\
+        \hline
+        % --- Dilated Banyan ---
+                              & 32             & 1984                                             & 2848                                             & 50                                    & $<$ 4.5 dB &           &      &      \\
+        Dilated Banyan        & 64             & 8064                                             & 14400                                            & 200                                   & $<$ 5 dB   & $>$ 50 dB & SNB  & Zero \\
+                              & 128            & 32512                                            & 69760                                            & 850                                   & $<$ 5.5 dB &           &      &      \\
+        \hline
+        % --- PILOSS ---
+                              & 32             & 1024                                             & 961                                              & 25                                    & $<$ 8 dB   &           &      &      \\
+        PILOSS                & 64             & 4096                                             & 3969                                             & 100                                   & $<$ 15 dB  & $>$ 15 dB & WSNB & Zero \\
+                              & 128            & 16384                                            & 16129                                            & 400                                   & $<$ 30 dB  &           &      &      \\
+        \hline
+    \end{tabular}
+\end{table*}
+
+Based on these results, for low-radix switches (32 ports or fewer), the Dilated Banyan network emerges as the most suitable solution, as it is non-blocking and provides the best optical performance.
+However, for higher radices (128 ports and beyond), the required chip area combined with current foundry constraints renders the Dilated Banyan architecture impractical today, only major advances in large-scale silicon photonic integration are expected to enable this architecture in the coming years, as fabrication technologies continue to mature.
+Finally, Double Dilated Benes can be implemented with today’s silicon photonics technology and represent a practical path toward high-radix optical switching.
+A key concept in making such networks viable is the notion of admissible blocking probability, which defines the maximum tolerable likelihood of a connection request being blocked. It is important to note that the dynamic blocking experiments considered here represent a highly conservative scenario: the network is assumed to be fully loaded at all times, and port usage is statistically independent. In realistic deployments, such as AI datacenter networks, traffic patterns tend to be more predictable and often scheduled.
+As a result, the observed blocking rates represent a worst-case estimate, indicating that RNB networks could still be practical in datacenter applications.

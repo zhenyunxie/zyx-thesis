@@ -11,8 +11,8 @@
 
 % Documentation is here: https://ctan.org/pkg/mitthesis
 
-%% Don't modify the \DocumentMetadata command unless you know what it does. 
-%% If this command throws an "undefined" error, your latex system is out of date: try commenting this command out.
+% Don't modify the \DocumentMetadata command unless you know what it does. 
+% If this command throws an "undefined" error, your latex system is out of date: try commenting this command out.
 \DocumentMetadata{ 
 	pdfstandard = a-2b,
 	pdfversion  = 1.7,
@@ -24,7 +24,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\documentclass[twoside, mydesign, fontset=heros-stix2 ,]{mitthesis} %,fontset=libertine, fontset=newtx-sans-text, fontset=heros-stix2, fontset=stix2
+\documentclass[twoside, mydesign, fontset=heros-stix2]{mitthesis} %,fontset=libertine, fontset=newtx-sans-text, fontset=heros-stix2, fontset=stix2
 %
 % option [twoside]		gives facing-page behavior for printing; omitting twoside will eliminate even-numbered blank pages.
 % option [lineno]	 	provides line numbers, as for editing
@@ -42,6 +42,15 @@
 \usepackage{algpseudocode}
 \usepackage{tikz}
 \usetikzlibrary{positioning}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  breaklines=true,
+  frame=single,
+  columns=fullflexible
+}
 
 \begin{document}
 
@@ -58,10 +67,8 @@
 
 \Degree{Doctor of Philosophy}{Faculty of Telecommunications Engineering}
 % \Author{Luisa Hernández}{Department of Research}[B.S. Mechanical Engineering, UCLA, 2018][M.S. Stellar Interiors, Vulcan Science Academy, 2020]% \Author{Thurston Howell III}{Department of Economics}[MBA, Ferengi School of Management, 2022]% Use once for each degree fulfilled by thesis% For two degrees from one department, leave the department argument blank for the second degree {}.%\Degree{Master of Science in Physics}{}%\Degree{Bachelor of Science in Mechanical Engineering}{Department of Mechanical Engineering}% If there is more than one supervisor, use the \Supervisor command for each.
-\Supervisor{Daniel
-	Pérez-López}{Chief Technology Officer of iPronics}
-\Supervisor{José
-	Capmany-Francoy}{Professor of Telecommunications Engineering}
+\Supervisor{Daniel Pérez-López}{Chief Technology Officer of iPronics}
+\Supervisor{José Capmany-Francoy}{Professor of Telecommunications Engineering}
 % \Supervisor{José Capmany Francoy}{Professor of Physics, and \\ \> Professor of Something Else}
 % \Supervisor{Secunda Castor}{Professor of Research}
 % \Supervisor{Quintus Castor}{Professor of Log Dams}

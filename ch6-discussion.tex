@@ -1,9 +1,71 @@
-% Author: David Sanchez-Jacome
+% Author: Zhenyun Xie
 
 \chapter{Discussion and conclusions}\label{chap:discussion_and_conclusions} % (fold)
+This chapter builds on the previous analysis of the design, modeling, and evaluation of large-scale silicon photonic optical circuit switches, and discusses them in the broader context of data center networking.
+
+It first explores the impact of optical insertion loss and crosstalk on large-radix photonic switching fabrics.
+It then addresses practical challenges in integrating optical circuit switching into existing data center infrastructures.
+Finally, it outlines potential future research directions, such as scalable multi-chip switching fabrics and failure-resilient circuit mechanisms, and summarizes the main conclusions of the thesis.
+
+\section{Discussion} \label{section:discussion}
+\subsection{Optical insertion losses} \label{subsec:insertion_loss}
+Optical insertion loss is one of the most critical factors limiting the scalability of silicon photonic interconnects,
+as the accumulated loss introduced by switching elements, waveguide crossings, and other photonic components increases significantly with the radix of the switching fabric,
+thereby directly affecting the feasibility of large-scale deployments in data center environments.
+
+In Chapter~\ref{chap:applications_on_pip}, programmable photonic processors based on hexagonal meshes were investigated as a flexible platform for implementing optical switching functions.
+While such programmable architectures provide strong versatility, they inherently suffer from limited scalability when applied to high-radix switching fabrics.
+As a result, Chapter~\ref{chap:ocs_archs} presents several application-specific switching architectures and further analyzed the insertion loss as a function of the two dominant contributors: switching cells and waveguide crossings.
+Figure~\ref{fig:ch6_pic_loss_projection} presents this projection for 128- and 256-port radices, where the grey dashed lines indicate state-of-the-art building blocks, representing the current technological baseline.
+As shown in Figure~\ref{fig:ch6_pic_loss_projection}a, for the 128×128 case, all architectures except PILOSS can achieve a total loss below 5 dB provided that the switching-cell and crossing losses are reduced to 0.15 dB and 1.5 mdB, respectively.
+For even higher radices, such as 256×256 in Figure~\ref{fig:ch6_pic_loss_projection}b, this 5 dB PIC-loss target remains feasible as long as the switching-cell and crossing losses are reduced below 0.1 dB and 1 mdB, respectively.
+It should be noted that the loss calculations also include additional building blocks listed in Table~\ref{tab:ch4-sota-bb}, which are required to realize the complete circuit and significantly contribute to the overall PIC performance.
+These components account for on-chip polarization management, coupling efficiency, and propagation loss.
+\begin{figure*}[h]
+    \centering
+    \includegraphics{figures/ch6-pic-loss-projection.pdf}
+    \caption{
+        PIC loss projection for high-radix switches
+        Optical loss contour map as a function of switching-cell and waveguide-crossing losses. Contours corresponding to loss thresholds of 5, 10, 15, 20, and 30 dB are shown.
+        Grey dashed lines indicate the state-of-the-art component losses listed in Table~\ref{tab:ch4-sota-bb}.
+        (a) Switching radix 128. (b) Switching radix 256.
+    }
+    \label{ch6_pic_loss_projection}
+\end{figure*}
+
+One of the important challenge arises from polarization management.
+Silicon waveguides are inherently polarization sensitive and typically support only a single polarization mode with low loss.
+However, optical signals transmitted through optical fibers generally arrive with arbitrary polarization states.
+To address this issue, many integrated photonic systems adopt a polarization-diversity scheme, in which the incoming signal is split into two orthogonal polarization components that are processed independently through duplicated switching fabric.
+Although this approach ensures polarization-independent operation, it effectively doubles the required switching resources, thereby increasing chip area, integration complexity, and causes the overall optical loss.
+
+The coupling efficiency of photonic interfaces is influenced not only by the design of edge couplers but also by packaging and assembly processes.
+Even the improvements in edge couplers by using advanced silicon-nitride with losses of 0.1–0.2 dB can further reduce the total PIC loss,
+fiber-array attachment and flip-chip integration can introduce mechanical stress and chip warpage, which may affect optical alignment to reduce the coupling efficiency.
+In large photonic integrated circuits, even small mechanical deformations can lead to misalignment between optical interfaces.
+For example, in a 32×32 switch, the maximum center deflection caused by packaging-induced warpage is typically limited to approximately 20~µm.
+As the the switching radix getting higher, these tolerances become even more stringent, requiring careful co-design of the photonic layout and packaging process.
+
+A potential approach to mitigate the accumulated losses in large-scale switching fabrics is through integrate optical amplification system.
+Semiconductor optical amplifiers (SOAs) are suitable candidates for this purpose, as data center interconnects typically operate in the O-band, where SOAs can provide effective optical gain.
+However, introducing active components also brings additional system-level considerations, as optical amplifiers may introduce noise and signal distortions that affect transmission quality.
+Therefore, performance metrics such as signal-to-noise ratio (SNR), bit-error ratio (BER), and transmitter dispersion eye closure (TDECQ), need to be carefully evaluated to ensure reliable operation.
+
+\subsection{Optical Crosstalk} \label{subsec:crosstalk}
+
+\subsection{Practical deployment} \label{subsec:deployment}
+
+\section{Future work} \label{section:future_work}
+
+\subsection{multi-chip switch fabric} \label{subsec:multi_chip}
+
+\subsection{Failure resilience circuit} \label{subsec:failure_resilience}
+
+\section{Conclusions} \label{section:conclusions}
 
 % 1.性能和可靠性方面的技术限制插入损耗和信号劣化:光信号交换会引入功率损耗(例如6 dB 或更多),
 % 削弱远距离传输，并且需要放大器，这会增加复杂性和发热量，从而抵消光通信系统(OCS)的效率优势.
+
 % 可扩展性和稳定性问题:大端口OCS(例如,端口数超过1000个)面临精确对准的挑战(公差小于1毫弧度), 72x72, 144x144, not really for power of 2
 % 通道间串扰以及对热/振动漂移的敏感性,导致性能不稳定.这些问题在超大规模系统中比在小规模系统中更难解决.
 

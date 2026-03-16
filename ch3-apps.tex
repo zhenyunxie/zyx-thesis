@@ -2,14 +2,17 @@
 
 \chapter{Optical Networking Applications Based on Programmable Integrated Photonics}\label{chap:applications_on_pip} % (fold)
 % Motivation of this chapter
-The hexagonal mesh as one of the most predominant configurations in programmable integrated photonics which enables the recirculation of light to synthesize different photonic circuits.
-By properly manipulating PUCs, a dynamic interplay of several optical circuits, such as optical interconnects, multicasting, and switches can be programmed.
-The conventional control of these programmable circuits consists of tuning each individual PUC sequentially to obtain the desired behavior.
-This method requires human intervention, resulting in low efficiency and potential errors.
+In the previous chapter, the theoretical foundations and programming methodologies for programmable photonic integrated circuits were introduced.
+The fundamental building blocks of programmable photonic systems, including splitters, crossings, phase shifters, and PUCs.
+Based on these components, different circuit topologies were discussed, with particular emphasis on recirculating mesh architectures that enable flexible and software-defined photonic functionality.
+The hexagonal mesh as one of the most predominant configurations in programmable integrated photonics which enables synthesize a wide range of optical circuits through appropriate configuration of the PUCs.
+
 % Objective of this chapter
-In this chapter, graph theory-based routing algorithms are employed to experimentally demonstrate optical networking applications,
-such as optical interconnects, optical circuit switching, and optical multicast on a programmable integrated photonic processor.
-The corresponding performance metrics are analyzed in detail.
+Building upon this theoretical framework, this chapter explores the implementation of optical networking applications on a programmable integrated photonic processor based on a hexagonal mesh topology.
+By dynamically configuring the PUC states and applying graph-theory-based routing algorithms, different optical networking functionalities can be realized within the same hardware platform.
+Specifically, we experimentally demonstrate several representative optical networking applications, including optical interconnects, optical multicast, and optical circuit switching.
+The corresponding performance metrics are analyzed in detail, highlighting the capability of programmable photonic processors to support flexible and reconfigurable optical networking functions.
+
 % section interconnect
 \section{Interconnects (1x1)}\label{sec:interconnects}
 Reconfigurable optical interconnects are of great interest in optical networks as they enable flexible connections of terabit data rates with high-performance operation [CITE].
@@ -232,9 +235,6 @@ To evaluate network performance, a laser source with a central wavelength of 155
 The switch was then software defined to synthesize six different configurations between this input and all possible outputs.
 Once the network was defined, the power of each output port was measured and normalized with the input source, resulting in the characterization of six switch matrices.
 This process was replicated for the remaining five input ports, resulting in the characterization of 36 switch matrices in total.
-
-As illustrated in Figure~\ref{fig:ch3-switch-power}, each column in the subfigure represents the optical power monitored in a specific output port,
-and distinct marker shapes identifying the six different input ports.
 % figure switch
 \begin{figure}[h]
     \begin{center}
@@ -244,12 +244,26 @@ and distinct marker shapes identifying the six different input ports.
         Input ports 0, 27, 26, 25, 24, and 23 and output ports 15, 16, 17, 18, 19, and 20 are numbered from 1-6 each in blue color and red color, respectively.
     }\label{fig:ch3-switch}
 \end{figure}
+
+As illustrated in Figure~\ref{fig:ch3-switch-power}, each column in the subfigure represents the optical power monitored in a specific output port,
+and distinct marker shapes identifying the six different input ports.
 These results demonstrate the optical circuit switch's performance showcasing accurate switching of multiple inputs to their respective target outputs.
 Notable, all circuit paths within the switch are of consistent length, passing through 15 PUCs.
 As a result, we observed -10 dB (±0.5) insertion losses in all six output ports for each configuration.
 Optical crosstalk is determined by checking the difference between the optical power from the specified input/output pair and the highest leakage power from other input ports to the same output port.
 This distinction is visually represented by the distance between two blue lines in Figure~\ref{fig:ch3-switch-power}, with a typical value of -25 dB.
 This metric varies based on the switch configuration; the best scenario of crosstalk observed in our experiments is 26 dB for the switch configuration: [1:4, 2:5, 3:6, 4:1, 5:2, 6:3].
+% figure switch measurement
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics{figures/ch3-switch-power.pdf}
+    \end{center}
+    \caption{6 x 6 switch matrix for six different configurations.
+        Each subplot demonstrates the output of a specific switch configuration,
+        with the X-axis depicting the output ports in the mesh and the Y-axis representing the measured optical power levels at the output ports.
+        The six input ports are visually represented by six distinct markers in the figure.
+    }\label{fig:ch3-switch-power}
+\end{figure}
 The source of crosstalk is mainly from PUC performance, as well as small drifts due to auto-calibration and auto-characterization. The reconfiguration speed can be broken down into physical layer reconfiguration,
 control plane latency, and algorithm computation time as shown in Table~\ref{tab:ch3-switch-speed}.
 Physical layer latency is independent of the number of elements to be tuned but the control plane scales linearly with the number of PUCs.
@@ -276,14 +290,3 @@ The switching architecture can be classified as rearrangeable non-blocking as it
 The algorithm demonstrated its reliability by generating feasible solutions for all 720 cases without any observed instances of failure.
 This fact makes the software layer developed for this work a key differentiator with respect to previous manually implemented solutions.
 
-% figure switch measurement
-\begin{figure}[h]
-    \begin{center}
-        \includegraphics{figures/ch3-switch-power.pdf}
-    \end{center}
-    \caption{6 x 6 switch matrix for six different configurations.
-        Each subplot demonstrates the output of a specific switch configuration,
-        with the X-axis depicting the output ports in the mesh and the Y-axis representing the measured optical power levels at the output ports.
-        The six input ports are visually represented by six distinct markers in the figure.
-    }\label{fig:ch3-switch-power}
-\end{figure}
