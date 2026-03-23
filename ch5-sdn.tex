@@ -74,7 +74,7 @@ The \textit{simplex} type provides a standard one-to-one mapping, while the \tex
 Notably, we introduce a \textit{bulk} connection type, which enables the multiple input and output port groups (e.g., In1,2,3 to Out2,3,5) within a single uid.
 This bulk operation is advantageous for AI workload, as it reduces the control plane overhead and the number of transactions required to establish links.
 
-\section{gNMI Operation Flow}\label{sec:yang_model} % (fold)
+\section{gNMI operation flow}\label{sec:yang_model} % (fold)
 In this OCS system, we adopt a solution based on the OpenConfig gNMI framework to perform device control and state monitoring.
 The gNMI protocol provides a unified interface for communication between the SDN controller and the hardware devices.
 In this section, we describe the gNMI operation workflow in detail.
@@ -105,12 +105,12 @@ This thread periodically retrieves the relevant data from the datastore, and at 
 This mechanism enables the controller to track the optical signal conditions of the OCS ports in near real time while maintaining low control-plane overhead.
 The controller can also cancel or modify the subscription by sending a SET request to update the subscription parameters or terminate the monitoring.
 
-\section{Experimental Validation}\label{sec:experimental} % (fold)
+\section{Experimental validation}\label{sec:experimental} % (fold)
 To validate the proposed SDN control architecture, experiments were conducted to demonstrate the complete operational workflow of the gNMI-based control interface.
 In particular, the experiments focus on verifying the three fundamental gNMI operations introduced in the previous section.
 Through these experiments, we demonstrate that the silicon photonic OCS can be dynamically configured and monitored by the SDN controller within the proposed control framework.
 
-\subsection{Experimental Setup}
+\subsection{Experimental setup}
 Figure~\ref{fig:ch5-exp-setup}(a) illustrates the experimental platform used to evaluate the SDN-controlled OCS system.
 \begin{figure}[h]
     \begin{center}
@@ -201,7 +201,7 @@ Conversely, the reversal matrix (Figure~\ref{fig:results}(b)) demonstrates a map
 Our OCS yields a normalized signal power of approximately 0 dB for the connected ports which is considerably above the background signal of -50 dB to -70 dB observed for the unconnected port combinations (off-diagonal).
 This confirms that the expected logic is implemented correctly with a high extinction ratio, as well as its lossless characteristic thanks to the SOA compensation.
 To further assess the impact of different routing paths on high-speed data transmission, we measured the Bit Error Rate (BER) for a 400G LWDM signal across all 32 output ports for both configurations.
-As shown in Figure~\ref{fig:results}(c), the BER performance for both the identity and reversal matrices remains well below the Forward Error Correction (FEC) threshold of $2.4\times10^{-4}$.
+As shown in Figure~\ref{fig:results}(c), the BER performance for both the identity and reversal matrices remains well below the pre Forward Error Correction (FEC) threshold of $2.4\times10^{-4}$, which is the commonly accepted standard target value in high speed optical communication systems.
 The average BER across all measured paths is approximately $1.9\times10^{-5}$.
 While slight variations in BER are observed across different output ports, likely due to the non-uniform insertion loss of the SiPh switching stages and the manual fiber connection in the experimental setup—,the consistency between the two topologies shows that the SDN controller can dynamically reconfigure the network without compromising link stability,
 and the ability to maintain BER within $10\times10^{-5}$ to $10\times10^{-6}$ the range while performing bulk reconfigurations.

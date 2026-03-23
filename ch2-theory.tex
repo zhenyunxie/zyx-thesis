@@ -37,7 +37,7 @@ By inducing a controllable phase shift, these devices enable the constructive or
 Mathematically, the accumulated optical phase $\phi$ along a waveguide of length $L$ is given by:
 \begin{equation}
     \phi = \frac{2 \pi n_{\mathrm{eff}} L}{\lambda}
-\end{equation}
+\end{equation}\label{eq:ch2-phase-shifter}
 where $n_{\mathrm{eff}}$ denotes the effective refractive index of the guided mode and $\lambda$ is the free-space optical wavelength.
 A variation in either $n_{\mathrm{eff}}$ or $L$ produces a corresponding change in the optical phase, which forms the basis of phase-shifting devices.
 In silicon photonics, integrated phase shifting is primarily achieved through either electro-optic PS (EOPS) either thermos-optic PS (TOPS).
@@ -161,7 +161,7 @@ they are not directly connected to photodetectors in the hardware design.
     }\label{fig:ch2-smartlight}
 \end{figure}
 
-\section{Graph-Theoretic Modeling}\label{sec:graph}
+\section{Graph-theoretic modeling}\label{sec:graph}
 Although programmable photonic circuits demonstrate remarkable functional versatility, scaling these architectures to large meshes introduces substantial control complexity.
 Conventional configuration methods typically rely on sequential tuning, where each PUC is manually adjusted one at a time to achieve the desired optical response.
 While feasible for small-scale systems, this approach becomes increasingly impractical as the number of PUCs grows to the hundreds or thousands.
@@ -275,7 +275,7 @@ while northbound interfaces expose abstracted network capabilities to applicatio
     \label{fig:ch2-sdn-architecture}
 \end{figure}
 
-\subsection{Data Models and Control Protocols}\label{sub:models_and_protocol}
+\subsection{Data models and control protocols}\label{sub:models_and_protocol}
 To implement these interfaces in practice, structured and vendor-neutral data models are required.
 YANG has become a widely adopted modeling language, providing formal representations of device configuration, operational state, and notifications across different network devices and services.
 Controllers manipulate YANG-defined data using management protocols.
