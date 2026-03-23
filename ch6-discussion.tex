@@ -1,9 +1,10 @@
 % Author: Zhenyun Xie
 
-\chapter{Discussion and conclusions}\label{chap:discussion_and_conclusions} % (fold)
+\chapter{Discussion and Conclusion}\label{chap:discussion_and_conclusions} % (fold)
 This chapter builds on the previous analysis of the design, modeling, and evaluation of large-scale silicon photonic optical circuit switches, and discusses them in the broader context of data center networking.
 
-It first explores the impact of optical insertion loss and crosstalk on large-radix photonic switching fabrics.
+It first explores the impact of optical insertion loss and crosstalk on large-radix photonic switching fabrics,
+followed by a discussion of optical crosstalk and its dependence on calibration strategies.
 It then addresses practical challenges in integrating optical circuit switching into existing data center infrastructures.
 Finally, it outlines potential future research directions, such as scalable multi-chip switching fabrics and failure-resilient circuit mechanisms, and summarizes the main conclusions of the thesis.
 
@@ -15,7 +16,7 @@ thereby directly affecting the feasibility of large-scale deployments in data ce
 
 In Chapter~\ref{chap:applications_on_pip}, programmable photonic processors based on hexagonal meshes were investigated as a flexible platform for implementing optical switching functions.
 While such programmable architectures provide strong versatility, they inherently suffer from limited scalability when applied to high-radix switching fabrics.
-As a result, Chapter~\ref{chap:ocs_archs} presents several application-specific switching architectures and further analyzed the insertion loss as a function of the two dominant contributors: switching cells and waveguide crossings.
+As a result, Chapter~\ref{chap:ocs_archs} presents several application-specific switching architectures, and for very high-radix optical switches in silicon photonics, we further analyzed the insertion loss as a function of the two dominant contributors: switching cells and waveguide crossings.
 Figure~\ref{fig:ch6_pic_loss_projection} presents this projection for 128- and 256-port radices, where the grey dashed lines indicate state-of-the-art building blocks, representing the current technological baseline.
 As shown in Figure~\ref{fig:ch6_pic_loss_projection}a, for the 128×128 case, all architectures except PILOSS can achieve a total loss below 5 dB provided that the switching-cell and crossing losses are reduced to 0.15 dB and 1.5 mdB, respectively.
 For even higher radices, such as 256×256 in Figure~\ref{fig:ch6_pic_loss_projection}b, this 5 dB PIC-loss target remains feasible as long as the switching-cell and crossing losses are reduced below 0.1 dB and 1 mdB, respectively.
@@ -44,46 +45,135 @@ Even the improvements in edge couplers by using advanced silicon-nitride with lo
 fiber-array attachment and flip-chip integration can introduce mechanical stress and chip warpage, which may affect optical alignment to reduce the coupling efficiency.
 In large photonic integrated circuits, even small mechanical deformations can lead to misalignment between optical interfaces.
 For example, in a 32×32 switch, the maximum center deflection caused by packaging-induced warpage is typically limited to approximately 20~µm.
-As the the switching radix getting higher, these tolerances become even more stringent, requiring careful co-design of the photonic layout and packaging process.
+As the switching radix getting higher, these tolerances become even more stringent, requiring careful co-design of the photonic layout and packaging process.
 
 A potential approach to mitigate the accumulated losses in large-scale switching fabrics is through integrate optical amplification system.
-Semiconductor optical amplifiers (SOAs) are suitable candidates for this purpose, as data center interconnects typically operate in the O-band, where SOAs can provide effective optical gain.
+SOAs are suitable candidates for this purpose, as we demonstrated in Chapter~\ref{chap:sdn_for_ocs}, where SOAs can provide effective optical gain to compensate the losses across all paths.
 However, introducing active components also brings additional system-level considerations, as optical amplifiers may introduce noise and signal distortions that affect transmission quality.
-Therefore, performance metrics such as signal-to-noise ratio (SNR), bit-error ratio (BER), and transmitter dispersion eye closure (TDECQ), need to be carefully evaluated to ensure reliable operation.
+Therefore, performance metrics such as signal-to-noise ratio, bit-error ratio, and transmitter dispersion eye closure (TDECQ), need to be carefully evaluated to ensure reliable operation.
 
-\subsection{Optical Crosstalk} \label{subsec:crosstalk}
+\subsection{Optical crosstalk and calibration} \label{subsec:crosstalk}
+As covered in Chapter~\ref{chap:ocs_archs}, optical crosstalk becomes increasingly critical as the switching fabric scales.
+While the 64×64 dilated Benes-like architecture can achieve signal-to-noise ratios exceeding 45~dB at the central wavelength, its performance degrades noticeably at wavelengths farther from the center.
+This degradation is primarily attributed to the wavelength-dependent behavior of the PUCs, where crosstalk increases significantly at the spectral edges.
+Such behavior is particularly relevant for systems operating over wider wavelength ranges, such as FR4, where uniform performance across channels is required.
+In this context, calibration plays a key role in shaping the crosstalk response over wavelength.
+Instead of optimizing PUCs solely at the central wavelength, it is possible to redistribute the crosstalk performance by slightly relaxing the optimal condition at the center in order to improve performance at edge wavelengths.
+This leads to a more balanced response across the full operating spectrum, which is often preferable in practical Wavelength-division multiplexing (WDM) systems.
+
+The behavior of each PUC under calibration depends on the chosen phase control value.
+According to the phase-shift relation described in Equation~\ref{eq:ch2-phase-shifter} and the PUC scattering matrix in Equation~\ref{eq:ch2-puc},
+a target switching state can be realized by applying multiple control values, which correspond to multiple driven phase solutions.
+Higher control values generally correspond to larger driven phase \(\phi\).
+When the wavelength deviates from its nominal value, configurations with larger driven phase are more sensitive to these variations and deviate more from the ideal BAR/CROSS conditions.
+Even if multiple control values achieve the target state at the central wavelength, those with lower driven phase are preferable.
+In practice, operating at lower control values reduces wavelength-dependent phase errors and improves the stability of crosstalk across the full wavelength range.
+
+Another factor affecting PUC crosstalk is the coupling ratio deviation caused by fabrication.
+For the CROSS state, crosstalk is highly sensitive to the absolute values of the coupling coefficients, whereas for the BAR state, it is mainly affected by mismatches between the two couplers within a PUC.
+One possible approach to mitigate this issue is to replace fixed couplers with tunable elements, such as Mach–Zehnder interferometer based splitters, allowing the effective coupling ratio to be adjusted during calibration.
+However, this solution introduces additional active components, increasing both insertion loss and circuit complexity, which limits scalability.
+While this approach offers greater flexibility, it also significantly increases the complexity of the calibration process, as a larger parameter space must be explored and stabilized.
+
+To achieve low and stable crosstalk in large-scale photonic switching fabrics requires a joint consideration of device design, calibration strategy, and system-level constraints.
 
 \subsection{Practical deployment} \label{subsec:deployment}
+Optical circuit switches are not a plug-and-play replacement for existing packet-switched infrastructures.
+Their integration requires non-trivial changes to both network architecture and control mechanisms.
+In particular, OCS deployment often involves redesigning network topologies, requires optimized SDN controllers for traffic scheduling, and adopting appropriate routing and connection management mechanisms.
+These requirements increase the complexity of orchestration for topology optimization and failure recovery.
 
+At the ecosystem level, the vendor landscape for OCS remains relatively immature.
+Compared to the well-established Ethernet ecosystem, which benefits from standardized interfaces and decades of operational experience, OCS solutions lack consistent interoperability guarantees across vendors.
+As discussed in Chapter~\ref{chap:sdn_for_ocs}, the YANG model presented in this work includes data nodes for components such as polarization controllers and semiconductor optical amplifiers, as well as multiple connection types.
+These features are not commonly supported in existing OCS models, further highlighting the lack of standardization.
+This limitation introduces additional risks for multi-vendor deployments and may slow down broader adoption.
+
+Another key limitation of OCS lies in its reconfiguration speed.
+Unlike packet switching, which operates at nanosecond timescales, OCS relies on the establishment of end-to-end circuits.
+OCS technologies typically require millisecond-scale switching times, while silicon photonic implementations can reduce this to the microsecond.
+However, these reconfiguration times are still one or more orders of magnitude slower than electronic packet switching.
+
+This disparity is particularly relevant in data center environments.
+While OCS is well suited for high-capacity, long-lived elephant flows, it is less efficient for short-lived mice flows.
+The relatively slow reconfiguration limits the ability of OCS to respond to rapid traffic variations without introducing packet loss or transient service disruption.
+
+Despite the advantages of optical interconnects in terms of bandwidth and latency, current data center networks are more likely to adopt hybrid architectures that combine OCS with traditional packet switching.
+Such designs aim to balance the high-capacity benefits of optical circuits with the flexibility and responsiveness of electrical packet-switched networks.
 \section{Future work} \label{section:future_work}
 
-\subsection{multi-chip switch fabric} \label{subsec:multi_chip}
+\subsection{Scaling toward large-radix switching fabrics} \label{subsec:multi_chip}
+As discussed in the previous sections, insertion loss and crosstalk remain the primary factors limiting the scalability of integrated photonic switching fabrics.
+Even when following the design guidelines presented in Chapter~\ref{chap:ocs_archs}, which jointly consider loss and crosstalk constraints, silicon-photonic OCS architectures face reticle size limitations in scaling beyond radix sizes on the order of 256 ports.
+However, the continued growth of data center workloads suggests that even higher-radix switching fabrics will be required in future systems.
 
+One possible approach to overcome this limitation is to move beyond single-chip implementations and adopt multi-chip switching fabrics.
+In this paradigm, multiple moderate-radix OCS modules can be interconnected to form a larger switching network, for example using Clos topologies to achieve scalable all-to-all connectivity.
+Such architectures allow the system to scale in a modular manner while keeping the complexity and loss of individual photonic chips within feasible limits.
+Moreover, the graph-based modeling framework developed in Chapter~\ref{chap:ocs_archs} can be extended to simulate and optimize the configuration of these multi-stage networks.
+
+In addition to spatial scaling, spectral multiplexing provides another dimension for improving port efficiency.
+WDM enables multiple data channels to be transmitted over a single physical port, effectively increasing the system capacity.
+For instance, when using DR4 transceivers, one transceiver typically occupies four parallel optical lanes, whereas FR4 transceivers can map four wavelengths onto a single fiber pair.
+As a result, each OCS port can be utilized more efficiently, effectively increasing the port capacity by a factor of up to four.
+However, the use of WDM introduces additional design considerations.
+Crosstalk and insertion loss may vary across wavelengths, and performance degradation at edge wavelengths can become more pronounced.
+Furthermore, the ability of integrated optical amplifiers to compensate for wavelength-dependent loss depends on their spectral response and gain uniformity.
+Therefore, both the photonic circuit and the amplification scheme must be co-designed to ensure consistent performance across all channels.
+
+Further improvements in port efficiency can be achieved through bidirectional operation.
+By enabling simultaneous transmission and reception on the same physical port, an $N \times N$ switching fabric can, in principle, be extended to support $2N \times 2N$ connectivity.
+In addition to insertion loss and crosstalk, such configurations require careful management of reflection-induced crosstalk, which can degrade signal integrity if not properly controlled.
+
+Finally, application-level techniques can also contribute to improving the effective utilization of switching resources.
+As demonstrated in Chapter~\ref{chap:applications_on_pip}, programmable photonic meshes can support multicast operations, which can also be extended to feedforward OCS architectures.
+This capability is particularly relevant for distributed AI workloads, where collective communication patterns such as broadcast and all-gather are common.
+By enabling native multicast at the photonic layer, the number of required point-to-point connections can be reduced, thereby improving overall network efficiency.
+
+Overall, while physical-layer constraints impose fundamental limits on the scalability of silicon photonic interconnect, a combination of architectural, spectral, and application-level approaches provides viable pathways to extend system capacity beyond the limits of single-chip implementations.
 \subsection{Failure resilience circuit} \label{subsec:failure_resilience}
+As discussed earlier, insertion loss and crosstalk are not only determined by the design of the switching fabric, but are also strongly influenced by fabrication imperfections, packaging-induced variations, and long-term device degradation.
+These non-idealities can lead to performance drift or even partial component failures over time, making failure resilience an important consideration for large-scale photonic interconnect systems.
+
+In this context, programmable photonic architectures offer inherent advantages.
+The general-purpose programmable photonic integrated circuit presented in Chapter~\ref{chap:applications_on_pip} demonstrates a high degree of resilience due to its hexagonal mesh topology, which provides substantial path diversity between input and output ports.
+For a given port pair, multiple alternative routing paths can be realized, allowing the system to bypass faulty switching PUC.
+Similarly, the dilated Benes-like architectures discussed in Chapter~\ref{chap:ocs_archs} also exhibit path redundancy, as multiple routing options exist for each connection depending on the switching configuration.
+However, a systematic evaluation of failure resilience in such architectures remains largely unexplored.
+In particular, different switching PUCs within the fabric may have highly non-uniform impact on overall performance.
+For example, failures occurring in switching PUCs located at the input or output stages may directly reduce the effective radix of the switch, whereas failures in the core stages may instead degrade the non-blocking properties of the network.
+A key open question is how many and which types of PUCs failures can be tolerated before a strictly non-blocking architecture transitions into a wide-sense non-blocking or even rearrangeably non-blocking regime, and how this transition affects the resulting blocking probability.
+Understanding these failure mechanisms would enable more informed design strategies at the circuit level.
+In particular, redundancy could be selectively introduced in critical regions of the switching fabric, rather than uniformly across the entire chip, thereby achieving a better trade-off between robustness, complexity, and loss.
+
+Such resilience-aware design becomes especially important in the context of AI workloads, where long-running training jobs require stable and predictable network connectivity over extended periods of time.
 
 \section{Conclusions} \label{section:conclusions}
+This thesis develops a clear framework for the design and implementation of large-scale silicon photonic optical circuit switches, covering the process from graph-based modeling to practical controlling.
 
-% 1.性能和可靠性方面的技术限制插入损耗和信号劣化:光信号交换会引入功率损耗(例如6 dB 或更多),
-% 削弱远距离传输，并且需要放大器，这会增加复杂性和发热量，从而抵消光通信系统(OCS)的效率优势.
+At its core, the work develops a graph-theoretic modeling and programming framework.
+A key finding is that the complexity of photonic integrated circuits, particularly those involving hundreds of interferometric elements, can be effectively abstracted into nodes connections and edge weights.
+This abstraction is for automation, enabling the translation of high-level connectivity requirements into device-level PUCs states.
+This approach was first validated through the iPronics Smartlight platform.
+The successful commercial release and public demonstration of iPronics Smartlight at OFC 2023 proved that hexagonal programmable meshes could serve as a multipurpose platform for diverse functions, including optical interconnect, multicasting and circuit switch for data center.
 
-% 可扩展性和稳定性问题:大端口OCS(例如,端口数超过1000个)面临精确对准的挑战(公差小于1毫弧度), 72x72, 144x144, not really for power of 2
-% 通道间串扰以及对热/振动漂移的敏感性,导致性能不稳定.这些问题在超大规模系统中比在小规模系统中更难解决.
+While the general-purpose meshes offer high flexibility, the inherent hardware overhead—characterized by accumulated insertion loss and a cell count per path—limits their scalability in high-radix data center switching.
+To address this limitation, this work moves toward application-specific photonic switching architectures.
+The thesis explores application-specific OCS designs using the same graph-theory-based modeling approach, different topologies are analyzed and compared in terms of hardware complexity, insertion loss, signal-to-noise ratio, and blocking behavior.
+The results indicate that while some architectures perform well at small scales, their hardware requirements limit scalability.
+Dilated Benes-like architectures are the most suitable for 128-port and 256-port silicon photonic switches within current CMOS-compatible fabrication limits.
+Furthermore, the analysis of blocking behavior highlights the importance of routing strategies and acceptable performance trade-offs in practical deployments.
 
-% 以太网的优势:电交换机避免了这些光通信的缺陷,提供可靠,低损耗的运行以及成熟的纠错机制.
-% 谷歌在 Apollo 计划中通过优化波长(1310 nm 的 O 波段)和涂层解决了损耗问题,但此类调整需要定制化的工程设计
+Another key conclusion of this thesis work is that the physical performance of a photonic switch depends on how well it can be managed by a network orchestrator.
+The development of a software-defined networking control framework, utilizing gNMI and a custom YANG model, bridging the gap between photonic switching hardware and data center control planes.
+The experimental validation demonstrated that complex internal operations—such as the control of gain-compensated SOAs, different connection types can be abstracted into standardized interfaces.
+This research proves that silicon photonic OCS can operate as standard equipments in a software-defined environment, supporting features like path configuration and telemetry that are essential for practical used.
+The inclusion of specialized data nodes in the YANG model sets a precedent for the standardization of photonic parameters.
 
-% 2.重配置速度慢, 不适合突发流量OCS 采用电路circuit交换模型,建立或更改连接需要物理机制,例如倾斜 MEMS 微镜或重新定向液晶，耗时 10-100 毫秒(某些设计甚至需要几秒).
-% 这比以太网纳秒级的数据包交换慢几个数量级.数据中心流量通常是“突发性”且不可预测的,既包含短的“老鼠”流(例如Web 请求),也包含长的“大象”流(例如备份数据).
-% OCS擅长为“大象”流提供专用、持久的连接,但会将容量浪费在未充分利用的电路上以处理短的“老鼠”流,并且无法在不中断链路的情况下处理快速变化,
-% 从而导致丢包或停机。
-% 以太网的优势:它提供细粒度的动态路由,且没有重配置延迟,使其成为通用工作负载的理想选择。超大规模数据中心通过混合设置(AI集群使用 OCS,其他所有设备使用以太网)来缓解这个问题,但改造并非易事.
+The outcomes of this research are reflected in the development of the iPronics ONE platform.
+Demonstrated at OFC 2025 as the world's first commercial silicon photonic OCS, iPronics ONE provides practical support for validation of the concepts presented in this thesis.
+The key design decisions behind the platform—such as the choice of scalable topologies, gNMI-controlled software and Yang model are directly derived from the proposed modeling framework and its associated software development tools in this thesis.
 
-% 3.集成复杂&生态系统不成熟OCS并非“即插即用”的替代方案,它们需要重新设计网络拓扑,用于流量调度的软件定义网络(SDN)控制器以及用于处理重连的协议(例如，“先建立后断开”冗余以避免中断).
-% 这增加了拓扑优化和故障恢复的编排层数.供应商生态系统尚处于起步阶段——与以太网的即插即用环境相比,缺乏标准化接口——这使得多厂商互操作性存在风险.
-% 以太网的优势:它经过数十年的实战检验,拥有丰富的软件工具,向后兼容性和全球支持.即使标准不断发展,诸如此类的采用障碍也会减缓 OCS的推广.
-
-% 4.高昂的前期成本OCS 需要大量的初始资本支出(CAPEX),由于需要定制光模块,精密制造和集成,其成本通常是以太网交换机的3.5到6倍。虽然OCS有望带来长期的成本节约(例如,降低功耗和冷却成本,从而降低运营成本),
-% 但投资回收期可能长达数年——这对于追求快速迭代的超大规模数据中心而言缺乏吸引力.扩展到超大规模端口数量(数千根光纤)会加剧成本,因为自由空间设计会受到小批量芯片制造等生产复杂性的影响.
-% 以太网的优势:拥有来自 Arista 和Cisco 等供应商的成熟供应链, 从而能够以更低的成本和更快的速度进行部署。谷歌在Apollo 项目中通过设计与速率和波长无关,可在3,到 4 代硬件中重复使用的OCS来降低成本,
-% 从而有效降低了约 30 percentage 的CAPEX,但这需要巨额的研发投入,鲜有其他方案能够匹敌.
-
+In summary, this research advances silicon photonic switching toward practical deployment.
+While OCS is not a universal replacement for electrical packet switching, it provides an essential high-capacity layer for the AI era.
+By establishing a comprehensive framework spanning from the graph theory abstraction of optical mesh to the standardized software control of a commercial product, this thesis provides a structured foundation for future optical interconnect systems.
