@@ -80,11 +80,11 @@ This represents a broad and complex challenge in integrating optical circuit swi
 Within this context, it is important to focus on approaches that allow Layer-1 optical resources to be more easily interfaced with SDN frameworks, addressing part of this integration gap.
 
 \section{Objectives} \label{sec:objective}
-Considering the critical role of programmable photonic integrated circuits (PICs) in scaling AI data center interconnects, this thesis is framed around the development of a comprehensive, software-defined ecosystem for large-scale integrated photonic switching.
-The primary aim is to establish a vertically integrated technological stack that spans architectural design, physical-layer circuit synthesis, and system-level control, thereby enabling programmable photonic processors to be seamlessly integrated into modern AI infrastructures.
-Specifically, the global objective of this thesis is to contribute to the development of a scalable and manageable silicon photonic OCS solution that can ultimately be deployed in data center interconnects.
-This project begins with the development of a graph-based programming framework to automate the synthesis and mapping of photonic circuits, bridging the gap between high-level logic and physical actuator configurations.
-It then investigates scalable photonic switching architectures, aiming to resolve the trade-offs between port count and signal integrity.
+Considering the critical role of programmable photonic integrated circuits (PICs) in scaling AI data center interconnects, this thesis focuses on the development of a comprehensive, software-defined ecosystem for large-scale integrated photonic switching.
+The primary aim is to establish a vertically integrated technological stack that covers physical-layer circuit synthesis, architectural design, and system-level control, thereby enabling programmable photonic processors to be seamlessly integrated into modern AI infrastructures.
+Specifically, this thesis aims to develop a scalable and manageable silicon photonic OCS solution for data center interconnects.
+This project begins with the development of a graph-based programming methodology to automate the synthesis and mapping of photonic circuits, bridging the gap between high-level logic and physical actuator configurations.
+It then investigates scalable photonic switching architectures, aiming to resolve the trade-offs between hardware complexity and signal integrity.
 This includes conducting in-depth blocking analysis and physical-layer simulations to evaluate insertion loss (IL) and signal-to-noise ratio (SNR) in data center environments.
 Finally, an integrated gNMI-based control system is implemented for Layer-1 SiPh OCS, enabling standardized, software-defined reconfiguration and management within AI data center networks.
 
@@ -97,12 +97,12 @@ The remainder of this document is structured into the following chapters:
             It reviews the architecture of modern AI data centers networks and highlights the increasing demand for scalable silicon-photonic optical circuit switching.
             The chapter then defines the research objectives and outlines the main contributions of the thesis, providing an overview of the structure of the subsequent chapters.
       \item Chapter 2: \nameref{chap:fundamentals} This chapter presents the theoretical foundations for photonic integrated circuits.
-            It introduces key photonic components and circuit topologies, then develops a graph-theory-based framework for circuit modeling and routing, which enables automated control and programming at the photonic layer.
+            It introduces key photonic components and circuit topologies, then demonstrates a graph-theory-based framework for circuit modeling and routing, which enables automated control and programming at the photonic layer.
             It also outlines Software-Defined Networking (SDN) principles to support the design of an SDN-based control layer for integrating optical circuit switching into data center networks.
       \item Chapter 3: \nameref{chap:applications_on_pip} This chapter demonstrates optical networking applications implemented on hexagonal programmable photonic processors.
             By applying graph-theory-based routing algorithms, the work replaces manual and sequential tuning procedures with automated programming methods.
             The chapter presents implementations of optical interconnects, multicasting and circuit switching functions, followed by a systematic evaluation of performance metrics.
-      \item Chapter 4: \nameref{chap:ocs_archs} This chapter develops a graph-theory-based modeling and benchmarking framework for high-radix silicon photonic switch architectures, including Benes-like, PILOSS and Dilated banyan topologies.
+      \item Chapter 4: \nameref{chap:ocs_archs} This chapter develops a graph-theory-based modeling and benchmarking approach for high-radix silicon photonic switch architectures, including Benes-like, PILOSS and Dilated banyan topologies.
             It analyzes hardware complexity and optical performance by evaluating metrics such as component count, insertion loss, and signal-to-noise ratio.
             Blocking probability under different routing strategies is also investigated.
             The chapter provides design guidelines for scalable and efficient optical switching fabrics suitable for data center applications.
