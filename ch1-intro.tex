@@ -10,12 +10,11 @@ This gap between the slowing pace of Moore’s Law transistor scaling and the ra
 As a result, computing paradigm is no longer confined to a single device or system boundary.
 % How AI reshaped interconnect
 Modern data centers (DCs) infrastructures are increasingly organized as hierarchical systems, with on-chip and network-level communication mechanisms increasingly adopt similar paradigms for scalability and performance \cite{noc, jerger2022chip, kas2012toward}.
-At the lowest level, intra-package integration enables communication among chiplets, processor cores, and high-bandwidth memory through advanced technologies such as silicon interposers. \cite{10767590, chiplet}
-At the server level, multiple accelerators within a single chassis are interconnected using high-bandwidth links such as NVLink to support tightly coupled scale-up computing \cite{nvidia_nvlink, song2025survey}.
+At the lowest level, intra-package integration and chiplet links such as NVLink C2C enable high-bandwidth, low-latency communication among processor cores, accelerators, and high-bandwidth memory, allowing multiple components to function as a super chip. \cite{10767590, chiplet, tirumala2024nvidia}
+At the server level, multiple XPUs (e.g., GPUs or TPUs) within a single chassis are interconnected using high-speed links such as NVLink, which are primarily implemented using copper-based electrical interconnects, to enable tightly coupled scale-up computing. \cite{nvidia_nvlink, song2025survey}.
 Beyond the server boundary, large numbers of nodes are connected across racks within a data center using high-performance networking technologies such as InfiniBand or Ethernet, enabling distributed scale-out workloads \cite{pfister2001introduction}.
 At the largest scale, hyperscale clusters coordinate tens of thousands of accelerators to operate as a single synchronized system for large-model training and other data-intensive applications \cite{kokolis2025revisiting}.
-As communication distance increases from micrometers to kilometers, interconnect media and architectures change to meet bandwidth, latency, and energy constraints.
-In contemporary systems, the energy cost associated with data movement often exceeds the cost of computation itself, making interconnect design a central architectural challenge \cite{MWINUKA2026100927, en19030722}.
+As communication distance increases from micrometers to kilometers, interconnect media and architectures evolve to meet the corresponding bandwidth, latency, and energy requirements.
 
 % EPS as current datacenter solution
 Most data center networks have been predominantly built upon electronic packet switching (EPS).
