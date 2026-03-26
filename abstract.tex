@@ -8,14 +8,22 @@
 % Approximately 500 words or less; try not to use formulas or special characters
 % If you don't want an initial indentation, do \noindent at the start of the abstract
 
-The field of programmable silicon photonics has garnered significant attention in recent years due to its potential to revolutionize various technological domains.
-The ability to reconfigure photonic integrated circuits on demand offers unprecedented flexibility and adaptability for applications ranging from telecommunications and optical signal processing to sensing and quantum information processing.
-This interest is driven by the promise of creating versatile photonic platforms that can be tailored to specific tasks through software control, much like their electronic counterparts.
+Silicon photonics provides a scalable and cost-efficient platform for high-bandwidth, low-power data transmission, making it a promising solution for next-generation data center interconnects.
+In particular, circuit switching enables direct optical connectivity for both scale-up and scale-out network architectures, avoiding optical–electrical–optical conversions.
+However, the practical deployment of large-scale photonic switching fabrics is limited not only by hardware capabilities, but also by the lack of scalable programming and control methodologies.
 
-This manuscript provides a comprehensive exploration of the theoretical underpinnings, the developmental journey, and the experimental validation of applications stemming from this research.
-The central theme revolves around the design, implementation, and application of a multipurpose programmable photonic integrated circuit (PIC) based on a recirculating mesh architecture.
-The thesis outlines the critical need for a robust technology stack, with a particular emphasis on the software infrastructure required to harness the full potential of photonic integrated circuits.
-A significant portion of this work is dedicated to the in-depth documentation of various applications demonstrated on the developed photonic processor, including advancements in optical networking, tunable delay lines, optical signal processing, and topological photonics, enabled by specifically developed algorithms and high-level instructions.
-Furthermore, the thesis delves into the theoretical intricacies of optical arbitrary matrix-multiply operators, proposing a novel theoretical model for Mach-Zehnder interferometers within a recirculating mesh array.
-This theoretical framework is complemented by the software implementation and experimental demonstration of arbitrary parametric matrix-multiply operators on the fabricated photonic processor.
-Finally, the thesis concludes by discussing the key findings, the challenges encountered and addressed, and the commercial and research prospects of the developed technology, while also outlining future directions to further the impact and accessibility of multipurpose programmable photonic platforms.
+This thesis addresses these limitations by introducing a graph-based programming methodology that translates photonic circuits into weighted graphs, providing a rigorous mathematical abstraction of complex photonic circuit fabrics.
+By representing photonic building blocks and their connections as graph elements with associated physical metrics,
+this approach enables high-level programming and systematic optimization of device architectures and control methodologies, facilitating efficient and scalable design and analysis of photonic circuits.
+
+Based on this methodology, a set of routing and configuration algorithms is developed to support optical interconnects, multicasting, and circuit switching within general-purpose photonic processors, demonstrating that diverse networking functions can be realized on a single hardware platform without manual intervention.
+
+While this flexibility of general-purpose architectures enables multi-functional operation, it also introduces inherent challenges in scaling to large, high-radix switching fabrics
+To move beyond limited-scale programmability, the work further establishes a unified approach for modeling and benchmarking high-radix photonic switch architectures.
+By combining graph representations with physical-layer metrics such as insertion loss, crosstalk, and signal-to-noise ratio, it provides a systematic way to evaluate scalability trade-offs across different topologies and routing strategies,
+thereby offering practical design guidance for switching fabrics that balance hardware complexity and optical performance under realistic network conditions.
+
+Finally, we extend these concepts to system integration by implementing a software-defined control plane based on model-driven interfaces and gNMI.
+This allows photonic switches to be managed as programmable network elements, aligning Layer-1 optical resources with existing SDN workflows, supporting dynamic interconnect reconfiguration and monitoring.
+
+Our work establishes a scalable and manageable foundation for integrating photonic circuit switching into next-generation AI networking systems.
