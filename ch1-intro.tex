@@ -4,18 +4,18 @@
 
 \section{Interconnects in network infrastructure} \label{sec:background}
 % background: development of AI
-Over the past decade, the rapid rise of artificial intelligence (AI) has driven computing systems from relatively small neural networks toward models containing trillions of parameters.
-Since the introduction of the Transformer architecture in 2017, the computational demand for training large models has grown exponentially, doubling approximately every six months—far beyond Moore's Law.
-This gap between silicon capability and AI requirements has driven a transition from single-chip optimization to massive distributed computing.
+Over the past decade, the rapid rise of artificial intelligence (AI) has driven computing systems from relatively simple neural networks toward models containing trillions of parameters \cite{Lu02012019, tu2024overview}.
+Since the introduction of the Transformer architecture in 2017 \cite{transformer}, the computational demand for training large models has grown exponentially, doubling approximately every six months—far beyond Moore's Law \cite{9891914, 7878935}.
+This gap between the slowing pace of Moore’s Law transistor scaling and the rapidly increasing computational demands of AI has driven a shift beyond single-chip optimization to large-scale distributed computing \cite{distributedcomputing}.
 As a result, computing paradigm is no longer confined to a single device or system boundary.
 % How AI reshaped interconnect
-Modern data centers (DCs) infrastructures are increasingly organized as hierarchical systems in which the distinction between on-chip communication and network-level communication is becoming less clearly defined.
-At the lowest level, intra-package integration enables communication among chiplets, processor cores, and high-bandwidth memory through advanced technologies such as silicon interposers.
-At the server level, multiple accelerators within a single chassis are interconnected using high-bandwidth links such as NVLink to support tightly coupled scale-up computing.
-Beyond the server boundary, large numbers of nodes are connected across racks within a data center using high-performance networking technologies such as InfiniBand or Ethernet, enabling distributed scale-out workloads.
-At the largest scale, hyperscale clusters coordinate tens of thousands of accelerators to operate as a single synchronized system for large-model training and other data-intensive applications.
+Modern data centers (DCs) infrastructures are increasingly organized as hierarchical systems, with on-chip and network-level communication mechanisms increasingly adopt similar paradigms for scalability and performance \cite{noc, jerger2022chip, kas2012toward}.
+At the lowest level, intra-package integration enables communication among chiplets, processor cores, and high-bandwidth memory through advanced technologies such as silicon interposers. \cite{10767590, chiplet}
+At the server level, multiple accelerators within a single chassis are interconnected using high-bandwidth links such as NVLink to support tightly coupled scale-up computing \cite{nvidia_nvlink, song2025survey}.
+Beyond the server boundary, large numbers of nodes are connected across racks within a data center using high-performance networking technologies such as InfiniBand or Ethernet, enabling distributed scale-out workloads \cite{pfister2001introduction}.
+At the largest scale, hyperscale clusters coordinate tens of thousands of accelerators to operate as a single synchronized system for large-model training and other data-intensive applications \cite{kokolis2025revisiting}.
 As communication distance increases from micrometers to kilometers, interconnect media and architectures change to meet bandwidth, latency, and energy constraints.
-In contemporary systems, the energy cost associated with data movement often exceeds the cost of computation itself, making interconnect design a central architectural challenge.
+In contemporary systems, the energy cost associated with data movement often exceeds the cost of computation itself, making interconnect design a central architectural challenge \cite{MWINUKA2026100927, en19030722}.
 
 % EPS as current datacenter solution
 Most data center networks have been predominantly built upon electronic packet switching (EPS).
@@ -24,17 +24,17 @@ Incoming optical signals are converted to electrical form, buffered and processe
 This architecture offers flexibility and compatibility with existing protocols.
 % EPS problem
 However, as bandwidth and scale continue to increase, EPS faces growing limitations.
-Repeated O-E-O conversions raise power consumption, especially with high-speed serializer/deserializer (SerDes) circuits required for 400G to 1.6T links.
-In parallel, electronic switch ASICs (Application-Specific Integrated Circuits) also encounter physical I/O constraints, and while techniques such as co-packaged optics improve interface density, they do not remove the power burden of electronic switching cores.
-In addition, the store-and-forward model introduces buffering and queuing delays, leading to variable latency.
+Frequent O-E-O conversions raise power consumption, especially with high-speed serializer/deserializer (SerDes) circuits required for 400G to 1.6T links \cite{keysight_800g_16t}.
+In parallel, electronic switch ASICs (Application-Specific Integrated Circuits) also encounter physical I/O constraints, and while techniques such as co-packaged optics improve interface density, they do not remove the power burden of electronic switching cores \cite{minkenberg2021co}.
+In addition, the store-and-forward model introduces buffering and queuing delays, leading to variable latency \cite{1455410}.
 For tightly synchronized large-scale AI training, even small network delays can reduce overall system efficiency.
 
 \section{Toward optical circuit switching} \label{sec:toc}
 % Motivates OCS
 These limitations indicate that purely electronic packet switching may not scale efficiently for future AI infrastructures.
-Unlike traditional internet traffic, AI training involves large, structured, and persistent data exchanges among fixed node groups.
+Unlike traditional internet traffic, AI training involves large, structured, and persistent data exchanges among fixed node groups \cite{wang2023topoopt, avin2025revolutionizing}.
 Processing every packet individually therefore introduces unnecessary overhead.
-This motivates Optical Circuit Switching (OCS).
+This motivates Optical Circuit Switching (OCS) \cite{macnica_coherent}.
 % OCS introduction
 OCS establishes dedicated physical-layer connections between endpoints instead of routing packets hop by hop.
 Optical signals are directly routed from input to output ports through free-space optics or integrated photonic circuits, forming transparent paths without intermediate electronic processing.

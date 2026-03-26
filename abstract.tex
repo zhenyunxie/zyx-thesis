@@ -8,19 +8,22 @@
 % Approximately 500 words or less; try not to use formulas or special characters
 % If you don't want an initial indentation, do \noindent at the start of the abstract
 
-Silicon photonics offers a scalable and cost-efficient platform for high-bandwidth, low-power data transmission, making it a promising solution for data center interconnects.
+Silicon photonics provides a scalable and cost-efficient platform for high-bandwidth, low-power data transmission, making it a promising solution for next-generation data center interconnects.
 In particular, circuit switching enables direct optical connectivity for both scale-up and scale-out network architectures, avoiding optical–electrical–optical conversions.
-However, the practical deployment of large-scale photonic switching fabrics is limited not only by device capability, but also by the lack of scalable programming and control methodologies.
+However, the practical deployment of large-scale photonic switching fabrics is limited not only by hardware capabilities, but also by the lack of scalable programming and control methodologies.
 
-This thesis addresses these limitations by introducing a graph-based programming methodology that formalizes photonic circuits as weighted graphs, enabling automated path synthesis, conflict resolution, and performance-aware optimization.
-This abstraction bridges the gap between physical photonic structures and algorithmic control, allowing complex circuit configurations to be derived directly from high-level connectivity requirements.
-Based on this, a set of routing and configuration algorithms is developed to support optical interconnects, multicasting, and circuit switching within programmable photonic processors, demonstrating that diverse networking functions can be realized on a single hardware platform without manual intervention.
+This thesis addresses these limitations by introducing a graph-based programming methodology that translates photonic circuits into weighted graphs, providing a rigorous mathematical abstraction of complex photonic circuit fabrics.
+By representing photonic building blocks and their connections as graph elements with associated physical metrics,
+this approach enables high-level programming and systematic optimization of device architectures and control methodologies, facilitating efficient and scalable design and analysis of photonic circuits.
 
-To move beyond small-scale programmability, the work further establishes a unified approach for modeling and benchmarking high-radix photonic switch architectures.
-By combining graph representations with physical layer metrics such as insertion loss, crosstalk, and signal-to-noise ratio, it provides a systematic way to evaluate scalability trade-offs across different topologies and routing strategies.
-This provides practical design guidance for switching fabrics that balance hardware complexity and optical performance under realistic network conditions.
+Based on this methodology, a set of routing and configuration algorithms is developed to support optical interconnects, multicasting, and circuit switching within general-purpose photonic processors, demonstrating that diverse networking functions can be realized on a single hardware platform without manual intervention.
+
+While this flexibility of general-purpose architectures enables multi-functional operation, it also introduces inherent challenges in scaling to large, high-radix switching fabrics
+To move beyond limited-scale programmability, the work further establishes a unified approach for modeling and benchmarking high-radix photonic switch architectures.
+By combining graph representations with physical-layer metrics such as insertion loss, crosstalk, and signal-to-noise ratio, it provides a systematic way to evaluate scalability trade-offs across different topologies and routing strategies,
+thereby offering practical design guidance for switching fabrics that balance hardware complexity and optical performance under realistic network conditions.
 
 Finally, we extend these concepts to system integration by implementing a software-defined control plane based on model-driven interfaces and gNMI.
-This allows photonic switches to be managed as programmable network elements, aligning Layer-1 optical resources with existing SDN workflows.
+This allows photonic switches to be managed as programmable network elements, aligning Layer-1 optical resources with existing SDN workflows, supporting dynamic interconnect reconfiguration and monitoring.
 
 Our work establishes a scalable and manageable foundation for integrating photonic circuit switching into next-generation AI networking systems.
