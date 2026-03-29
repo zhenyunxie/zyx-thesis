@@ -8,16 +8,16 @@ Based on these components, different circuit topologies were discussed, with par
 The hexagonal mesh as one of the most predominant configurations in programmable integrated photonics which enables synthesize a wide range of optical circuits through appropriate configuration of the PUCs.
 
 % Objective of this chapter
-Building upon this theoretical framework, this chapter explores the implementation of optical networking applications on a programmable integrated photonic processor based on a hexagonal mesh topology.
+Building upon this theoretical framework, this chapter explores the implementation of optical networking applications using a programmable integrated photonic processor with a hexagonal mesh topology.
 By dynamically configuring the PUC states and applying graph-theory-based routing algorithms, different optical networking functionalities can be realized within the same hardware platform.
 Specifically, we experimentally demonstrate several representative optical networking applications, including optical interconnects, optical multicast, and optical circuit switching.
 The corresponding performance metrics are analyzed in detail, highlighting the capability of programmable photonic processors to support flexible and reconfigurable optical networking functions.
 
 % section interconnect
 \section{Interconnects (1x1)}\label{sec:interconnects}
-Reconfigurable optical interconnects are of great interest in optical networks as they enable flexible connections of terabit data rates with high-performance operation [CITE].
+Reconfigurable optical interconnects are of great interest in optical networks as they enable flexible connections of terabit data rates with high-performance operation \cite{sato2022prospects, sato2023optical}.
 These interconnects demand reduced latency and energy efficiency between input and output (I/O) ports, and therefore minimal insertion loss and shortest distance is highly desired.
-The software layer demonstrated herein provides an interconnect algorithm based on Dijkstra [CITE], which can automatically provide an optimum path configuration.
+The software layer demonstrated herein provides an interconnect algorithm based on Dijkstra \cite{foead2021systematic, bierlaire_optimization_2018}, which can automatically provide an optimum path configuration.
 This application can also provide self-healing capabilities to allocate alternative optical paths with lower insertion loss when needed.
 
 The results of the optical interconnect experiments at a central wavelength of 1550 nm and the processor configuration are shown in Figure~\ref{fig:ch3-interconnect}.
@@ -58,7 +58,7 @@ As a consequence of this, the operator can then control how much power is alloca
 In this section, we have designed an auto-multicast algorithm that can accommodate any number of desired outputs from a given input.
 It determines the optimum path to each output, and efficiently auto-configures the splitting PUC with a ratio that ensures every output port receives the same power,
 for a traditional multicast operation, or the specified power ratio, under custom operation.
-To achieve this, the auto-multicast algorithm can be translated into a single-source shortest path problem represented by a directed acyclic graph (directed tree) [CITE].
+To achieve this, the auto-multicast algorithm can be translated into a single-source shortest path problem represented by a directed acyclic graph (directed tree) \cite{perez2018delay_line}.
 A simple example of a 1x3 network is demonstrated in Figure~\ref{fig:ch3-multicast}
 % figure multicasting
 \begin{figure}[h]
@@ -136,7 +136,7 @@ On the other hand, for the insertion losses of a branch (path) that contains a c
 \begin{equation}
     IL_{cross(bar)} = 10 \cdot \log \left( k_q \right) + IL_{q,cross} + IL_{path} \label{eq:ch3-il_parent}
 \end{equation}
-In the latter, \(k_q\) represents the coupling factor of the child node $q$ (in this case $TC_2$), \(IL_q\), is the insertion loss of child node $q$ in the cross path, and \(IL_{path}\) is the insertion loss between the parent node and the child node [CITE].
+In the latter, \(k_q\) represents the coupling factor of the child node $q$ (in this case $TC_2$), \(IL_q\), is the insertion loss of child node $q$ in the cross path, and \(IL_{path}\) is the insertion loss between the parent node and the child node \cite{perez2018delay_line}.
 
 \begin{figure}[h]
     \begin{center}
@@ -164,16 +164,16 @@ The latter entails that, in order to have an accurate compensation of path loss 
 However, for this work we have relied on an average loss value for all the PUCs; therefore, as more of these are added to the circuit, more deviation is expected.
 In addition to path loss difference errors, optical crosstalk originating from a PUC can also contribute to non-uniform output powers.
 In the chip platform used in this work, we have measured that the optical crosstalk of individual PUCs is always below -25 dB.
-Note that we could also employ the on-chip photodetectors and the closed feedback loop to dynamically adjust or fine tune the coupling factors to correct all aforementioned errors starting from the analytical seed provided by the presented algorithm [CITE].
+Note that we could also employ the on-chip photodetectors and the closed feedback loop to dynamically adjust or fine tune the coupling factors to correct all aforementioned errors starting from the analytical seed provided by the presented algorithm \cite{perez2017multipurpose}.
 % section switch
 \section{Switches (NxN)}\label{sec:switches}
 Optical circuit switching (OCS) is a technology that allows the physical layer of an optical network to be configured through software instructions.
 When traffic patterns are predictable and deterministic, OCS allows for direct data routing and topology adjustments entirely within the optical domain.
-By eliminating the optical-electrical-optical (OEO) conversion required by traditional Electronic Packet Switches (EPS), OCS significantly reduces latency, power consumption, and operational costs for AI/ML workloads in modern data centers [CITE]
+By eliminating the OEO conversion required by traditional EPS, OCS significantly reduces latency, power consumption, and operational costs for AI/ML workloads in modern data centers.
 This section demonstrated the implementation of an on-chip software-defined switch designed for the dynamic control of optical waveguide paths for multiple input and output channels.
 The system is synthesized on the previously introduced hexagonal core and facilitates a 6x6 cross-connect matrix.
 To achieve automated reconfigurability for the full switch matrix, we have adapted three algorithms and implemented them in our software stack.
-We have explored three routing algorithms: sequential routing [CITE], graph-based edge weight penalty [CITE], and analytical decomposition [CITE].
+We have explored three routing algorithms: sequential routing \cite{lopez2020auto}, graph-based edge weight penalty \cite{vanden2023automated}, and analytical decomposition \cite{jia2018six}.
 The first two are more general as they make use of iterative algorithms to find the non-conflicting routes between the set of port pairs.
 Sequential routing is the most computationally intensive, as it exhaustively explores all possible I/O port combinations.
 Conversely, the edge weight penalty approach use dynamic graph updates to penalize conflicting path sections.
@@ -181,9 +181,9 @@ Once the weight is updated, the routine will attempt to find a new route in the 
 The \textit{max\_iter} parameter (see Algorithm~\ref{alg:auto_switch}) regulates the maximum number of iterations for paths re-routing in instances of edge conflicts, when no routing solution exists for certain input/output port combinations.
 Analytical decomposition method offers near instantaneous solutions by mapping the switch matrix to a Spanke-Benes network on a hexagonal mesh.
 However, its efficiency is traded for port flexibility, which is constrained by the feed-forward architecture.
-Regarding physical performance, the device's reconfiguration is driven by thermo-optic actuators, achieving microsecond-scale (\textit{μs}) switching speeds—orders of magnitude faster than traditional MEMS-based approaches (\textit{ms}) [CITES].
+Regarding physical performance, the device's reconfiguration is driven by thermo-optic actuators, achieving microsecond-scale (\textit{μs}) switching speeds—orders of magnitude faster than traditional MEMS-based approaches (\textit{ms}) \cite{1244924}.
 
-The fist and the third approaches are straightforward to implement and have been previously documented[CITE].
+The fist and the third approaches are straightforward to implement and have been previously documented \cite{lopez2020auto, jia2018six}.
 Here, we document to a deeper extent the second approach that implements the edge penalty algorithm since it offers significantly better
 computational efficiency than the brute-force sequential routing of the first approach, while avoiding the ports constraints in the Spanke-Benes architecture.
 % algorithm
@@ -264,26 +264,28 @@ This metric varies based on the switch configuration; the best scenario of cross
         The six input ports are visually represented by six distinct markers in the figure.
     }\label{fig:ch3-switch-power}
 \end{figure}
-The source of crosstalk is mainly from PUC performance, as well as small drifts due to auto-calibration and auto-characterization. The reconfiguration speed can be broken down into physical layer reconfiguration,
-control plane latency, and algorithm computation time as shown in Table~\ref{tab:ch3-switch-speed}.
-Physical layer latency is independent of the number of elements to be tuned but the control plane scales linearly with the number of PUCs.
-The software plane time ranges from milliseconds to seconds based on algorithm choice, in which edge penalty and sequential routing approaches take more time as they require a conflict-edge resolution step.
-\begin{table}[h!]
-    \centering
-    \caption{Configuration Speed of the Optical Switch Circuit}
-    \begin{tabular}{lccc}
-        \toprule
-                              & \multicolumn{3}{c}{\textbf{Latency (ms)}}                                                   \\
-        \cmidrule{2-4}
-        Physical layer        & \multicolumn{3}{c}{0.18}                                                                    \\
-        Control plane         & \multicolumn{3}{c}{48}                                                                      \\
-        Algorithm computation & $38^a$                                    & $2700^b$    & $5800^c$                          \\
-        Total                 & $86.18^a$                                 & $2748.18^b$ & $5848.18^c$                       \\ \bottomrule
-        \addlinespace
-        \multicolumn{4}{l}{\footnotesize $^a$Analytical decomposition; $^b$Edge penalty algorithm; $^c$Sequential routing.} \\
-    \end{tabular}
-    \label{tab:ch3-switch-speed}
-\end{table}
+The source of crosstalk is mainly from PUC performance, as well as small drifts due to auto-calibration and auto-characterization.
+% Removed, conflict with company interest
+% The reconfiguration speed can be broken down into physical layer reconfiguration,
+% control plane latency, and algorithm computation time as shown in Table~\ref{tab:ch3-switch-speed}.
+% Physical layer latency is independent of the number of elements to be tuned but the control plane scales linearly with the number of PUCs.
+% The software plane time ranges from milliseconds to seconds based on algorithm choice, in which edge penalty and sequential routing approaches take more time as they require a conflict-edge resolution step.
+% \begin{table}[h!]
+%     \centering
+%     \caption{Configuration Speed of the Optical Switch Circuit}
+%     \begin{tabular}{lccc}
+%         \toprule
+%                               & \multicolumn{3}{c}{\textbf{Latency (ms)}}                                                   \\
+%         \cmidrule{2-4}
+%         Physical layer        & \multicolumn{3}{c}{0.18}                                                                    \\
+%         Control plane         & \multicolumn{3}{c}{48}                                                                      \\
+%         Algorithm computation & $38^a$                                    & $2700^b$    & $5800^c$                          \\
+%         Total                 & $86.18^a$                                 & $2748.18^b$ & $5848.18^c$                       \\ \bottomrule
+%         \addlinespace
+%         \multicolumn{4}{l}{\footnotesize $^a$Analytical decomposition; $^b$Edge penalty algorithm; $^c$Sequential routing.} \\
+%     \end{tabular}
+%     \label{tab:ch3-switch-speed}
+% \end{table}
 
 We evaluated the algorithm's feasibility using the same set of I/O ports for a 6x6 circuit switch.
 The switching architecture can be classified as rearrangeable non-blocking as it needs to reconfigure already established connections to allocate new ones.
