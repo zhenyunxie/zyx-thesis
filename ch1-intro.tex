@@ -6,14 +6,14 @@
 % background: development of AI
 Over the past decade, the rapid rise of artificial intelligence (AI) has driven computing systems from relatively simple neural networks toward models containing trillions of parameters \cite{Lu02012019, tu2024overview}.
 Since the introduction of the Transformer architecture in 2017 \cite{transformer}, the computational demand for training large models has grown exponentially, doubling approximately every six months—far beyond Moore's Law \cite{9891914, 7878935}.
-This gap between the slowing pace of Moore’s Law transistor scaling and the rapidly increasing computational demands of AI has driven a shift beyond single-chip optimization to large-scale distributed computing \cite{distributedcomputing}.
+This gap between the slowing pace of Moore’s Law transistor scaling and the rapidly increasing computational demands of AI has driven a shift beyond single-chip optimization to large-scale distributed computing \cite{distributedcomputing, duan2022distributed}.
 As a result, computing paradigm is no longer confined to a single device or system boundary.
 % How AI reshaped interconnect
 Modern data centers (DCs) infrastructures are increasingly organized as hierarchical systems, with on-chip and network-level communication mechanisms increasingly adopt similar paradigms for scalability and performance \cite{noc, jerger2022chip, kas2012toward}.
 At the lowest level, intra-package integration and chiplet links such as NVLink C2C enable high-bandwidth, low-latency communication among processor cores, accelerators, and high-bandwidth memory, allowing multiple components to function as a super chip. \cite{10767590, chiplet, tirumala2024nvidia}
 At the server level, multiple XPUs (e.g., GPUs or TPUs) within a single chassis are interconnected using high-speed links such as NVLink, which are primarily implemented using copper-based electrical interconnects, to enable tightly coupled scale-up computing. \cite{nvidia_nvlink, song2025survey}.
-Beyond the server boundary, large numbers of nodes are connected across racks within a data center using high-performance networking technologies such as InfiniBand or Ethernet, enabling distributed scale-out workloads \cite{pfister2001introduction}.
-At the largest scale, hyperscale clusters coordinate tens of thousands of accelerators to operate as a single synchronized system for large-model training and other data-intensive applications \cite{kokolis2025revisiting}.
+Beyond the server boundary, large numbers of nodes are connected across racks within a data center using high-performance networking technologies such as InfiniBand or Ethernet, enabling distributed scale-out workloads \cite{pfister2001introduction, aramide2024ultra}.
+At the largest scale, hyperscale clusters coordinate tens of thousands of accelerators to operate as a single synchronized system for large-model training and other data-intensive applications \cite{kokolis2025revisiting, broadcom_scale_across_ai}.
 As communication distance increases from micrometers to kilometers, interconnect media and architectures evolve to meet the corresponding bandwidth, latency, and energy requirements.
 % How AI reshape the traffic
 Meanwhile, traffic patterns within data centers have been gradually evolving.
