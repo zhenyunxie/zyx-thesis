@@ -18,12 +18,12 @@ As communication distance increases from micrometers to kilometers, interconnect
 % How AI reshape the traffic
 Meanwhile, traffic patterns within data centers have been gradually evolving.
 Traditional workloads were dominated by north-south traffic between external clients and servers.
-In contrast, modern AI workloads generate east-west traffic, consisting of intensive server-to-server communication within the data center \cite{Sbriglia2024AIDataCenter}.
+In contrast, modern AI workloads generate east-west traffic, consisting of intensive server-to-server communication within the data center \cite{Sbriglia2024AIDataCenter, nooruzzaman2021hyperscale}.
 Such traffic is typically high-bandwidth and latency-sensitive, and often follows structured and predictable communication patterns across many commuting nodes \cite{wang2023topoopt, avin2025revolutionizing}.
 These characteristics place significantly different demands on the network compared to traditional burst and independent flows.
 
 % EPS as current datacenter solution
-Most data center networks have been predominantly built upon electronic packet switching (EPS), originally optimized for north-south traffic.
+Most data center networks have been predominantly built upon electronic packet switching (EPS), originally optimized for north-south traffic \cite{1455410}.
 Each packet is handled independently, and transmitted hop-by-hop across leaf-spine topologies.
 Although transmission uses optical fiber, each switch still performs optical-electrical-optical (O-E-O) conversions.
 Incoming optical signals are converted to electrical form, buffered and processed, and then retransmitted optically.

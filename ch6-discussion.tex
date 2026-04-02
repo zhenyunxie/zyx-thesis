@@ -42,15 +42,15 @@ In addition, careful path length matching between the two split signals is requi
 
 The coupling efficiency of photonic interfaces is influenced not only by the design of edge couplers but also by packaging and assembly processes.
 Even the improvements in edge couplers by using advanced silicon-nitride with losses of 0.1–0.2 dB can further reduce the total PIC loss \cite{psiquantum2025manufacturable},
-fiber-array attachment and flip-chip integration can introduce mechanical stress and chip warpage, which may affect optical alignment to reduce the coupling efficiency.
-In large photonic integrated circuits, even small mechanical deformations can lead to misalignment between optical interfaces.
+fiber-array attachment and flip-chip integration can introduce mechanical stress and chip warpage, which may affect optical alignment to reduce the coupling efficiency \cite{tian2025photonic, hall2025innovations}.
+In large photonic integrated circuits, even small mechanical deformations can lead to misalignment between optical interfaces \cite{tian2023passive}.
 Typically, maximum deflections in similar packaging contexts are in the ~10–30 µm range, depending on geometry and material properties \cite{ma14133723}.
 As the switching radix getting higher, these tolerances become even more stringent, requiring careful co-design of the photonic layout and packaging process.
 
 A potential approach to mitigate the accumulated losses in large-scale switching fabrics is through integrate optical amplification system.
-SOAs are suitable candidates for this purpose, as we demonstrated in Chapter~\ref{chap:sdn_for_ocs}, where SOAs can provide effective optical gain to compensate the losses across all paths.
-However, introducing active components also brings additional system level considerations, as optical amplifiers may introduce noise and signal distortions that affect transmission quality \cite{ASSADIHAGHI2010158}.
-Therefore, performance metrics such as signal-to-noise ratio, bit-error ratio, and transmitter dispersion eye closure (TDECQ), need to be carefully evaluated to ensure reliable operation.
+SOAs are suitable candidates for this purpose, as we demonstrated in Chapter~\ref{chap:sdn_for_ocs}, where SOAs can provide effective optical gain to compensate the losses across all paths, especially in the O-band.
+However, introducing active components also brings additional system level considerations, as optical amplifiers may introduce noise and signal distortions that affect transmission quality \cite{ASSADIHAGHI2010158, lippiatt2024analysis}.
+Therefore, performance metrics such as signal-to-noise ratio, bit-error ratio, and transmitter dispersion eye closure (TDECQ), need to be carefully evaluated to ensure reliable operation \cite{baney2000theory}.
 
 \subsection{Optical crosstalk and calibration} \label{subsec:crosstalk}
 As covered in Chapter~\ref{chap:ocs_archs}, optical crosstalk becomes increasingly critical as the switching fabric scales.
@@ -59,19 +59,19 @@ This degradation is primarily attributed to the wavelength-dependent behavior of
 Such behavior is particularly relevant for systems operating over wider wavelength ranges, such as FR4, where uniform performance across channels is required.
 In this context, calibration plays an important role in shaping the crosstalk response over wavelength.
 Instead of optimizing PUCs solely at the central wavelength, it is possible to redistribute the crosstalk performance by slightly relaxing the optimal condition at the center in order to improve performance at edge wavelengths.
-This leads to a more balanced response across the full operating spectrum, which is often preferable in practical Wavelength-division multiplexing (WDM) systems.
+This leads to a more balanced response across the full operating spectrum, which is often preferable in practical Wavelength-division multiplexing systems.
 
 The behavior of each PUC under calibration depends on the chosen phase control value.
 According to the phase-shift relation described in Equation~\ref{eq:ch2-phase-shifter} and the PUC scattering matrix in Equation~\ref{eq:ch2-puc},
 a target switching state can be realized by applying multiple control values, which correspond to multiple driven phase solutions.
-Higher control values generally correspond to larger driven phase \(\phi\).
-When the wavelength deviates from its nominal value, configurations with larger driven phase are more sensitive to these variations and deviate more from the ideal BAR/CROSS conditions \cite{rios2022ultra}.
+Higher control values generally correspond to larger driven phase \(\phi\) \cite{di2026high}.
+When the wavelength deviates from its nominal value, configurations with larger driven phase are more sensitive to these variations and deviate more from the ideal BAR/CROSS conditions \cite{rios2022ultra, bao2025ultra}.
 Even if multiple control values achieve the target state at the central wavelength, those with lower driven phase are preferable.
 In practice, operating at lower control values reduces wavelength-dependent phase errors and improves the stability of crosstalk across the full wavelength range.
 
 Another factor affecting PUC crosstalk is the coupling ratio deviation caused by fabrication.
 For the CROSS state, crosstalk is highly sensitive to the absolute values of the coupling coefficients, whereas for the BAR state, it is mainly affected by mismatches between the two couplers within a PUC.
-One possible approach to mitigate this issue is to replace fixed couplers with tunable elements, such as Mach–Zehnder interferometer based splitters, allowing the effective coupling ratio to be adjusted during calibration \cite{suzuki2015ultra, bao2025silicon}.
+One possible approach to mitigate this issue is to replace fixed couplers with tunable elements, such as Mach–Zehnder interferometer based splitters, allowing the effective coupling ratio to be adjusted during calibration \cite{suzuki2015ultra, bao2025ultra, bao2025silicon}.
 While this approach offers greater extinction ratio and flexibility, it also significantly increases the complexity of the calibration process, as a larger parameter space must be explored and stabilized.
 
 To achieve low and stable crosstalk in large-scale photonic switching fabrics requires a joint consideration of device design, calibration strategy, and system-level constraints.
