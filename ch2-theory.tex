@@ -47,12 +47,13 @@ Although slower than electro-optic effects, thermal shifters are simpler to impl
 Design evolution has focused on enhancing thermal efficiency as actuator density increases.
 
 % TOPS performance
-The TOPS is mainly determined by two key parameters: the half-wave power (Pπ), which indicates the electrical power required to produce a π phase shift;
+The TOPS is mainly determined by two key parameters: the half-wave power ($P\pi$), which indicates the electrical power required to produce a π phase shift;
 and the reconfiguration speed, typically defined by the 10-90\% rise and fall times of the optical response.
-Figure~\ref{fig:ch2-ps} illustrates schematic of three different structure of thermo-optic phase shifter.
-Conventional metal heaters on oxide cladding suffer from heat leakage into the substrate, resulting in high Pπ and thermal crosstalk \cite{gupta2018performance}.
-Vertical trench structures improve lateral thermal confinement, lowering power consumption and enabling tighter actuator spacing \cite{liu2022thermo}.
-For maximum efficiency, suspended silicon structures remove the underlying substrate to achieve near-complete thermal isolation, minimizing power usage and crosstalk \cite{5712163, gao2023comprehensive}.
+Figure~\ref{fig:ch2-ps} illustrates schematic of three different structure of thermo-optic phase shifter \cite{gomez-hidalgoFundamentalBuildingBlocksa}.
+Conventional metal heaters on oxide cladding suffer from heat leakage into the substrate, the temperature rise in the waveguide core is limited, resulting in high $P\pi$ with typical value is on the order of ~ 18-19mW and thermal crosstalk \cite{gupta2018performance}.
+Vertical trench structures improve lateral thermal confinement, this reduces heat spreading into the surrounding oxide and substrate, lowering power consumption $P\pi$ to typical values of ~ 10-14mW, and this structure also enabling tighter actuator spacing due to suppressed lateral heat diffusion \cite{liu2022thermo}.
+In full suspended silicon structures, the silicon waveguide is thermally isolated by removing the underlying substrate and surrounding oxide, leaving it supported by narrow anchors.
+This configuration maximizes thermal confinement and concentrates heat in the waveguide region, which improve the crosstalk and power consumption, with $P\pi$ to the sub-milliwatt level \cite{5712163, gao2023comprehensive}.
 \begin{figure}[h]
     \begin{center}
         \includegraphics{figures/ch2-ps.pdf}
