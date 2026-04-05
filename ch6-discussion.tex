@@ -3,7 +3,7 @@
 \chapter{Discussion and Conclusion}\label{chap:discussion_and_conclusions} % (fold)
 This chapter builds on the previous analysis of the design, modeling, and evaluation of large-scale silicon photonic optical circuit switches, and discusses them in the broader context of data center networking.
 
-It first explores the impact of optical insertion on large-radix photonic switching fabrics, followed by a discussion of optical crosstalk and its dependence on calibration strategies.
+It first explores the impact of optical insertion losses on large-radix photonic switching fabrics, followed by a discussion of optical crosstalk and its dependence on calibration strategies.
 It then addresses practical challenges in integrating optical circuit switching into existing data center infrastructures.
 Finally, it outlines potential future research directions, such as scalable multi-stage switching fabrics and failure-resilient circuit mechanisms, and summarizes the main conclusions of the thesis.
 
@@ -59,7 +59,7 @@ This degradation is primarily attributed to the wavelength-dependent behavior of
 Such behavior is particularly relevant for systems operating over wider wavelength ranges, such as FR4, where uniform performance across channels is required.
 In this context, calibration plays an important role in shaping the crosstalk response over wavelength.
 Instead of optimizing PUCs solely at the central wavelength, it is possible to redistribute the crosstalk performance by slightly relaxing the optimal condition at the center in order to improve performance at edge wavelengths.
-This leads to a more balanced response across the full operating spectrum, which is often preferable in practical Wavelength-division multiplexing systems.
+This leads to a more balanced response across the full operating spectrum, which is often preferable in practical wavelength-division multiplexing systems.
 
 The behavior of each PUC under calibration depends on the chosen phase control value.
 According to the phase-shift relation described in Equation~\ref{eq:ch2-phase-shifter} and the PUC scattering matrix in Equation~\ref{eq:ch2-puc},
@@ -95,7 +95,6 @@ However, these reconfiguration times are still one or more orders of magnitude s
 This disparity is particularly relevant in data center environments.
 While OCS is well suited for high-capacity, long-lived elephant flows, it is less efficient for short-lived mice flows.
 The relatively slow reconfiguration limits the ability of OCS to respond to rapid traffic variations without introducing packet loss or transient service disruption.
-
 Despite the advantages of optical interconnects in terms of bandwidth and latency, current data center networks are more likely to adopt hybrid architectures that combine OCS with traditional packet switching \cite{liao2025mixnet}.
 Such designs aim to balance the high-capacity benefits of optical circuits with the flexibility and responsiveness of electrical packet-switched networks.
 \section{Future work} \label{section:future_work}
@@ -149,7 +148,7 @@ Such resilience-aware design becomes especially important in the context of AI w
 \section{Conclusions} \label{section:conclusions}
 This thesis develops a clear framework for the design and implementation of large-scale silicon photonic optical circuit switches, covering the process from graph-based modeling to practical controlling.
 
-At its core, the work develops a graph-theoretic modeling and programming framework.
+At its core, this work develops a graph-theoretic modeling and programming framework.
 A key finding is that the complexity of photonic integrated circuits, particularly those involving hundreds of interferometric elements, can be effectively abstracted into nodes connections and edge weights.
 This abstraction is for automation, enabling the translation of high-level connectivity requirements into device-level PUCs states.
 This approach was first validated through the iPronics Smartlight platform.
