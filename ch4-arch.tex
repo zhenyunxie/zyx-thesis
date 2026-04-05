@@ -10,7 +10,7 @@ These factors make it challenging to efficiently realize high-radix switching fa
 
 % Objective of this chapter
 In this chapter, we introduce a graph-theory-based methodology to investigate the scalability limits of silicon photonics OCS architectures, which including Benes, Dilated Benes, Double Dilated Benes, PILOSS, and Dilated Banyan networks.
-We analyze and benchmark their optical loss, signal-to-noise ratio (SNR), and hardware complexity, comparing them with state-of-the-art silicon photonics integration capabilities to extrapolate feasible scenarios in the near to mid-term \cite{perez-lopezLargescalePhotonicProcessors2025a, giewont300mmMonolithicSilicon2019}.
+We analyze and benchmark their optical loss, signal-to-noise ratio (SNR), and hardware complexity, comparing them with state-of-the-art silicon photonics integration capabilities to extrapolate feasible scenarios in the near to mid-term \cite{perez2025large, giewont300mmMonolithicSilicon2019}.
 Additionally, we simulate the blocking probability under different conditions to gain insight into the impact of rearrangeability across various architectures.
 The overall objective of this chapter is to provide a comprehensive benchmark among alternative circuit architectures for high-radix silicon photonics OCS that meet the performance requirements of modern networking applications.
 \section{Graph-based modelling of photonic switches}\label{sec:graph_modelling} % (fold)
@@ -34,7 +34,7 @@ In this study, we also consider a vertically stacked network \cite{leaMultiLogNe
 The motivation is to investigate the impact on performance and blocking probability of adding a second fabric in parallel.
 For the sake of comparison, two additional networks are also considered.
 The PILOSS network \cite{suzukiUltracompact882014}, derived from the crossbar, provides balanced loss across all possible paths and is wide-sense non-blocking (WSNB), meaning that any new connection can be established provided the network is routed using an appropriate algorithm.
-The final network considered is the Dilated Banyan \cite{aliPerformanceEnhancement8$$times$$82021}, which completely suppresses crosstalk and is strictly non-blocking (SNB); this network does not require any specific routing algorithm, as there exists a single disjoint path between each input and output port.
+The final network considered is the Dilated Banyan \cite{aliPerformanceEnhancement8times82021}, which completely suppresses crosstalk and is strictly non-blocking (SNB); this network does not require any specific routing algorithm, as there exists a single disjoint path between each input and output port.
 \subsection{Network conflicts} \label{sub:network_conflicts} % (fold)
 Network conflicts represent a key specification in switching. It defines how the switch behaves for routing requests that could potentially impact the routing operation of the other channels.
 We define two types of conflicts that can occur in the network.
