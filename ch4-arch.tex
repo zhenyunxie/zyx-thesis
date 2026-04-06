@@ -15,7 +15,7 @@ Additionally, we simulate the blocking probability under different conditions to
 The overall objective of this chapter is to provide a comprehensive benchmark among alternative circuit architectures for high-radix silicon photonics OCS that meet the performance requirements of modern networking applications.
 \section{Graph-based modelling of integrated photonic switches}\label{sec:graph_modelling} % (fold)
 Integrated photonic switches consist of arrangements of basic tunable switching cells, where an input array of signals can be spatially or spectrally routed to an array of optical outputs.
-To study their properties, photIntegrated photonic circuits can be modeled based on the graph layer that presented previous chapter~\ref{chap:fundamentals}.
+To study their properties, integrated photonic circuits can be modeled based on the graph layer that presented previous chapter~\ref{chap:fundamentals}.
 This mathematical representation facilitates the analysis of switching networks and their blocking probabilities by applying pathfinding algorithms directly to the graph.
 The performance of the switch strongly depends on its architecture, which ultimately dictates the number of switching and crossing cells, stages to go through, crosstalk and blocking type.
 % figure architectures
@@ -105,7 +105,7 @@ The transfer-matrix method \cite{baliliTRANSFERMATRIXMETHOD2012} was applied to 
 By summing the crosstalk across all ports and normalizing to the loss, the SNR was computed as a function of wavelength, with the leakage of the switching and crossing cells derived from typical extinction ratio (ER) values, using standard silicon photonic components and thermo-optic phase shifting \cite{gomez-hidalgoFundamentalBuildingBlocksa} (see Figure~\ref{fig:ch4-optical-performance}(a)).
 
 The crosstalk in the switching cells is strongly dependent on the spectral response in the O-band region, reaching approximately –40 dB at center wavelengths and –20 dB at corner wavelengths.
-This is occurs due to the thermo-optic phase shifter response and the uneven splitting ratio of the 2×2 MZI considered in this study.
+This occurs due to the thermo-optic phase shifter response and the uneven splitting ratio of the 2×2 MZI considered in this study.
 The inherent wavelength-dependent phase shift produces the exact phase for maximum extinction ratio (ER) at a given central point in the spectrum, but the ER decreases outside this wavelength due to phase tuning inaccuracies, with the added effect of the uneven splitting ratio.
 In contrast, the ER for the crossings remains below –60 dB and flat across the entire O-band, if properly designed.
 \begin{figure}[H]
