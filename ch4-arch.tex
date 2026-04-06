@@ -1,6 +1,6 @@
 % Author: Zhenyun Xie
 
-\chapter{Scalability Analysis of Silicon Photonics Optical Circuit Switch Architectures}\label{chap:ocs_archs} % (fold)
+\chapter{Scalability Analysis of Silicon Photonic Optical Circuit Switch Architectures}\label{chap:ocs_archs} % (fold)
 % Motivation of this chapter
 In the previous chapter, optical networking functionalities were demonstrated on a multipurpose integrated photonic processor based on a hexagonal mesh topology.
 By properly configuring the PUCs, various optical circuits, including optical interconnects, multicasting, and circuit switching, were implemented within a single reconfigurable platform.
@@ -13,9 +13,9 @@ In this chapter, we introduce a graph-theory-based methodology to investigate th
 We analyze and benchmark their optical loss, signal-to-noise ratio (SNR), and hardware complexity, comparing them with state-of-the-art silicon photonics integration capabilities to extrapolate feasible scenarios in the near to mid-term \cite{perez2025large, giewont300mmMonolithicSilicon2019}.
 Additionally, we simulate the blocking probability under different conditions to gain insight into the impact of rearrangeability across various architectures.
 The overall objective of this chapter is to provide a comprehensive benchmark among alternative circuit architectures for high-radix silicon photonics OCS that meet the performance requirements of modern networking applications.
-\section{Graph-based modelling of photonic switches}\label{sec:graph_modelling} % (fold)
-Photonic switches consist of arrangements of basic tunable switching cells, where an input array of signals can be spatially or spectrally routed to an array of optical outputs.
-To study their properties, photonic circuits can be modeled based on the graph layer that presented previous chapter~\ref{chap:fundamentals}.
+\section{Graph-based modelling of integrated photonic switches}\label{sec:graph_modelling} % (fold)
+Integrated photonic switches consist of arrangements of basic tunable switching cells, where an input array of signals can be spatially or spectrally routed to an array of optical outputs.
+To study their properties, photIntegrated photonic circuits can be modeled based on the graph layer that presented previous chapter~\ref{chap:fundamentals}.
 This mathematical representation facilitates the analysis of switching networks and their blocking probabilities by applying pathfinding algorithms directly to the graph.
 The performance of the switch strongly depends on its architecture, which ultimately dictates the number of switching and crossing cells, stages to go through, crosstalk and blocking type.
 % figure architectures
