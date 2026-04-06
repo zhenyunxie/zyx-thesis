@@ -1,7 +1,7 @@
 % Author: Zhenyun Xie
 
 \chapter{Theoretical and Programming Methodologies of Photonic Integrated Circuits} \label{chap:fundamentals}
-The rapid advancement of silicon photonics has transitioned integrated optical systems from application-specific, static designs toward versatile, software-defined architectures.
+The rapid advancement of silicon photonics has transitioned integrated optical systems from static designs toward reconfigurable, software-defined architectures.
 This shift enables the dynamic manipulation of light, allowing a single hardware platform to support reconfigure networking functions and connections \cite{7503119}.
 This chapter introduces the theoretical foundations and programming methodologies required to understand and control programmable PICs.
 It begins with the fundamental building blocks, including 50:50 splitters, waveguide crossings, phase shifters, and 2x2 programmable unit cells (PUCs).
@@ -17,7 +17,7 @@ The 50:50 splitter, or 3dB coupler, serves as the foundational element for signa
 Directional Couplers (DCs) serve as passive splitting elements by placing two waveguides in extreme proximity, typically separated by a gap of only a few hundred nanometers \cite{AGRAWAL202157, tormen2005wavelength, chen2017broadband}.
 The structure schematic is shown in top panel of Figure~\ref{fig:ch2-splitters}(a).
 This arrangement facilitates evanescent coupling, a physical phenomenon where light tunnels between adjacent cores as their electromagnetic fields overlap, as illustrated in the bottom panel of Figure~\ref{fig:ch2-splitters}(a).
-While DCs are valued for their exceptionally low insertion loss (typically ranging from 0.1 to 0.5 dB) and their ability to be dynamically tuned via phase shifters for precise amplitude control, they are inherently sensitive to environmental and manufacturing conditions \cite{xu2019low, darmawan2005rigorous}.
+While DCs are valued for their exceptionally low insertion loss (typically ranging from 0.1 to 0.5 dB), they are inherently sensitive to environmental and manufacturing conditions \cite{xu2019low, darmawan2005rigorous}.
 Because the power-splitting ratio is a strict function of the coupling length and waveguide separation, even nanometric deviations during fabrication or shifts in the operating wavelength can result in significant power imbalances.
 Consequently, while DCs offer high performance, their delicate nature makes them susceptible to yield issues in large-scale systems \cite{tang2024broadband}.
 
@@ -53,6 +53,7 @@ Mathematically, the accumulated optical phase $\phi$ along a waveguide of length
 \end{equation}\label{eq:ch2-phase-shifter}
 where $n_{\mathrm{eff}}$ denotes the effective refractive index of the guided mode and $\lambda$ is the free-space optical wavelength \cite{chrostowski2015silicon}.
 A variation in either $n_{\mathrm{eff}}$ or $L$ produces a corresponding change in the optical phase, which forms the basis of phase-shifting devices.
+
 In silicon photonics, integrated phase shifting is primarily achieved through either electro-optic PS (EOPS) or thermos-optic PS (TOPS) \cite{eo_ps, liu2022thermo}.
 While electro-optic shifters based on plasma dispersion offer high-speed modulation in the nanoseconds timescales, they often suffer from relatively high insertion losses due to carrier absorption and require complex manufacturing processing.
 In contrast, thermo-optic phase shifters exploit silicon's high thermo-optic coefficient to modify the refractive index locally through heat.

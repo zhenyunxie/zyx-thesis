@@ -10,16 +10,16 @@ This gap between the slowing pace of Moore’s Law transistor scaling and the ra
 As a result, computing paradigm is no longer confined to a single device or system boundary.
 % How AI reshaped interconnect
 Modern data centers (DCs) infrastructures are increasingly organized as hierarchical systems, with on-chip and network-level communication mechanisms increasingly adopt similar paradigms for scalability and performance \cite{noc, jerger2022chip, kas2012toward}.
-At the lowest level, intra-package integration and chiplet links such as NVLink C2C enable high-bandwidth, low-latency communication among processor cores, accelerators, and high-bandwidth memory, allowing multiple components to function as a super chip \cite{10767590, chiplet, tirumala2024nvidia}
+At the lowest level, intra-package integration and chiplet links such as NVLink C2C enable high-bandwidth, low-latency communication among processor cores, accelerators, and high-bandwidth memory, allowing multiple components to function as a super chip \cite{10767590, chiplet, tirumala2024nvidia}.
 At the server level, multiple XPUs (e.g., GPUs or TPUs) within a single chassis are interconnected using high-speed links such as NVLink, which are primarily implemented using copper-based electrical interconnects, to enable tightly coupled scale-up computing \cite{nvidia_nvlink, song2025survey}.
 Beyond the server boundary, large numbers of computing nodes are connected across racks within a data center using high-performance networking technologies such as InfiniBand or Ethernet, enabling distributed scale-out workloads \cite{pfister2001introduction, aramide2024ultra}.
 At the largest scale, hyperscale clusters coordinate tens of thousands of accelerators to operate as a single synchronized system for large-model training and other data-intensive applications \cite{kokolis2025revisiting, broadcom_scale_across_ai}.
 As communication distance increases from micrometers to kilometers, interconnect media and architectures evolve to meet the corresponding bandwidth, latency, and energy requirements.
 % How AI reshape the traffic
-Meanwhile, traffic patterns within data centers have been gradually evolving.
+Meanwhile, traffic patterns within network have been gradually evolving.
 Traditional workloads were dominated by north-south traffic between external clients and servers.
-In contrast, modern AI workloads generate east-west traffic, consisting of intensive server-to-server communication within the data center \cite{Sbriglia2024AIDataCenter, nooruzzaman2021hyperscale}.
-Such traffic is typically high-bandwidth and latency-sensitive, and often follows structured and predictable communication patterns across many commuting nodes \cite{wang2023topoopt, avin2025revolutionizing}.
+In contrast, modern AI workloads generate east-west traffic, consisting of intensive server-to-server communication within the network \cite{Sbriglia2024AIDataCenter, nooruzzaman2021hyperscale}.
+Such traffic is typically high-bandwidth and latency-sensitive, and often follows structured and predictable communication patterns across many computing nodes \cite{wang2023topoopt, avin2025revolutionizing}.
 These characteristics place significantly different demands on the network compared to traditional burst and independent flows.
 
 % EPS as current datacenter solution
@@ -69,20 +69,20 @@ These solid-state devices support configuration speed ranging from microseconds 
 By interconnecting a large number of such building blocks on a silicon photonics platform, programmable photonic integrated circuits (PPICs) can be realized, which can dynamically reconfigure optical connectivity patterns.
 Importantly, beyond conventional point-to-point circuit switching, PPICs can support more flexible interconnect topologies, such as 1$\times$N connections for optical multicasting where one source transmits the same data to multiple destinations \cite{samadi2015optical, dinc2024multicasting}.
 Such communication patterns are common in distributed AI training workloads, particularly in collective operations such as broadcast and all-gather \cite{si2025collective}.
-This capability makes SiPh-based OCS particularly well-suited for AI traffic patterns.
+This capability makes SiPh-based OCS well-suited for AI traffic patterns.
 Furthermore, benefiting from wafer-scale fabrication and the absence of mechanical moving parts, SiPh offers improved scalability, robustness, and suitability for next-generation networks \cite{perez2025large, torrijos2026industry}.
 
 \section{Challenges} \label{sec:challenges}
 Despite the advantages of silicon photonics for optical circuit switching, deployment of large-scale SiPh-based switching fabric in hyperscale AI networks still faces complexity that has not yet been fully addressed.
 % software defined control mechanism for programmable photonic circuit.
 AI training workloads follow several traffic patterns between computing nodes, which requires the precise coordination of thousands of integrated actuators to real-time reconfiguration of photonic circuit processor \cite{bogaerts2020programmable}.
-Performing such on-chip reconfiguration through the traditional one-by-one sequential tuning of actuators can introduce significant delay, making it operationally impractical for large switching fabrics and potentially disrupting cluster scheduling and training efficiency.
-In this regard, auto-routing algorithms have been explored to develop point-to-point optical interconnects in a programmable photonic circuit, with fault-tolerant and self-healing capabilities but applied in a short-scale circuit of a few actuators \cite{lopez2020auto}.
+Performing such on-chip reconfiguration in PPICs through the traditional one-by-one sequential tuning of actuators can introduce significant delay, making it operationally impractical for large switching fabrics and potentially disrupting cluster scheduling and training efficiency.
+In this regard, auto-routing algorithms have been explored to develop point-to-point optical interconnects in a programmable photonic circuit, with fault-tolerant and self-healing capabilities but applied in a small-scale circuit of a few actuators \cite{lopez2020auto}.
 More recently, a novel N$\times$N automated switching algorithm has also been reported theoretically, but experimental validation is still lacking \cite{vanden2023automated}.
-Therefore, there remains room to improve interconnect algorithms, particularly in efficiently identifying paths in large-scale circuits and in supporting more complex communication patterns, while their effectiveness on integrated photonic hardware remains to be validated.
+Therefore, there remains room to improve interconnect algorithms in PPICs, particularly in efficiently identifying paths in large-scale circuits and in supporting more complex communication patterns, while their effectiveness on hardware remains to be validated.
 
 % scalability problem.
-Although small-scale switches have been proven, scaling these systems to meet industrial demands introduces fundamental challenges that necessitate new research \cite{tanizawa2015ultra, suzuki2014ultra, tanizawa2016ultra, suzuki2025band}.
+Although small-scale SiPh switches have been proven, scaling these systems to meet industrial demands introduces fundamental challenges that necessitate new research \cite{tanizawa2015ultra, suzuki2014ultra, tanizawa2016ultra, suzuki2025band}.
 The high-radix scaling and architecture design present significant difficulties.
 Supporting modern clusters may require switches with 128$\times$128, 256$\times$256 or even higher ports, involving tens of thousands of integrated actuators on a single chip \cite{patronas2024optical, perez2025large}.
 At this density, cumulative insertion loss and crosstalk become substantial, and conventional circuit topologies are insufficient, designing these systems demands a careful balance between port count, signal integrity, physical footprint, etc,.
@@ -95,12 +95,13 @@ This represents a broad and complex challenge in integrating optical circuit swi
 Within this context, it is important to focus on approaches that allow Layer-1 optical resources to be more easily interfaced with SDN frameworks, addressing part of this integration gap.
 
 \section{Objectives} \label{sec:objective}
-Considering the critical role of programmable photonic integrated circuits in scaling AI data center interconnects, this thesis focuses on the development of a comprehensive, software-defined ecosystem for large-scale integrated photonic switching.
-The primary aim is to establish a vertically integrated technological stack that covers physical-layer circuit synthesis, architectural design, and system-level control, thereby enabling programmable photonic processors to be seamlessly integrated into modern AI infrastructures.
-Specifically, this thesis aims to develop a scalable and manageable silicon photonic OCS solution for data center interconnects.
-This project begins with the development of a graph-based programming methodology to automate the synthesis and mapping of photonic circuits, bridging the gap between high-level logic and physical actuator configurations.
-It then investigates scalable photonic switching architectures, aiming to resolve the trade-offs between hardware complexity and signal integrity.
-This includes conducting in-depth blocking analysis and physical-layer simulations to evaluate insertion loss (IL) and signal-to-noise ratio (SNR) in data center environments.
+Considering the critical role of programmable photonic integrated circuits in scaling AI data center interconnects, this thesis develops a comprehensive, software-defined platform for large-scale integrated photonic switching.
+
+The primary aim is to establish a vertically integrated technological stack that covers physical-layer circuit synthesis algorithms, architectural design guideline, and system-level control framework, thereby enabling programmable photonic processors to be seamlessly integrated into modern AI infrastructures.
+Specifically, this work focuses on a scalable and manageable silicon photonic OCS solution for data center interconnects.
+
+To achieve this, first, a graph-based programming methodology to automate the synthesis and mapping of photonic circuits, bridging the gap between high-level logic and physical actuator configurations.
+Next, scalable photonic switching architectures are investigated to resolve the trade-offs between hardware complexity and signal integrity, including in-depth blocking analysis and physical-layer simulations to evaluate insertion loss (IL) and signal-to-noise ratio (SNR).
 Finally, an integrated gNMI-based control system is implemented for Layer-1 SiPh OCS, enabling standardized, software-defined reconfiguration and management within networks.
 
 \section{Structure of the thesis} \label{sec:structure}
@@ -109,11 +110,11 @@ The thesis is structured into the following chapters:
 
 \begin{itemize}
       \item Chapter 1: \nameref{chap:intro} This chapter provides the research background and motivation, focusing on the transition from traditional electronic switching to integrated photonic switching.
-            It reviews the architecture of modern AI data centers networks and highlights the increasing demand for scalable silicon-photonic optical circuit switching.
+            It reviews the architecture of modern AI data center networks and highlights the increasing demand for scalable silicon-photonic optical circuit switching.
             The chapter then defines the research objectives and outlines the main contributions of the thesis, providing an overview of the structure of the subsequent chapters.
-      \item Chapter 2: \nameref{chap:fundamentals} This chapter presents the theoretical foundations for photonic integrated circuits.
-            It introduces key photonic components and circuit topologies, then demonstrates a graph-theory-based framework for circuit modeling and routing, which enables automated control and programming at the photonic layer.
-            It also outlines Software-Defined Networking (SDN) principles to support the design of an SDN-based control layer for integrating optical circuit switching into data center networks.
+      \item Chapter 2: \nameref{chap:fundamentals} This chapter presents the theoretical foundations for programmable photonic integrated circuits.
+            It introduces key integrated photonic components and circuit topologies, then demonstrates a graph-theory-based framework for circuit modeling and routing, which enables automated control and programming at the photonic layer.
+            It also outlines Software-Defined Networking (SDN) principles to support the design of an SDN-based control layer for integrating optical circuit switching into networks.
       \item Chapter 3: \nameref{chap:applications_on_pip} This chapter demonstrates optical networking applications implemented on hexagonal programmable photonic processors.
             By applying graph-theory-based routing algorithms, the work replaces manual and sequential tuning procedures with automated programming methods.
             The chapter presents implementations of optical interconnects, multicasting and circuit switching functions on a single processor, followed by a systematic evaluation of performance metrics.
@@ -125,8 +126,10 @@ The thesis is structured into the following chapters:
             It introduces a custom YANG model designed to minimize control overhead while optimizing hardware performance across diverse connection types.
             The chapter validates the operational flow, showcasing lossless performance through integrated SOA compensation and exceptionally low crosstalk,
             establishing a standardized pathway for integrating OCS into AI infrastructures.
-      \item Chapter 6: \nameref{chap:discussion_and_conclusions} This final chapter summarizes the main findings and discusses key challenges, including optical loss, crosstalk, and scalability.
-            It also outlines remaining gaps in SDN standardization and AI network optimization, and highlights directions toward large-scale commercialization of optical circuit switching systems.
+      \item Chapter 6: \nameref{chap:discussion_and_conclusions} This chapter examines the design, modeling, and evaluation of large-scale silicon photonic optical circuit switches in data center networks.
+            It discusses key physical-layer challenges, including optical insertion loss, crosstalk, and analyzes their impact on scalability and performance.
+            Practical deployment considerations, such as integration with existing network architectures and software-defined control are also addressed.
+            Finally, the chapter outlines future directions, including multi-stage switching fabrics, failure-resilient architectures, and approaches toward scalable system-level implementations.
 \end{itemize}
 
 At the end of the thesis, a section is provided with a complete list of the Author's merits and contributions to scientific journals and conferences.
