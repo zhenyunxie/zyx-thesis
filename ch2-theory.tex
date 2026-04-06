@@ -54,7 +54,7 @@ Mathematically, the accumulated optical phase $\phi$ along a waveguide of length
 where $n_{\mathrm{eff}}$ denotes the effective refractive index of the guided mode and $\lambda$ is the free-space optical wavelength \cite{chrostowski2015silicon}.
 A variation in either $n_{\mathrm{eff}}$ or $L$ produces a corresponding change in the optical phase, which forms the basis of phase-shifting devices.
 
-In silicon photonics, integrated phase shifting is primarily achieved through either electro-optic PS (EOPS) or thermos-optic PS (TOPS) \cite{eo_ps, liu2022thermo}.
+In silicon photonics, integrated phase shifting is primarily achieved through either electro-optic PS (EOPS) or thermo-optic PS (TOPS) \cite{eo_ps, liu2022thermo}.
 While electro-optic shifters based on plasma dispersion offer high-speed modulation in the nanoseconds timescales, they often suffer from relatively high insertion losses due to carrier absorption and require complex manufacturing processing.
 In contrast, thermo-optic phase shifters exploit silicon's high thermo-optic coefficient to modify the refractive index locally through heat.
 Although slower than electro-optic effects, thermal shifters are simpler to implement, and exhibit negligible insertion loss, making them the preferred choice for the high-density circuit \cite{liu2022thermo}.
@@ -150,7 +150,7 @@ Further reduction can be achieved by adopting partially etched waveguides, which
 In parallel, subwavelength gratings (SWG) crossings employ metamaterial engineering through periodically segmented waveguides to artificially tune the effective refractive index, allowing the optical mode to expand adiabatically and cross the intersection with suppressed scattering \cite{bock2010subwavelength, ni2023compact}.
 
 \section{Photonics mesh architectures}\label{sec:mesh_architectures}
-By leveraging the interconnectivity of the fundamental building blocks detailed in section \ref{sec:functional_blocks}, a wide variety of photonic mesh architectures can be synthesized to achieve complex and high-dimensional optical functions.
+By leveraging the interconnectivity of the fundamental building blocks detailed in section~\ref{sec:functional_blocks}, a wide variety of photonic mesh architectures can be synthesized to achieve complex and high-dimensional optical functions.
 These topologies are primarily categorized based on their signal flow characteristics into two classes: feedforward meshes, which maintain a unidirectional light path for linear transformations and switching ~\cite{reck1994experimental, miller2013self}, and recirculating (or circular) meshes, which incorporate feedback loops to enable resource reuse and spectral filtering \cite{zhuang2015programmable, perez2017multipurpose, perez2019integrated}.
 This section explores the structural properties, scaling laws, and operational principles of these mesh geometries, which form the physical foundation of software-defined photonic systems.
 
@@ -166,7 +166,7 @@ Common architectures include Benes, Path-Independent Loss (PILOSS), Banyan, etc 
 Despite their advantages, scaling feedforward meshes to the port counts required by modern datacenters introduces bottlenecks.
 Hardware complexity grows rapidly, leading to large chip footprints and increased fabrication risks.
 Furthermore, optical performance is often limited by the accumulation of insertion loss and coherent crosstalk from hundreds of waveguide crossings and splitters, which can severely limit the SNR and lead to internal blocking under certain traffic patterns.
-A rigorous evaluation of these trade-offs and the optimization of these switching fabrics for large-scale deployment will be discussed in detail in Chapter \ref{chap:ocs_archs}.
+A rigorous evaluation of these trade-offs and the optimization of these switching fabrics for large-scale deployment will be discussed in detail in Chapter~\ref{chap:ocs_archs}.
 \subsection{Recirculating mesh}\label{sub:circular} % (fold)
 Recirculating meshes, represent a paradigm shift from application-specific designs toward general-purpose photonic processors \cite{perez2017multipurpose}.
 Unlike feedforward architectures where light follows a fixed, unidirectional path, recirculating meshes allow for the creation of feedback loops and multi-directional routing.
@@ -176,7 +176,7 @@ The defining characteristic of these meshes is their ability to synthesize a wid
 By dynamically configuring each PUC into one of three primary states—bar, cross, or tunable (see Fig~\ref{fig:ch2-puc}(c))—the user can effectively configure specific sub-circuits within the physical hardware, such as recursive filters (FIR/IIR) and tunable delay lines \cite{perez2018programmable}.
 While these meshes are theoretically universal and capable of emulating any feedforward topology, doing so requires a higher density of PUCs to manage the internal routing necessary to mimic unidirectional flow.
 
-As illustrated in figure\ref{fig:ch2-recirculating_topologies}, various grid geometries have been explored, including square \cite{perez2019integrated}, and hexagonal layouts \cite{perez2017multipurpose}.
+As illustrated in figure~\ref{fig:ch2-recirculating_topologies}, various grid geometries have been explored, including square \cite{perez2019integrated}, and hexagonal layouts \cite{perez2017multipurpose}.
 Among these, the hexagonal architecture is widely regarded as the superior choice for high-density integration due to its unique topological advantages \cite{bogaerts2020programmable}.
 One of the primary benefits of the hexagonal arrangement is its higher spatial utilization and connectivity per unit area, which allows for a more compact and efficient footprint.
 Furthermore, the hexagonal architecture supports greater routing flexibility and increased degrees of freedom for programming, enabling the synthesis of more complex functions with reduced hardware overhead.
@@ -190,7 +190,7 @@ Furthermore, the hexagonal architecture supports greater routing flexibility and
 \end{figure}
 \subsubsection{Hexagonal mesh}\label{sub:hexagonal} % (fold)
 The general-purpose photonic processor in this work consists of a hexagonal arrangement of 72 PUCs and 28 optical ports connected to photodetectors \cite{perez2024general}.
-The schematic of the core is shown in Figure\ref{fig:ch2-smartlight}.
+The schematic of the core is shown in Figure~\ref{fig:ch2-smartlight}.
 It should be noted that bottom ports cannot be used as optical I/O; they are not directly connected to photodetectors in the hardware design.
 \begin{figure}[h]
     \begin{center}
@@ -213,7 +213,7 @@ The flexibility of the graph model allows for different levels of abstraction de
 One challenge in graph representation of hexagonal mesh is the feedback loops in the circuit.
 To address this, we chose the directed graph with eight artificial nodes for our model \cite{chen2020graph}, where each port of a PUC is represented with two artificial nodes, for inbound and outbound of the signal.
 The PUC phase shifters are modeled by arcs with the direction of input and output ports.
-Figure\ref{fig:ch2-hexagonal-graph} shows the graph representing the hexagonal mesh fig\ref{fig:ch2-smartlight}.
+Figure~\ref{fig:ch2-hexagonal-graph} shows the graph representing the hexagonal mesh Fig.~\ref{fig:ch2-smartlight}.
 \begin{figure}[h]
     \begin{center}
         \includegraphics{figures/ch2-hexagonal-graph.pdf}
@@ -235,12 +235,12 @@ The graph-based mesh can be systematically connected in a predetermined manner, 
 Conversely, for feedforward architectures, such as Benes or PILOSS meshes, the abstraction can be significantly simplified.
 Since signal propagation in these networks is strictly unidirectional and acyclic, the topology forms a directed acyclic graph (DAG).
 As a result, a single node can often represent an entire PUC or a specific junction without the need for artificial port duplication.
-As illustrated in Figure\ref{fig:ch2-benes-graph}, the benes mesh can be abstracted at different levels of granularity depending on the computational requirements.
+As illustrated in Figure~\ref{fig:ch2-benes-graph}, the benes mesh can be abstracted at different levels of granularity depending on the computational requirements.
 Fig.~\ref{fig:ch2-benes-graph}(a) illustrates a 4×4 Benes topology schematic constructed from six PUCs.
 The corresponding PUC-level graph abstraction is shown in Fig.~\ref{fig:ch2-benes-graph}(b), where each node represents a complete PUC.
 This simplified representation is highly efficient for high-level operations, such as calculating total hardware complexity or performing rapid path routing across large-scale meshes, as the reduced number of nodes minimizes the search space for pathfinding algorithms.
 
-In contrast, the port-level graph (Fig\ref{fig:ch2-benes-graph}(c)) provides a higher-resolution abstraction where each node corresponds to an individual optical port of a PUC.
+In contrast, the port-level graph (Fig.~\ref{fig:ch2-benes-graph}(c)) provides a higher-resolution abstraction where each node corresponds to an individual optical port of a PUC.
 While this increases the total number of nodes and consequently slows down the routing speed in massive meshes, it offers significantly more operational detail.
 This level of abstraction allows the control software not only to find a valid path but also to automatically derive the specific configuration (bar, cross, or tunable) for every PUC along that path.
 Moreover, this detailed model explicitly accounts for waveguide crossings (yellow points in the graph), which often represent critical bottlenecks in terms of insertion loss and crosstalk.

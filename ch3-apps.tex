@@ -183,7 +183,7 @@ Analytical decomposition method offers near instantaneous solutions by mapping t
 However, its efficiency is traded for port flexibility, which is constrained by the feed-forward architecture.
 Regarding physical performance, the device's reconfiguration is driven by thermo-optic actuators, achieving microsecond-scale (\textit{μs}) switching speeds—orders of magnitude faster than traditional MEMS-based approaches (\textit{ms}) \cite{1244924}.
 
-The fist and the third approaches are straightforward to implement and have been previously documented \cite{lopez2020auto, jia2018six}.
+The first and the third approaches are straightforward to implement and have been previously documented \cite{lopez2020auto, jia2018six}.
 Here, we document to a deeper extent the second approach that implements the edge penalty algorithm since it offers significantly better
 computational efficiency than the brute-force sequential routing of the first approach, while avoiding the ports constraints in the Spanke-Benes architecture.
 % algorithm
@@ -222,7 +222,7 @@ computational efficiency than the brute-force sequential routing of the first ap
 % end algorithm
 Refer to pseudo-code of Algorithm~\ref{alg:auto_switch}, in lines 1 and 2, the best paths for each I/O port pair are identified.
 Next, the algorithm checks for conflict edges within these paths (line 4), as conflicting edges within the identified paths will be penalized
-with a higher wight (line 6). A conflicting edge is defined as a PUC associated with more than two paths that requires a different state (cross/bar)
+with a higher weight (line 6). A conflicting edge is defined as a PUC associated with more than two paths that requires a different state (cross/bar)
 in at least two of those paths. A functional switching network needs a conflict free configuration.
 Once problematic edges are penalized, the algorithm recomputes optimal paths for I/O port pairs based on these updated weights and updating the
 preprocessing paths configuration list (lines 7 and 8). If the system detects no further conflicts (lines 10-11), the configuration
