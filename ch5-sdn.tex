@@ -214,7 +214,7 @@ The command used for this operation is as follows:
 \begin{lstlisting}[language=bash, caption={gNMI subscription command for real-time power monitoring.}]
 gnmic -a ${GNMI_HOST:-localhost:50051} --insecure subscribe --path "swtchd:/swtchd/ports/port[port-id='Out32']" --stream-mode sample --sample-interval 100000000
 \end{lstlisting}
-The sampling interval is configured to 100ms, providing a high-resolution telemetry stream.
+The sampling interval is configured to 100 ms, providing a high-resolution telemetry stream.
 Figure~\ref{fig:ch5-subscribe} illustrates the normalized optical power recorded via gNMI telemetry over a 40-second period.
 \begin{figure}[h]
     \begin{center}
