@@ -30,7 +30,7 @@ This architecture offers flexibility and compatibility with existing networking 
 % EPS problem
 However, as bandwidth and scale continue to increase, and as traffic patterns gradually evolve to east-west communication, EPS faces growing limitations.
 Frequent O-E-O conversions raise power consumption, especially with high-speed serializer/deserializer (SerDes) circuits required for 400G to 1.6T links \cite{keysight_800g_16t}.
-In parallel, electronic switch ASICs (Application-Specific Integrated Circuits) also encounter physical I/O constraints, and while techniques such as co-packaged optics improve interface density, they do not remove the power burden of electronic switching cores \cite{minkenberg2021co}.
+In parallel, electronic switch Application-Specific Integrated Circuits (ASICs) also encounter physical I/O constraints, and while techniques such as co-packaged optics improve interface density, they do not remove the power burden of electronic switching cores \cite{minkenberg2021co}.
 In addition, the store-and-forward model introduces buffering and queuing delays, leading to variable latency \cite{1455410}.
 For tightly synchronized large-scale AI training, even small network delays can reduce overall system efficiency.
 
@@ -66,11 +66,11 @@ Most current deployments rely on MEMS mirrors to steer light.
 Although MEMS switches offer low insertion loss and high port counts, they are relatively bulky and operate on millisecond timescales, limiting responsiveness to dynamic AI workloads \cite{1244924, CignalAI2025OCS4Q25}.
 Silicon photonics (SiPh) addresses these drawbacks by integrating photonic building blocks such as Mach-Zehnder interferometers and microring resonators onto CMOS-compatible (Complementary Metal-Oxide-Semiconductor) chips, enabling circuit level programmability \cite{bogaerts2020programmable}.
 These solid-state devices support configuration speed ranging from microseconds to sub-milliseconds, while also providing higher integration density and enabling co-packaged deployment with GPUs and CPUs, thereby reducing system footprint and electrical loss.
-By interconnecting a large number of such building blocks, silicon photonics enables the programmable photonic integrated circuits (PPICs), which can dynamically reconfigure optical connectivity patterns.
+By interconnecting a large number of such building blocks on a silicon photonics platform, programmable photonic integrated circuits (PPICs) can be realized, which can dynamically reconfigure optical connectivity patterns.
 Importantly, beyond conventional point-to-point circuit switching, PPICs can support more flexible interconnect topologies, such as 1$\times$N connections for optical multicasting where one source transmits the same data to multiple destinations \cite{samadi2015optical, dinc2024multicasting}.
 Such communication patterns are common in distributed AI training workloads, particularly in collective operations such as broadcast and all-gather \cite{si2025collective}.
-This capability makes SiPh-based OCS particularly well-suited for emerging AI data center traffic patterns.
-Furthermore, benefiting from wafer-scale fabrication and the absence of mechanical moving parts, SiPh offers improved scalability, robustness, and suitability for next-generation AI networks \cite{perez2025large, torrijos2026industry}.
+This capability makes SiPh-based OCS particularly well-suited for AI traffic patterns.
+Furthermore, benefiting from wafer-scale fabrication and the absence of mechanical moving parts, SiPh offers improved scalability, robustness, and suitability for next-generation networks \cite{perez2025large, torrijos2026industry}.
 
 \section{Challenges} \label{sec:challenges}
 Despite the advantages of silicon photonics for optical circuit switching, deployment of large-scale SiPh-based switching fabric in hyperscale AI networks still faces complexity that has not yet been fully addressed.

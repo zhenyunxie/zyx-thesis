@@ -5,12 +5,12 @@
 In the previous chapter, the theoretical foundations and programming methodologies for programmable photonic integrated circuits were introduced.
 The fundamental building blocks of programmable photonic systems, including splitters, crossings, phase shifters, and PUCs.
 Based on these components, different circuit topologies were discussed, with particular emphasis on recirculating mesh architectures that enable flexible and software-defined photonic functionality.
-The hexagonal mesh as one of the most predominant configurations in programmable integrated photonics which enables synthesize a wide range of optical circuits through appropriate configuration of the PUCs.
+The hexagonal mesh as one of the most predominant topologies in programmable integrated photonics which enables synthesize a wide range of optical circuits through appropriate configuration of the PUCs.
 
 % Objective of this chapter
-Building upon this theoretical framework, this chapter explores the implementation of optical networking applications using a programmable integrated photonic processor with a hexagonal mesh topology.
+This chapter explores the implementation of optical networking applications using a programmable integrated photonic processor with a hexagonal mesh topology.
 By dynamically configuring the PUC states and applying graph-theory-based routing algorithms, different optical networking functionalities can be realized within the same hardware platform.
-Specifically, we experimentally demonstrate several representative optical networking applications, including optical interconnects, optical multicast, and optical circuit switching.
+Specifically, we experimentally demonstrate several representative optical networking applications, including interconnects, multicasting, and circuit switching.
 The corresponding performance metrics are analyzed in detail, highlighting the capability of programmable photonic processors to support flexible and reconfigurable optical networking functions.
 
 % section interconnect
@@ -166,8 +166,8 @@ In addition to path loss difference errors, optical crosstalk originating from a
 In the chip platform used in this work, we have measured that the optical crosstalk of individual PUCs is always below -25 dB.
 Note that we could also employ the on-chip photodetectors and the closed feedback loop to dynamically adjust or fine tune the coupling factors to correct all aforementioned errors starting from the analytical seed provided by the presented algorithm \cite{perez2017multipurpose}.
 % section switch
-\section{Switches (NxN)}\label{sec:switches}
-Optical circuit switching (OCS) is a technology that allows the physical layer of an optical network to be configured through software instructions.
+\section{Switching (NxN)}\label{sec:switches}
+Optical circuit switching is a technology that allows the physical layer of an optical network to be configured through software instructions.
 When traffic patterns are predictable and deterministic, OCS allows for direct data routing and topology adjustments entirely within the optical domain.
 By eliminating the OEO conversion required by traditional EPS, OCS significantly reduces latency, power consumption, and operational costs for AI/ML workloads in modern data centers.
 This section demonstrated the implementation of an on-chip software-defined switch designed for the dynamic control of optical waveguide paths for multiple input and output channels.
