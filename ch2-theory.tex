@@ -2,7 +2,7 @@
 
 \chapter{Theoretical and Programming Methodologies of Photonic Integrated Circuits} \label{chap:fundamentals}
 The rapid advancement of silicon photonics has transitioned integrated optical systems from static designs toward reconfigurable, software-defined architectures.
-This shift enables the dynamic manipulation of light, allowing a single hardware platform to support reconfiguring networking functions and connections \cite{7503119}.
+This shift enables the dynamic manipulation of light, allowing a single hardware platform to support reconfiguring networking functions and connections \cite{bogaerts2020programmable}.
 This chapter introduces the theoretical foundations and programming methodologies required to understand and control programmable PICs.
 It begins with the fundamental building blocks, including 50:50 splitters, waveguide crossings, phase shifters, and 2x2 programmable unit cells (PUCs).
 The transfer-matrix models of these components are presented to describe how optical signals are manipulated within the circuit.
@@ -236,7 +236,7 @@ Conversely, for feedforward architectures, such as Benes or PILOSS meshes, the a
 Since signal propagation in these networks is strictly unidirectional and acyclic, the topology forms a directed acyclic graph (DAG).
 As a result, a single node can often represent an entire PUC or a specific junction without the need for artificial port duplication.
 As illustrated in Figure~\ref{fig:ch2-benes-graph}, the benes mesh can be abstracted at different levels of granularity depending on the computational requirements.
-Fig.~\ref{fig:ch2-benes-graph}(a) illustrates a 4×4 Benes topology schematic constructed from six PUCs.
+Fig.~\ref{fig:ch2-benes-graph}(a) illustrates a 4$\times$4 Benes topology schematic constructed from six PUCs.
 The corresponding PUC-level graph abstraction is shown in Fig.~\ref{fig:ch2-benes-graph}(b), where each node represents a complete PUC.
 This simplified representation is highly efficient for high-level operations, such as calculating total hardware complexity or performing rapid path routing across large-scale meshes, as the reduced number of nodes minimizes the search space for pathfinding algorithms.
 
@@ -262,7 +262,7 @@ This ensures that both cyclic and acyclic photonic architectures can be modeled,
 \section{Software-Defined Network (SDN)}\label{sec:sdn}
 \subsection{SDN architecture}\label{sub:sdn_arch}
 SDN is an architectural paradigm that separates the control plane from the data plane and enables centralized, programmable network management \cite{kreutz2014software}.
-In traditional networks, network forwarding devices independently implement distributed control protocols, which tightly couple decision-making logic with packet or circuit processing.
+In traditional networks, forwarding devices independently implement distributed control protocols, which tightly couple decision-making logic with packet or circuit processing.
 This tightly coupled design limits flexibility, complicates automation, and makes large-scale optimization difficult.
 SDN addresses these limitations by abstracting control functionality into software-based controllers that expose programmable interfaces to applications.
 Through this decoupling, the network can be treated as a programmable system rather than a collection of independently configured devices.
@@ -327,7 +327,7 @@ Controllers manipulate YANG-defined data using management protocols.
 
 NETCONF, an early southbound protocol, operates over secure channels and supports transactional configuration and rollback, improving reliability compared to traditional command-line based management \cite{rfc6241}.
 More recently, gRPC-based frameworks have been adopted for higher efficiency and scalability \cite{draft_kumar_rtgwg_grpc_protocol_00}.
-In particular, gNMI (gRPC Network Management Interface) enables model-driven configuration and high-frequency telemetry using a set of RPC operations, including \textit{Get}, \textit{Set}, and \textit{Subscribe} \cite{openconfig_gnmi_spec, cisco_gnmi_2018}.
+In particular, gRPC Network Management Interface (gNMI) enables model-driven configuration and high-frequency telemetry using a set of RPC operations, including \textit{Get}, \textit{Set}, and \textit{Subscribe} \cite{openconfig_gnmi_spec, cisco_gnmi_2018}.
 The \textit{Get} operation retrieves operational or configuration data, while \textit{Set} allows controllers to modify configuration parameters defined in YANG models.
 The \textit{Subscribe} operation supports streaming telemetry, allowing controllers to continuously monitor selected data nodes in network devices.
 Subscriptions can operate in several modes.
@@ -342,18 +342,18 @@ These mechanisms enable flexible trade-offs between monitoring accuracy, respons
 Northbound interfaces complement these southbound mechanisms by offering applications and orchestration systems simplified access to network functions.
 REST APIs and the Transport API (TAPI) for transport networks are common examples, providing standardized ways to query network state, request services, and orchestrate resources across multiple devices and vendors \cite{github_rest_api_docs, rfc8597}.
 To further support multi-vendor interoperability and operational consistency, operator-led initiatives such as OpenConfig provide vendor-neutral YANG models for configuration and telemetry \cite{openconfig_net}.
-Open-source platforms like SONiC (Software for Open Networking in the Cloud) demonstrate these concepts in production, running on merchant switches with YANG- and gNMI-based management to realize programmable, model-driven networks \cite{sonic_foundation}.
+Open-source platforms like Software for Open Networking in the Cloud (SONiC) run on merchant switches and support programmable, model-driven network management through interfaces such as YANG and gNMI, enabling integration with modern SDN controllers \cite{sonic_foundation}.
 \subsection{Optical SDN}\label{sub:optical_sdn}
 Building on the layered architecture and model-driven management described above, SDN concepts have been extended from packet networks to optical networks, giving rise to Optical SDN \cite{7503119}.
 At the physical layer, controllers can dynamically manage Layer 1 optical resources, coordinating photonic components to adapt bandwidth and routing according to traffic demands.
 Critical devices in these networks include Reconfigurable Optical Add-Drop Multiplexers (ROADMs), which allow specific wavelengths to be added, dropped, or passed through dynamically \cite{casellas2019sdn};
 Dense Wavelength Division Multiplexing (DWDM) systems, which multiple optical signals on different wavelengths over the same fiber to maximize capacity \cite{amaya2014software};
 and transceivers, which convert electrical signals to optical signals and vice versa \cite{munoz2019sdn}.
-Through SDN, controllers can coordinate these devices to establish end-to-end optical circuits, optimize resource utilization, and automate provisioning without manual configuration.
+Standardized frameworks such as OpenROADM define YANG-based models and APIs for these devices, enabling SDN controllers to orchestrate multi-vendor optical hardware, establish end-to-end circuits, optimize resources, and automate provisioning without manual configuration.
 By decoupling the control plane from hardware, Optical SDN brings flexibility and programmability to high-capacity optical networks.
 
 OCS takes this programmability even further, enabling dynamic L1 network topology deployment without packet-level processing.
-Unlike traditional Optical SDN, OCS does not require transceivers, modulators, or explicit wavelength control; circuits are established purely through switch configuration based on traffic patterns.
+Unlike traditional Optical SDN frameworks, OCS does not require transceivers, modulators, or explicit wavelength control; circuits are established purely through switch configuration based on traffic patterns.
 Although OCS offers flexibility in network connection topology and transparent transmission, there is currently no widely adopted standard, and different vendors implement diverse architectures.
 Open initiatives, such as the Open Compute Project's (OCP) Optical Circuit Switching Subproject, provide open specifications and reference architectures to promote interoperability and accelerate research and deployment of programmable optical networks \cite{opencompute_optical_circuit_switching}.
 

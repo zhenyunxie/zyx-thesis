@@ -17,8 +17,8 @@ In Chapter~\ref{chap:applications_on_pip}, programmable photonic processors base
 While such multipurpose architectures provide strong versatility, they inherently suffer from limited scalability when applied to high-radix switching fabrics.
 As a result, Chapter~\ref{chap:ocs_archs} presents several application-specific switching architectures; and for very high-radix optical switches in silicon photonics, we further analyzed the insertion loss as a function of the two dominant contributors: switching cells and waveguide crossings.
 Figure~\ref{fig:ch6_pic_loss_projection} demonstrates this projection for 128- and 256-port radices, where the grey dashed lines indicate state-of-the-art building blocks, representing the current technological baseline.
-As shown in Figure~\ref{fig:ch6_pic_loss_projection}(a), for the 128×128 case, all architectures except PILOSS can achieve a total loss below 5 dB provided that the switching-cell and crossing losses are reduced to 0.15 dB and 1.5 mdB, respectively.
-For even higher radices, such as 256×256 in Figure~\ref{fig:ch6_pic_loss_projection}(b), this 5 dB PIC-loss target remains feasible as long as the switching-cell and crossing losses are reduced below 0.1 dB and 1 mdB, respectively.
+As shown in Figure~\ref{fig:ch6_pic_loss_projection}(a), for the 128$\times$128 case, all architectures except PILOSS can achieve a total loss below 5 dB provided that the switching-cell and crossing losses are reduced to 0.15 dB and 1.5 mdB, respectively.
+For even higher radices, such as 256$\times$256 in Figure~\ref{fig:ch6_pic_loss_projection}(b), this 5 dB PIC-loss target remains feasible as long as the switching-cell and crossing losses are reduced below 0.1 dB and 1 mdB, respectively.
 It should be noted that the loss calculations also include additional building blocks listed in Table~\ref{tab:ch4-sota-bb}, which are required to realize the complete circuit and significantly contribute to the overall PIC performance.
 These components account for on-chip polarization management, coupling efficiency, and propagation loss.
 \begin{figure*}[h]
@@ -53,7 +53,7 @@ Therefore, performance metrics such as signal-to-noise ratio, bit-error ratio, a
 
 \subsection{Optical crosstalk and calibration} \label{subsec:crosstalk}
 As covered in Chapter~\ref{chap:ocs_archs}, optical crosstalk becomes increasingly critical as the switching fabric scales.
-While the 64×64 dilated Benes-like architecture can achieve signal-to-noise ratios exceeding 45~dB at the central wavelength, its performance degrades noticeably at wavelengths farther from the center.
+While the 64$\times$64 dilated Benes-like architecture can achieve signal-to-noise ratios exceeding 45~dB at the central wavelength, its performance degrades noticeably at wavelengths farther from the center.
 This degradation is primarily attributed to the wavelength-dependent behavior of the PUCs, where crosstalk increases significantly at the spectral edges \cite{li2024power}.
 Such behavior is particularly relevant for systems operating over wider wavelength ranges, such as FR4, where uniform performance across channels is required.
 In this context, calibration plays an important role in shaping the crosstalk response over wavelength.
@@ -122,7 +122,8 @@ By enabling simultaneous transmission and reception on the same physical port, a
 In addition to insertion loss and crosstalk, such configurations require careful management of reflection-induced crosstalk, which can degrade signal integrity if not properly controlled.
 
 Finally, application-level techniques can also contribute to improving the effective utilization of switching resources.
-As demonstrated in Chapter~\ref{chap:applications_on_pip}, programmable photonic meshes can support multicast operations, which can also be extended to feedforward OCS architectures.
+As demonstrated in Chapter~\ref{chap:applications_on_pip}, general-purpose programmable photonic meshes can support multicast operations, which can also be extended to feedforward circuit architectures.
+With the integration of SOA, the optical power of each split branch can be compensated, mitigating splitting loss and further enhancing scalability.
 This capability is particularly relevant for distributed AI workloads, where collective communication patterns such as broadcast and all-gather are common \cite{samadi2015optical, moritz2018ray}.
 By enabling native multicast at the photonic layer, the number of required point-to-point connections can be reduced, thereby improving overall network efficiency.
 
@@ -151,11 +152,10 @@ At its core, this work develops a graph-theoretic modeling and programming frame
 A key finding is that the complexity of photonic integrated circuits, particularly those involving hundreds of interferometric elements, can be effectively abstracted into nodes connections and edge weights.
 This abstraction is for automation, enabling the translation of high-level connectivity requirements into device-level PUCs states.
 This approach was first validated through the iPronics Smartlight platform.
-The successful commercial release and public demonstration of iPronics Smartlight at OFC 2023 proved that hexagonal programmable meshes could serve as a multipurpose platform for diverse functions, including optical interconnect, multicasting and circuit switch for data center \cite{ipronics_smartlight}.
+The successful commercial release and public demonstration of iPronics Smartlight at OFC 2023 proved that different networking applications including optical interconnect, multicasting and circuit switching can be easily programmed and reconfigured on a single silicon processor~\cite{ipronics_smartlight}.
 
-While the general-purpose meshes offer high flexibility, the inherent hardware overhead—characterized by accumulated insertion loss and a cell count per path—limits their scalability in high-radix data center switching.
-To address this limitation, this work moves toward application-specific photonic switching architectures.
-The thesis explores application-specific OCS designs using the same graph-theory-based modeling approach, different topologies are analyzed and compared in terms of hardware complexity, insertion loss, signal-to-noise ratio, and blocking behavior.
+Taking the graph-theory-based modeling approach for the integrated photonic circuits, this thesis explores application-specific OCS designs, as general-purpose topologies is inherently limited to scale in high-radix data center switching.
+Different topologies are analyzed and compared in terms of hardware complexity, insertion loss, signal-to-noise ratio, and blocking behavior.
 The results indicate that while some architectures perform well at small scales, their hardware requirements limit scalability.
 Dilated Benes-like architectures are the most suitable for 128-port and 256-port silicon photonic switches within current CMOS-compatible fabrication limits.
 Furthermore, the analysis of blocking behavior highlights the importance of routing strategies and acceptable performance trade-offs in practical deployments.
@@ -166,9 +166,9 @@ The experimental validation demonstrated that internal operations can be abstrac
 This research proves that silicon photonic OCS can operate as standard equipments in a software-defined environment, supporting features like path configuration and telemetry that are essential for practical used.
 The inclusion of specialized data nodes in the YANG model sets a precedent for the standardization of photonic parameters.
 
-The outcomes of this research are reflected in the development of the iPronics ONE platform.
+The outcomes of this research are then reflected in the development of the iPronics ONE platform.
 Demonstrated at OFC 2025 as the world's first commercial silicon photonic OCS, iPronics ONE provides practical support for validation of the concepts presented in this thesis \cite{ipronics_one32_2025}.
-The key design decisions behind the platform—such as the choice of scalable topologies, gNMI-controlled software and Yang model are directly derived from the proposed modeling framework and its associated software development tools in this thesis.
+The key design decisions behind the platform—such as the design of scalable topologies, gNMI-controlled software and Yang model are directly derived from the proposed modeling framework and its associated software development tools in this thesis.
 
 In summary, this research advances silicon photonic switching toward practical deployment.
 While OCS is not a universal replacement for electrical packet switching, it provides an essential high-capacity layer for the AI era.

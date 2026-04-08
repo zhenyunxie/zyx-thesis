@@ -51,7 +51,7 @@ After selecting one path, a new port request—from input 7 to output 5—arises
 A conflict occurs between the two paths shown in blue and yellow in Figure~\ref{fig:ch4-routing}(b), as both attempt to exit through the same output and share the same edge, marked with a red cross.
 This is physically impossible and is classified as conflict of type 1, due to blocking.
 The second type of conflict is illustrated in Figure~\ref{fig:ch4-routing}(c), where another path in yellow—from input 7 to output 3—shares a node marked with a red cross.
-While two signals can cross in a 2×2 MZI in a photonic circuit, this generates first-order crosstalk, identified as conflict of type 2.
+While two signals can cross in a 2$\times$2 MZI in a photonic circuit, this generates first-order crosstalk, identified as conflict of type 2.
 \begin{figure}[t]
     \begin{center}
         \includegraphics[width=6.5in]{figures/ch4-routing.pdf}
@@ -105,7 +105,7 @@ The transfer-matrix method \cite{baliliTRANSFERMATRIXMETHOD2012} was applied to 
 By summing the crosstalk across all ports and normalizing to the loss, the SNR was computed as a function of wavelength, with the leakage of the switching and crossing cells derived from typical extinction ratio (ER) values, using standard silicon photonic components and thermo-optic phase shifting \cite{gomez-hidalgoFundamentalBuildingBlocksa} (see Figure~\ref{fig:ch4-optical-performance}(a)).
 
 The crosstalk in the switching cells is strongly dependent on the spectral response in the O-band region, reaching approximately –40 dB at center wavelengths and –20 dB at corner wavelengths.
-This occurs due to the thermo-optic phase shifter response and the uneven splitting ratio of the 2×2 MZI considered in this study.
+This occurs due to the thermo-optic phase shifter response and the uneven splitting ratio of the 2$\times$2 MZI considered in this study.
 The inherent wavelength-dependent phase shift produces the exact phase for maximum extinction ratio (ER) at a given central point in the spectrum, but the ER decreases outside this wavelength due to phase tuning inaccuracies, with the added effect of the uneven splitting ratio.
 In contrast, the ER for the crossings remains below –60 dB and flat across the entire O-band, if properly designed.
 \begin{figure}[H]
@@ -315,9 +315,9 @@ Overall, these results demonstrate that, under dynamic traffic conditions, the D
 
 \section{Comparative analysis of architecture}\label{sec:architecture_comparison} % (fold)
 Table~\ref{tab:ch4-summary-metrics} presents the overall comparison in terms of hardware complexity, optical performance, and blocking behavior for the networks considered.
-To assess the integration density of photonic components, an additional metric based on the total number of crossings and the corresponding die size is introduced, assuming footprints of 250×100 $um^{2}$ and 25×25 $um^{2}$ for the switching cell and the crossing cell, respectively.
+To assess the integration density of photonic components, an additional metric based on the total number of crossings and the corresponding die size is introduced, assuming footprints of 250$\times$100 $um^{2}$ and 25$\times$25 $um^{2}$ for the switching cell and the crossing cell, respectively.
 Loss and SNR values correspond to the worst-case path and wavelength, using the component-level parameters reported in Table~\ref{tab:ch4-sota-bb}, while blocking is categorized as low, medium, or high relative to the other architectures.
-As shown, Benes-like networks offer reduced hardware utilization—even a high-radix 128$\times$128 switch can be integrated within a 20×20 $mm^{2}$ die—together with relatively low optical loss.
+As shown, Benes-like networks offer reduced hardware utilization—even a high-radix 128$\times$128 switch can be integrated within a 20$\times$20 $mm^{2}$ die—together with relatively low optical loss.
 However, these architectures are RNB, and their blocking probability limits their applicability in scenarios where wide-sense or strictly non-blocking operation is required.
 Notably, Double Dilated Benes improves the SNR to values above 45 dB and reduces blocking, while still maintaining a substantially lower component count compared to other architectures, which facilitates integration within constrained design areas.
 The Dilated Banyan architecture exhibits excellent optical performance and SNB behavior, but at the cost of very large space utilization.
@@ -325,7 +325,7 @@ For a 128$\times$128 radix, the required die size reaches approximately 850 $mm^
 In contrast, the PILOSS network is wide-sense non-blocking (WSNB) but shows poor scalability beyond a 32$\times$32 radix in terms of optical loss, SNR, and integration capability, which remains inferior to that of Benes-like configurations.
 However, it is worth noting that significant efforts have been made to improve the SNR performance of the PILOSS network by implementing switching elements based on dual Mach–Zehnder structures \cite{suzukiLargescaleSiliconPhotonics2025a}, suppressing first-order crosstalk without increasing network loss, at the expense of approximately doubling the number of MZIs.
 The required SNR of a switching network naturally depends on the application.
-Focusing on datacenter interconnects, transceivers are predominantly based on intensity modulation and direct detection (IMDD). For a typical PAM-4 format at 100Gbps per lane, an optical SNR (OSNR) above 30 dB is generally needed to achieve a BER below 1×$10^{-4}$ \cite{shiTransmissionPerformanceComparison2017,zhangTransmissionSingleLane2016}.
+Focusing on datacenter interconnects, transceivers are predominantly based on intensity modulation and direct detection (IMDD). For a typical PAM-4 format at 100Gbps per lane, an optical SNR (OSNR) above 30 dB is generally needed to achieve a BER below 1$\times$$10^{-4}$ \cite{shiTransmissionPerformanceComparison2017,zhangTransmissionSingleLane2016}.
 Although this threshold does not directly apply to our reported SNRs, which quantify crosstalk rather than white noise, it provides a useful benchmark for the performance a network must achieve.
 \begin{table*}[!t]
     \footnotesize
