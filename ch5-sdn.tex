@@ -12,6 +12,7 @@
 
 \lstset{
     language=yangtree,
+    emph={set,get,subscribe},
     basicstyle=\ttfamily\footnotesize,
     keywordstyle=[1]\color{yangrw}\bfseries,
     keywordstyle=[2]\color{yangtype},
@@ -185,7 +186,7 @@ In this configuration, each input port is mapped directly to the corresponding o
 For readability, only the first few and last elements of the port lists are shown.
 % The command SET
 \begin{lstlisting}[language=bash, caption={Example gNMIc SET command for configuring a 32$\times$32 switch matrix using bulk connection.}, label={lst:gnmic_bulk_set}]
-gnmic -a ${GNMI_HOST:50051} --timeout 60s set --update-path "swtchd:/swtchd/connections/connection[uid='bulk_uid']" --encoding json_ietf --update-value 
+gnmic set --update-path "swtchd:/swtchd/connections/connection[uid='bulk_uid']" --encoding json_ietf --update-value 
     '{
         "ports-in":  [1, 2, 3, ..., 30, 31, 32],
         "ports-out": [1, 2, 3, ..., 30, 31, 32],
@@ -199,7 +200,7 @@ An example \texttt{gNMIc} \texttt{GET} command used to query the power of a spec
 In this example, the controller retrieves the status of output port \texttt{Out1} with measured optical power.
 % The command GET
 \begin{lstlisting}[language=bash, caption={Example gNMIc GET command for retrieving port power.}, label={lst:gnmic_get}]
-gnmic -a ${GNMI_HOST:-localhost:50051} get --path "swtchd:/swtchd/ports/port[port-id='Out1']"
+gnmic get --path "swtchd:/swtchd/ports/port[port-id='Out1']"
 \end{lstlisting}
 The returned data includes the port identifier, port number, port type, and the measured optical power.
 A simplified example of the returned output is shown in Listing~\ref{lst:gnmic_get_output}.
@@ -253,7 +254,7 @@ To further assess the impact of different routing paths on high-speed data trans
 As shown in Figure~\ref{fig:ch5-set-get-ber}(c), the BER performance for both the identity and reversal matrices remains well below the pre Forward Error Correction (FEC) threshold of $2.4\times10^{-4}$, which is the commonly accepted standard target value in high speed optical communication systems \cite{ran2023module}.
 The average BER across all measured paths is approximately $1.9\times10^{-5}$.
 While slight variations in BER are observed across different output ports, likely due to the non-uniform insertion loss of the SiPh switching stages and the manual fiber connection in the experimental setup, the consistency between the two topologies shows that the SDN controller can dynamically reconfigure the network without compromising link stability,
-and the ability to maintain BER within the $\times10^{-5}$ to $\times10^{-6}$ range while performing bulk reconfigurations.
+and the ability to maintain BER within the $10^{-5}$ to $10^{-6}$ range while performing bulk reconfigurations.
 
 The dynamic monitoring capability of the SDN controller is validated through a gNMI subscription experiment.
 Using the \textit{SAMPLE} subscription mode defined in the custom YANG model, the controller monitors the optical power of a specific output port (Port 32) in near real-time.
@@ -261,7 +262,7 @@ To initiate the telemetry stream, we utilize the gnmic CLI client to subscribe t
 The command used for this operation is as follows:
 % The command Subscribe
 \begin{lstlisting}[language=bash, caption={gNMI subscription command for real-time power monitoring.}]
-gnmic -a ${GNMI_HOST:50051} --insecure subscribe --path "swtchd:/swtchd/ports/port[port-id='Out32']" --stream-mode sample --sample-interval 100000000
+gnmic subscribe --path "swtchd:/swtchd/ports/port[port-id='Out32']" --stream-mode sample --sample-interval 100000000
 \end{lstlisting}
 The sampling interval is configured to 100 ms, providing a high-resolution telemetry stream.
 Figure~\ref{fig:ch5-subscribe} illustrates the normalized optical power recorded via gNMI telemetry over a 40-second period.
@@ -270,10 +271,10 @@ Figure~\ref{fig:ch5-subscribe} illustrates the normalized optical power recorded
         \includegraphics{figures/ch5-subscribe.pdf}
     \end{center}
     \caption{Normalized optical power monitoring obtained from the gNMI subscribe telemetry stream.
-    The values are normalized with respect to the input power of 6.5 dBm.
-    The connection is established at 6 seconds, as indicated by the green dashed line. 
-    A stable and consistent output power is observed between 6 and 28 seconds, highlighted by the green shaded region.
-    At 28 seconds, a drop request is executed, marked by the red dashed line.
+        The values are normalized with respect to the input power of 6.5 dBm.
+        The connection is established at 6 seconds, as indicated by the green dashed line.
+        A stable and consistent output power is observed between 6 and 28 seconds, highlighted by the green shaded region.
+        At 28 seconds, a drop request is executed, marked by the red dashed line.
     }\label{fig:ch5-subscribe}
 \end{figure}
 Initially, from t=0 to t≈6~s, no connection is established to Port 32, and the measured power remains at the noise floor of approximately -58 dB, which is generated by the power-monitoring photodiode
