@@ -347,15 +347,15 @@ Open-source platforms like Software for Open Networking in the Cloud (SONiC) run
 Building on the layered architecture and model-driven management described above, SDN concepts have been extended from packet networks to optical networks, giving rise to Optical SDN \cite{7503119}.
 At the physical layer, controllers can dynamically manage Layer 1 optical resources, coordinating photonic components to adapt bandwidth and routing according to traffic demands.
 Critical devices in these networks include Reconfigurable Optical Add-Drop Multiplexers (ROADMs), which allow specific wavelengths to be added, dropped, or passed through dynamically \cite{casellas2019sdn};
-Dense Wavelength Division Multiplexing (DWDM) systems, which multiple optical signals on different wavelengths over the same fiber to maximize capacity \cite{amaya2014software};
+Dense Wavelength Division Multiplexing (DWDM) systems, which multiplex multiple optical signals on different wavelengths over the same fiber to maximize capacity \cite{amaya2014software};
 and transceivers, which convert electrical signals to optical signals and vice versa \cite{munoz2019sdn}.
 Standardized frameworks such as OpenROADM define YANG-based models and APIs for these devices, enabling SDN controllers to orchestrate multi-vendor optical hardware, establish end-to-end circuits, optimize resources, and automate provisioning without manual configuration.
 By decoupling the control plane from hardware, Optical SDN brings flexibility and programmability to high-capacity optical networks.
 
 OCS takes this programmability even further, enabling dynamic L1 network topology deployment without packet-level processing.
-Unlike traditional Optical SDN frameworks, OCS does not require transceivers, modulators, or explicit wavelength control; circuits are established purely through switch configuration based on traffic patterns.
-Although OCS offers flexibility in network connection topology and transparent transmission, there is currently no widely adopted standard, and different vendors implement diverse architectures.
-Open initiatives, such as the Open Compute Project's (OCP) Optical Circuit Switching Subproject, provide open specifications and reference architectures to promote interoperability and accelerate research and deployment of programmable optical networks \cite{opencompute_optical_circuit_switching}.
+Unlike traditional Optical SDN frameworks, OCS does not require transceivers, modulators, or explicit wavelength control; circuits are established purely through switch configuration based on network connections topology and traffic patterns.
+Although OCS offers flexibility in network configurations, there is currently no widely adopted standard, and different vendors implement diverse architectures.
+Open initiatives, such as the Open Compute Project's (OCP) Optical Circuit Switching Subproject, aim to provide open specifications and reference architectures to promote interoperability and accelerate research and deployment of programmable optical networks \cite{opencompute_optical_circuit_switching}.
 
 Building on these developments, we have proposed our SDN related control software for silicon photonic OCS.
 The detailed design, implementation, and evaluation of this approach will be presented in Chapter~\ref{chap:sdn_for_ocs}
