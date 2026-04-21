@@ -7,32 +7,32 @@
 
 \chapter*{Resumen}
 \pdfbookmark[0]{Resumen}{resumen}
-La fotónica de silicio proporciona una plataforma escalable y rentable para la transmisión de datos de alto ancho de banda y bajo consumo energético, lo que la convierte en una solución prometedora para las interconexiones de centros de datos de próxima generación.
-En particular, la conmutación de circuitos permite una conectividad óptica directa tanto para arquitecturas de red "scale-up" como "scale-out", evitando conversiones óptico–eléctrico–óptico.
-Sin embargo, la implementación práctica de tejidos de conmutación fotónica a gran escala está limitada no solo por las capacidades del hardware, sino también por la falta de metodologías escalables de programación y control.
+La fotónica de silicio proporciona una plataforma escalable y rentable para la transmisión de datos de alta velocidad y bajo consumo energético, lo que la convierte en una solución prometedora para las interconexiones de centros de datos de próxima generación.
+En particular, el conmutado de circuitos permite conectividad óptica directa tanto para arquitecturas de red “scale-up” como “scale-out”, evitando las conversiones óptico–eléctrico–óptico.
+Sin embargo, el despliegue práctico de tejidos de conmutación fotónica a gran escala está limitado no solo por las capacidades del hardware, sino también por la falta de metodologías de programación y control escalables.
 
-Esta tesis aborda estas limitaciones introduciendo una metodología de programación basada en grafos que traduce los circuitos fotónicos en grafos ponderados, proporcionando una abstracción matemática rigurosa de tejidos complejos de circuitos fotónicos.
-Los bloques básicos fotónicos y sus conexiones se representan como elementos de grafo con métricas físicas asociadas, lo que permite la programación de alto nivel y la optimización sistemática de arquitecturas de hardware y metodologías de control, facilitando así el diseño y análisis eficientes y escalables de circuitos fotónicos.
-Basándose en esta metodología, se desarrolla un conjunto de algoritmos de enrutamiento y configuración para soportar interconexiones ópticas, multidifusión y conmutación de circuitos dentro de procesadores fotónicos de propósito general, demostrando que diversas funciones de red pueden implementarse en una única plataforma de hardware sin intervención manual.
-Si bien la arquitectura de propósito general permite la funcionalidad de conmutación de circuitos, también introduce desafíos inherentes al escalar hacia tejidos de conmutación de gran tamaño y alta radix.
-Para superar estas limitaciones de escalabilidad, este trabajo establece además un enfoque unificado para el modelado y la evaluación comparativa de arquitecturas de conmutadores fotónicos de alta radix.
-Al combinar representaciones en grafos con métricas de la capa física como la pérdida de inserción, la diafonía y la relación señal-ruido, se proporciona una forma sistemática de evaluar los compromisos de escalabilidad entre distintas topologías y estrategias de enrutamiento, ofreciendo así directrices prácticas de diseño para tejidos de conmutación que equilibren la complejidad del hardware y el rendimiento óptico bajo condiciones de red realistas.
-Por último, implementamos un plano de control definido por software basado en interfaces dirigidas por modelos y gNMI.
-Esto permite gestionar los conmutadores fotónicos como elementos de red programables, alineando los recursos ópticos de la capa 1 con los flujos de trabajo existentes de SDN y permitiendo la reconfiguración dinámica de interconexiones y su monitorización.
-Nuestro trabajo establece una base escalable y gestionable para integrar la conmutación de circuitos fotónicos en sistemas de redes de IA de próxima generación.
+Esta tesis introduce una metodología de programación basada en grafos que traduce los circuitos fotónicos en grafos ponderados, proporcionando una abstracción matemática de tejidos de circuitos complejos.
+Los componentes de circuitos integrados y sus conexiones se representan como elementos del grafo con métricas físicas, permitiendo programación de alto nivel, optimización sistemática de arquitecturas de hardware y metodologías de control.
+Utilizando este enfoque, se desarrollan algoritmos de enrutamiento y configuración para soportar interconexiones ópticas, multicast y conmutación de circuitos en un procesador fotónico de propósito general, demostrando que diversas funciones de red pueden realizarse en una única plataforma sin intervención manual.
+Para abordar los desafíos de escalabilidad en tejidos de circuitos a gran escala, la metodología basada en grafos se amplía para modelar y evaluar diferentes topologías y estrategias de enrutamiento.
+La incorporación de métricas de capa física como pérdida por inserción, diafonía y relación señal-ruido permite una evaluación cuantitativa de los compromisos y proporciona orientación práctica de diseño.
+Finalmente, se implementa un plano de control definido por software utilizando interfaces basadas en modelos y gNMI para habilitar la comunicación sur, alineando los recursos ópticos de Capa 1 con el marco SDN.
+
+Este trabajo demuestra que una metodología unificada basada en grafos proporciona tanto programabilidad a nivel de hardware como control a nivel de red para conmutadores fotónicos integrados.
+Establece una base escalable para integrar la conmutación de circuitos fotónicos en sistemas de redes impulsados por IA, soportando interconexiones ópticas flexibles, de alto rendimiento y fáciles de gestionar.
 
 \chapter*{Resum}
 \pdfbookmark[0]{Resum}{resum}
-La fotònica de silici proporciona una plataforma escalable i eficient en costos per a la transmissió de dades d’alt ample de banda i baix consum energètic, cosa que la converteix en una solució prometedora per a les interconnexions de centres de dades de pròxima generació.
-En particular, la commutació de circuits permet una connectivitat òptica directa tant per a arquitectures de xarxa *scale-up* com *scale-out*, evitant conversions òptic–elèctric–òptic.
-No obstant això, la implementació pràctica de teixits de commutació fotònica a gran escala està limitada no sols per les capacitats del maquinari, sinó també per la manca de metodologies escalables de programació i control.
+La fotònica de silici proporciona una plataforma escalable i rendible per a la transmissió de dades d’alta velocitat i baix consum energètic, convertint-la en una solució prometedora per a les interconnexions de centres de dades de nova generació.
+En particular, el commutació de circuits permet connectivitat òptica directa tant per a arquitectures de xarxa “scale-up” com “scale-out”, evitant les conversions òptic–elèctric–òptic.
+No obstant això, el desplegament pràctic de teixits de commutació fotònica a gran escala està limitat no sols per les capacitats del maquinari, sinó també per la manca de metodologies de programació i control escalables.
 
-Aquesta tesi aborda aquestes limitacions introduint una metodologia de programació basada en grafs que tradueix els circuits fotònics en grafs ponderats, proporcionant una abstracció matemàtica rigorosa de teixits complexos de circuits fotònics.
-Els blocs bàsics fotònics i les seues connexions es representen com a elements de graf amb mètriques físiques associades, la qual cosa permet la programació d’alt nivell i l’optimització sistemàtica d’arquitectures de maquinari i metodologies de control, facilitant així el disseny i l’anàlisi eficients i escalables de circuits fotònics.
-Basant-se en aquesta metodologia, es desenvolupa un conjunt d’algorismes d’encaminament i configuració per a donar suport a interconnexions òptiques, multidifusió i commutació de circuits dins de processadors fotònics de propòsit general, demostrant que diverses funcions de xarxa poden implementar-se en una única plataforma de maquinari sense intervenció manual.
-Encara que l’arquitectura de propòsit general permet la funcionalitat de commutació de circuits, també introdueix desafiaments inherents a l’hora d’escalar cap a teixits de commutació de gran grandària i alta radix.
-Per a superar aquestes limitacions d’escalabilitat, aquest treball estableix a més un enfocament unificat per al modelatge i l’avaluació comparativa d’arquitectures de commutadors fotònics d’alta radix.
-Combinant representacions en grafs amb mètriques de la capa física com la pèrdua d’inserció, la diafonia i la relació senyal-soroll, es proporciona una manera sistemàtica d’avaluar els compromisos d’escalabilitat entre diferents topologies i estratègies d’encaminament, oferint així directrius pràctiques de disseny per a teixits de commutació que equilibren la complexitat del maquinari i el rendiment òptic sota condicions de xarxa realistes.
-Finalment, implementem un pla de control definit per programari basat en interfícies dirigides per models i gNMI.
-Això permet gestionar els commutadors fotònics com a elements de xarxa programables, alineant els recursos òptics de la capa 1 amb els fluxos de treball existents de SDN, i permetent la reconfiguració dinàmica de les interconnexions i la seua monitorització.
-El nostre treball estableix una base escalable i gestionable per a integrar la commutació de circuits fotònics en sistemes de xarxes d’IA de pròxima generació.
+Aquesta tesi introdueix una metodologia de programació basada en grafos que tradueix els circuits fotònics en grafos ponderats, proporcionant una abstracció matemàtica de teixits de circuits complexos.
+Els components de circuits integrats i les seues connexions es representen com elements del graf amb mètriques físiques, permetent programació d’alt nivell, optimització sistemàtica d’arquitectures de maquinari i metodologies de control.
+Mitjançant aquest enfocament, es desenvolupen algoritmes d’encaminament i configuració per a suportar interconnexions òptiques, multicast i commutació de circuits en un processador fotònic de propòsit general, demostrant que diverses funcions de xarxa es poden realitzar en una única plataforma sense intervenció manual.
+Per a abordar els desafiaments d’escalabilitat en teixits de circuits a gran escala, la metodologia basada en grafos s’amplia per a modelar i avaluar diferents topologies i estratègies d’encaminament.
+La incorporació de mètriques de capa física com la pèrdua per inserció, diafonia i relació senyal soroll permet una avaluació quantitativa dels compromisos i proporciona orientació pràctica de disseny.
+Finalment, s’implementa un pla de control definit per programari utilitzant interfícies basades en models i gNMI per a habilitar la comunicació sud, alineant els recursos òptics de la Capa 1 amb el marc SDN.
+
+Aquest treball demostra que una metodologia unificada basada en grafos proporciona tant programabilitat a nivell de maquinari com control a nivell de xarxa per a commutadors fotònics integrats.
+Estableix una base escalable per a integrar la commutació de circuits fotònics en sistemes de xarxes impulsats per IA, donant suport a interconnexions òptiques flexibles, d’alt rendiment i fàcils de gestionar.
