@@ -49,8 +49,8 @@ As the switching radix getting higher, these tolerances become even more stringe
 A potential approach to mitigate the accumulated losses in large scale switching fabrics is through integrate optical amplification system.
 SOAs are suitable candidates for this purpose, as we demonstrated in Chapter~\ref{chap:sdn_for_ocs}, where SOAs can provide effective optical gain to compensate the losses across all paths, especially in the O-band.
 However, introducing active components also brings additional system level considerations, as optical amplifiers may introduce noise and signal distortions that affect transmission quality \cite{ASSADIHAGHI2010158, lippiatt2024analysis}.
-Therefore, performance metrics such as signal-to-noise ratio (SNR), bit-error ratio, and transmitter dispersion eye closure (TDECQ), need to be carefully evaluated to ensure reliable operation \cite{baney2000theory}.
-Taken together, these factors indicate that insertion loss is not only determined by individual components, but emerges from the combined effects of device characteristics, circuit architecture, and system-level integration.
+Therefore, performance metrics such as SNR, bit-error ratio, and transmitter dispersion eye closure (TDECQ), need to be carefully evaluated to ensure reliable operation \cite{baney2000theory}.
+Taken together, these factors indicate that insertion loss is not only determined by individual components, but emerges from the combined effects of device characteristics, circuit architecture, and system level integration.
 \subsubsection{Crosstalk} \label{subsec:crosstalk}
 As covered in Chapter~\ref{chap:ocs_archs}, optical crosstalk becomes increasingly critical as the switching fabric scales.
 While the 64$\times$64 dilated Benes-like architecture can achieve signal-to-noise ratios exceeding 45~dB at the central wavelength, its performance degrades noticeably at wavelengths farther from the center.
@@ -62,7 +62,7 @@ For the CROSS state, crosstalk is highly sensitive to the absolute values of the
 One possible approach to mitigate this issue is to replace fixed couplers with tunable elements, such as Mach–Zehnder interferometer based splitters, allowing the effective coupling ratio to be adjusted during calibration \cite{suzuki2015ultra, bao2025ultra, bao2025silicon}.
 While this approach offers greater extinction ratio and flexibility, it also significantly increases the complexity of the calibration process, as a larger parameter space must be explored and stabilized.
 
-These observations highlight that crosstalk is strongly dependent on both device-level imperfections and wavelength-dependent behavior, making it increasingly difficult to maintain uniform performance at scale.
+These observations highlight that crosstalk is strongly dependent on both device level imperfections and wavelength-dependent behavior, making it increasingly difficult to maintain uniform performance at scale.
 
 \subsection{Software-defined control and optimization} \label{subsec:sd_pip_ocs}
 As discussed earlier, the adoption of silicon photonics for OCS in production scale systems remains limited.
@@ -75,17 +75,17 @@ Rather than relying solely on static hardware design, software defined control i
 \subsubsection{Topology aware routing and control} \label{subsec:software_control}
 % routing algorithm and software to improve the optical performance, failure resilience.
 One key aspect of software-defined photonic systems lies in routing and control algorithms that are aware of the underlying switching topology.
-As demonstrated in Chapter~\ref{chap:applications_on_pip}, such algorithms can be naturally extended to scalable OCS architectures with feedforward or multi-stage topologies, where each input–output pair may have multiple feasible routing paths.
+As demonstrated in Chapter~\ref{chap:applications_on_pip}, such algorithms can be naturally extended to scalable OCS architectures with feedforward or multi-stage topologies, where each input output pair may have multiple feasible routing paths.
 Given a specific switching configuration, software can select an optimal path according to different objectives.
 
 For example, path routing can be optimized to minimize insertion loss by selecting paths with lower loss components, which requires prior characterization of device level parameters such as the insertion loss of PUCs and number of crossings.
 Alternatively, routing strategies can aim to minimize crosstalk by distributing optical paths across the switching fabric, avoiding excessive concentration of signals in localized regions.
-Under the constraint of non-blocking connectivity, such load-aware routing can improve overall SNR.
+Under the constraint of non-blocking connectivity, such load aware routing can improve overall SNR.
 
 Despite differences in physical implementation, these architectures can be uniformly represented using the same graph theory, where nodes correspond to switching elements and edges represent feasible optical connectivity with associated performance weights.
 This unified representation enables consistent routing across different architectures, allowing path selection to be formulated as a graph optimization problem independent of topology.
 
-Beyond performance optimization, the same graph based framework also enables resilience-aware routing.
+Beyond performance optimization, the same graph based methodology also enables resilience aware routing.
 Due to fabrication variations, packaging induced imperfections, and long term device degradation, certain switching PUCs may exhibit performance degradation or partial failure.
 Within the graph representation, these effects can be modeled by updating edge weights or removing unreliable nodes and links.
 Routing algorithms can then adapt accordingly by selecting alternative paths that bypass affected components while preserving connectivity.
