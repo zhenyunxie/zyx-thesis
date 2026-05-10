@@ -129,13 +129,13 @@ However, these reconfiguration times are still one or more orders of magnitude s
 This disparity is particularly relevant in data center environments.
 While OCS is well suited for high-capacity, long-lived elephant flows, it is less efficient for short-lived mice flows.
 The relatively slow reconfiguration limits the ability of OCS to respond to rapid traffic variations without introducing packet loss or transient service disruption.
-Despite the advantages of optical interconnects in terms of bandwidth and latency, current data center networks are more likely to adopt hybrid architectures that combine OCS with traditional packet switching \cite{liao2025mixnet}.
+Despite the advantages of optical interconnects in terms of bandwidth and latency, current data center networks are more likely to adopt hybrid architectures that combine OCS with traditional packet switching \cite{liaoMixNetRuntimeReconfigurable2025}.
 Such designs aim to balance the high-capacity benefits of optical circuits with the flexibility and responsiveness of electrical packet-switched networks.
 
 \section{Scaling toward ultra large radix switching fabrics} \label{subsec:multi_chip}
 As discussed in the previous sections, insertion loss and crosstalk remain the primary factors limiting the scalability of integrated photonic switching fabrics.
 Even when following the design guidelines presented in Chapter~\ref{chap:ocs_archs}, which jointly consider loss and crosstalk constraints, silicon-photonic OCS architectures face reticle size limitations in scaling beyond radix sizes on the order of 256 ports.
-However, the continued growth of data center workloads suggests that even higher radix switching fabrics will be required in future systems \cite{fi17120537}.
+However, the continued growth of data center workloads suggests that even higher radix switching fabrics will be required in future systems \cite{song2025survey}.
 
 One possible approach to overcome this limitation is to move beyond single chip implementations and adopt multi stage switching fabrics \cite{garao2013modular}.
 In this paradigm, multiple moderate radix OCS modules are interconnected to form a larger switching network, for example using Clos topologies to achieve scalable non-blocking all-to-all connectivity.

@@ -7,10 +7,10 @@
 Since the emergence in the mid-20th century, electronic integrated circuits (EICs) have played an important role in technological and economic development~\cite{sedra2011microelectronic}.
 In recent decades, photonic integrated circuits (PICs) have attracted growing interest in both academia and industry as a complementary technology, offering new opportunities to address some fundamental limitations of EICs.
 Specifically, PICs can offer potentially lower power in high speed data transmission, as optical signals avoid resistive losses inherent to electrical interconnects.
-In addition, PICs provide higher bandwidth, because optical signals are not fundamentally limited by electrical resistor–capacitor (RC) time constants, allowing much higher modulation speeds in waveguide transmission~\cite{photonics12080821, 81373}.
+In addition, PICs provide higher bandwidth, because optical signals are not fundamentally limited by electrical resistor–capacitor (RC) time constants, allowing much higher modulation speeds in waveguide transmission~\cite{tian2025photonic, 81373}.
 
 % give the programmability to integrated photonic
-Similar to the evolution of electronic systems toward programmable and software-defined architectures~\cite{oldfield1995field}, programmable integrated photonics (PIP) is a new paradigm in which the photonic circuit can be defined and controlled through software~\cite{pip, bogaerts2020programmable}.
+Similar to the evolution of electronic systems toward programmable and software-defined architectures~\cite{oldfield1995field}, programmable integrated photonics (PIP) is a new paradigm in which the photonic circuit can be defined and controlled through software~\cite{capmany2020programmable, bogaerts2020programmable}.
 PIP leverages a single integrated photonic hardware to implement multiple functionalities or reconfigure circuit behaviors by applying external control signals.
 % operation and application
 The core of PIP lies in its reconfigurable architectures, typically based on integrated waveguide meshes that cascaded by Mach-Zehnder interferometers (MZIs) or microring resonators.
@@ -35,7 +35,7 @@ In modern large scale computing systems, data movement across nodes has become a
 % background: development of AI
 Over the past decade, the rapid rise of artificial intelligence (AI) has driven computing systems from relatively simple neural networks toward models containing trillions of parameters \cite{Lu02012019, tu2024overview}.
 Since the introduction of the Transformer architecture in 2017 \cite{transformer}, the computational demand for training large models has grown exponentially, doubling approximately every six months, which is far beyond Moore's Law \cite{9891914, 7878935}.
-This gap between the slowing pace of Moore’s Law transistor scaling and the rapidly increasing computational demands of AI has driven a shift beyond single chip optimization to large-scale distributed computing \cite{distributedcomputing, duan2022distributed}.
+This gap between the slowing pace of Moore’s Law transistor scaling and the rapidly increasing computational demands of AI has driven a shift beyond single chip optimization to large-scale distributed computing \cite{distributedcomputing}.
 As a result, the computing paradigm is no longer confined to a single device or system boundary.
 % How AI reshaped interconnect
 Modern data center (DC) infrastructures are increasingly organized as hierarchical systems, with on-chip and network level communication mechanisms increasingly adopt similar paradigms for scalability and performance \cite{noc, jerger2022chip, kas2012toward}.
@@ -48,7 +48,7 @@ As communication distance increases from micrometers to kilometers, interconnect
 Meanwhile, traffic patterns within network have been gradually evolving.
 Traditional workloads were dominated by north-south traffic between external clients and servers.
 In contrast, modern AI workloads generate east-west traffic, consisting of intensive server-to-server communication within the network \cite{Sbriglia2024AIDataCenter, nooruzzaman2021hyperscale}.
-Such traffic is typically high bandwidth and latency sensitive, and often follows structured and predictable communication patterns across many computing nodes \cite{wang2023topoopt, avin2025revolutionizing}.
+Such traffic is typically high bandwidth and latency sensitive, and often follows structured and predictable communication patterns across many computing nodes \cite{wangTopoopTCooptimizingNetwork, avin2025revolutionizing}.
 These characteristics place significantly different demands on the network compared to traditional burst and independent flows.
 
 % EPS as current datacenter solution
@@ -117,7 +117,7 @@ More recently, a novel N$\times$N automated switching algorithm has also been re
 Therefore, there remains room to improve interconnect algorithms in PIP, particularly in efficiently identifying paths in large scale circuits and in supporting more complex communication patterns, while their effectiveness on hardware remains to be validated.
 
 % hardware scalability problem.
-Although small scale SiPh switches have been proven, scaling these systems to meet industrial demands introduces fundamental challenges that necessitate new research \cite{tanizawa2015ultra, suzuki2014ultra, tanizawa2016ultra, suzuki2025band}.
+Although small scale SiPh switches have been proven, scaling these systems to meet industrial demands introduces fundamental challenges that necessitate new research \cite{tanizawa2015ultra, suzukiUltracompact882014, tanizawa2016ultra, suzuki2025band}.
 The high radix scaling and architecture design present significant difficulties.
 Supporting modern clusters may require switches with 128$\times$128, 256$\times$256 or even higher ports, involving tens of thousands of integrated actuators on a single chip \cite{patronas2024optical, perez2025large}.
 At this density, cumulative insertion loss and crosstalk become substantial, and conventional circuit topologies are insufficient, designing these systems demands a careful balance between port count, signal integrity, physical footprint, etc,.
