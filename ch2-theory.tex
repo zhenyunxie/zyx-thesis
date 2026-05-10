@@ -1,14 +1,19 @@
 % Author: Zhenyun Xie
 
-\chapter{Theoretical and Programming Methodologies of Photonic Integrated Circuits} \label{chap:fundamentals}
+\chapter{Theoretical Foundations and Programming Methodologies for PIP Circuits} \label{chap:fundamentals}
 The rapid advancement of silicon photonics has transitioned integrated optical systems from static designs toward reconfigurable, software-defined architectures.
-This shift enables the dynamic manipulation of light, allowing a single hardware platform to support reconfiguring networking functions and connections \cite{bogaerts2020programmable}.
-This chapter introduces the theoretical foundations and programming methodologies required to understand and control programmable PICs.
+This evolution enables the dynamic manipulation of optical signals, allowing a single hardware platform to support reconfigurable networking functions, adaptive interconnects, and scalable optical switching \cite{bogaerts2020programmable}.
+As programmable integrated photonic circuits continue to increase in scale and complexity, efficient methodologies for circuit abstraction, automated configuration, and software-defined control become essential for practical deployment.
+
+This chapter introduces the theoretical foundations and programming methodologies required to model, program, and control PIP circuits.
 It begins with the fundamental building blocks, including 50:50 splitters, waveguide crossings, phase shifters, and 2x2 programmable unit cells (PUCs).
-The transfer-matrix models of these components are presented to describe how optical signals are manipulated within the circuit.
-The introduction then extends to circuit topologies constructed from these unit cells, including feedforward mesh architectures and recirculating mesh architectures.
-Building on these physical structures, a graph-theoretic abstraction is developed to model photonic circuits as nodes and edges, enabling automated routing and configuration synthesis.
-Finally, the chapter introduces the principles of Software-Defined Networking to provide a foundation for the control implementation presented in later chapters.
+The transfer-matrix models of these components are presented to describe the optical behavior and signal transformations of these components within integrated circuits.
+
+Building upon these device level elements, the chapter introduces programmable mesh topologies constructed from interconnected unit cells, including feedforward and recirculating mesh architectures.
+To address the growing complexity of large scale programmable photonic fabrics, a graph theoretic abstraction is developed to represent photonic circuits as weighted graphs composed of nodes and edges, enabling automated routing, path computation, and configuration synthesis.
+
+In parallel with hardware abstraction and programming, scalable operation of programmable photonic systems also requires integration with higher layer network control frameworks.
+Therefore, the chapter additionally introduces the principles of Software-Defined Networking (SDN), model driven management, and southbound communication interfaces, establishing the foundation for the software-defined control methodologies developed in later chapters.
 
 \section{Basic building blocks} \label{sec:functional_blocks} % (fold)
 \subsection{50:50 splitter} \label{sub:splitter} % (fold)
@@ -68,7 +73,7 @@ Conventional metal heaters on oxide cladding suffer from heat leakage into the s
 Vertical trench structures improve lateral thermal confinement, this reduces heat spreading into the surrounding oxide and substrate, lowering power consumption $P\pi$ to typical values of ~10-14 mW, and this structure also enabling tighter actuator spacing due to suppressed lateral heat diffusion \cite{liu2022thermo}.
 In full suspended silicon structures, the silicon waveguide is thermally isolated by removing the underlying substrate and surrounding oxide, leaving it supported by narrow anchors.
 This configuration maximizes thermal confinement and concentrates heat in the waveguide region, which improve the crosstalk and power consumption, with $P\pi$ to the sub-milliwatt level \cite{5712163, gao2023comprehensive}.
-\begin{figure}[h]
+\begin{figure}[ht]
     \begin{center}
         \includegraphics{figures/ch2-ps.pdf}
     \end{center}
@@ -86,7 +91,7 @@ Upon reaching the output coupler, the two optical signals interfere constructive
 This interference enables the device to control of both the optical amplitude and phase of the output signals, while also exhibiting a wavelength-dependent response  \cite{mach1892ueber, zehnder1891neuer}.
 As a result, the device can be configured to operate as a tunable coupler, an optical switch, or a wavelength-selective element.
 Figure~\ref{fig:ch2-puc}(c) illustrates three operating states of the PUC: cross, bar, and tunable.
-\begin{figure}[h]
+\begin{figure}[ht]
     \begin{center}
         \includegraphics{figures/ch2-puc.pdf}
     \end{center}
@@ -133,7 +138,7 @@ This behavior is illustrated in Figure.~\ref{fig:ch2-crossings}(b), where the fi
 Gaussian-beam (GB) synthesis crossings are based on mode expander framework and intentionally excite multiple higher-order modes through non-adiabatic transitions \cite{dumais2017three}.
 The relative phases of these modes are then controlled so that their constructive interference forms a Gaussian-like beam in the crossing region.
 As shown in Figure.~\ref{fig:ch2-crossings}(c), the synthesized beam exhibits a smooth and well-collimated profile, resulting in minimal scattering, lower insertion loss, and superior broadband performance.
-\begin{figure}[h]
+\begin{figure}[ht]
     \begin{center}
         \includegraphics{figures/ch2-crossings.pdf}
     \end{center}
@@ -180,7 +185,7 @@ As illustrated in figure~\ref{fig:ch2-recirculating_topologies}, various grid ge
 Among these, the hexagonal architecture is widely regarded as the superior choice for high-density integration due to its unique topological advantages \cite{bogaerts2020programmable}.
 One of the primary benefits of the hexagonal arrangement is its higher spatial utilization and connectivity per unit area, which allows for a more compact and efficient footprint.
 Furthermore, the hexagonal architecture supports greater routing flexibility and increased degrees of freedom for programming, enabling the synthesis of more complex functions with reduced hardware overhead.
-\begin{figure}[h]
+\begin{figure}[ht]
     \begin{center}
         \includegraphics{figures/ch2-recir-mesh.pdf}
     \end{center}
@@ -192,7 +197,7 @@ Furthermore, the hexagonal architecture supports greater routing flexibility and
 The general-purpose photonic processor in this work consists of a hexagonal arrangement of 72 PUCs and 28 optical ports connected to photodetectors \cite{perez2024general}.
 The schematic of the core is shown in Figure~\ref{fig:ch2-smartlight}.
 It should be noted that bottom ports cannot be used as optical I/O; they are not directly connected to photodetectors in the hardware design.
-\begin{figure}[h]
+\begin{figure}[ht]
     \begin{center}
         \includegraphics{figures/ch2-smartlight.pdf}
     \end{center}
@@ -214,7 +219,7 @@ One challenge in graph representation of hexagonal mesh is the feedback loops in
 To address this, we chose the directed graph with eight artificial nodes for our model \cite{chen2020graph}, where each port of a PUC is represented with two artificial nodes, for inbound and outbound of the signal.
 The PUC phase shifters are modeled by arcs with the direction of input and output ports.
 Figure~\ref{fig:ch2-hexagonal-graph} shows the graph representing the hexagonal mesh Fig.~\ref{fig:ch2-smartlight}.
-\begin{figure}[h]
+\begin{figure}[ht]
     \begin{center}
         \includegraphics{figures/ch2-hexagonal-graph.pdf}
     \end{center}

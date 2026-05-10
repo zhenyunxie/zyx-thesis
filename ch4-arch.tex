@@ -6,13 +6,12 @@ In the previous chapter, optical networking functionalities were demonstrated on
 By properly configuring the PUCs, various optical circuits, including optical interconnects, multicasting, and circuit switching, were implemented within a single reconfigurable platform.
 However, the scalability of this approach becomes limited when implementing large-scale optical circuit switches.
 As the switch radix increases, the number of required programmable elements grows significantly, leading to increased hardware complexity, accumulated optical loss, and higher control overhead.
-These factors make it challenging to efficiently realize high-radix switching fabrics using a fully general-purpose photonic mesh architecture.
+These factors make it challenging to efficiently realize high-radix switching fabrics using a fully general purpose photonic mesh architecture.
 
 % Objective of this chapter
-In this chapter, we introduce a graph-theory-based methodology to investigate the scalability limits of silicon photonics OCS architectures, which including Benes, Dilated Benes, Double Dilated Benes, PILOSS, and Dilated Banyan networks.
-We analyze and benchmark their optical loss, signal-to-noise ratio (SNR), and hardware complexity, comparing them with state-of-the-art silicon photonics integration capabilities to extrapolate feasible scenarios in the near to mid-term \cite{perez2025large, giewont300mmMonolithicSilicon2019}.
-Additionally, we simulate the blocking probability under different conditions to gain insight into the impact of rearrangeability across various architectures.
-The overall objective of this chapter is to provide a comprehensive benchmark among alternative circuit architectures for high-radix silicon photonics OCS that meet the performance requirements of modern networking applications.
+In this chapter, we propose the use of graphs to model OCS in silicon photonics, enabling the analysis of routing behavior and blocking characteristics, as well as hardware specifications such as the number of crossings, cells, and stages, to assess scalability limits.
+We analyze and benchmark multiple architectures in terms of optical loss, signal-to-noise ratio (SNR), and hardware complexity, comparing them with state-of-the-art silicon photonics integration capabilities to extrapolate feasible scenarios in the near to mid-term \cite{perez2025large, giewont300mmMonolithicSilicon2019}.
+The overall goal of this paper is to provide a comprehensive benchmark among alternative circuit architectures for high-radix silicon photonics OCS that meet the performance requirements of modern networking applications.
 \section{Graph-based modelling of integrated photonic switches}\label{sec:graph_modelling} % (fold)
 Integrated photonic switches consist of arrangements of basic tunable switching cells, where an input array of signals can be spatially or spectrally routed to an array of optical outputs.
 To study their properties, integrated photonic circuits can be modeled based on the graph layer that presented previous chapter~\ref{chap:fundamentals}.
@@ -73,8 +72,9 @@ The random strategy distributes paths uniformly across the network, whereas the 
 
 It is also worth noting that, beyond sequential routing, the full set of IO pairs can be configured simultaneously in RNB networks using synchronous switching \cite{chakrabartyMatrixBasedNonblockingRouting2009, karimiIntroductionAnalysisOptimal2014, zulfinImplementationRoutingDivision2020}, allowing global optimization of the routing and the establishment of non-blocking connections for the requested IO pairs.
 However, in this study we focus on asynchronous switching, reflecting the non-fully scheduled traffic of real-world use cases, which generates unpredictable IO requests over time.
+Such traffic models have been widely adopted in prior studies to evaluate worst-case routing behavior and blocking characteristics in optical switching architectures \cite{8535157}.
+Under asynchronous switching, different network architectures exhibit distinct blocking characteristics.
 
-Therefore, in asynchronous switching, different network architectures exhibit distinct blocking characteristics.
 WSNB and SNB topologies, such as the PILOSS and Dilated Banyan networks, guarantee that any idle IO pair can be connected without blocking or the need to rearrange established paths.
 In contrast, RNB topologies, such as the Benes and Dilated Benes networks, may experience blocking, as they provide multiple shared paths for each IO pair, which can lead to both types of conflict.
 \section{Hardware complexity}\label{sec:hardware_complexity} % (fold)
@@ -102,7 +102,12 @@ The 128$\times$128 Double Dilated Benes network has the highest number of crossi
 \section{Optical performance}\label{sec:optical_performance} % (fold)
 For the optical performance shown in Figure~\ref{fig:ch4-optical-performance}, we simulated the photonic circuits based on the network graphs, incorporating the S-parameters of the switching cells and crossings at each node.
 The transfer-matrix method \cite{baliliTRANSFERMATRIXMETHOD2012} was applied to the complete switch matrices to simulate crosstalk at the undesired ports.
-By summing the crosstalk across all ports and normalizing to the loss, the SNR was computed as a function of wavelength, with the leakage of the switching and crossing cells derived from typical extinction ratio (ER) values, using standard silicon photonic components and thermo-optic phase shifting \cite{gomez-hidalgoFundamentalBuildingBlocksa} (see Figure~\ref{fig:ch4-optical-performance}(a)).
+The signal-to-noise ratio (SNR) refers to the attenuation-to-crosstalk ratio (ACR), defined at each output port as the ratio between the received power of the intended signal and the total accumulated crosstalk power. For output port $i$, the SNR is given by
+\begin{equation}
+    SNR_i = \frac{P_{s,i}}{\sum_k P_{xt,i-k}},
+\end{equation}
+where $P_{s,i}$ denotes the received optical power at output port $i$, including all propagation and insertion losses along the selected routing path, and $P_{xt,i-k}$ represents the power leakage from undesired input channels contributing to crosstalk at the same output port.
+The SNR was computed as a function of wavelength, with the leakage of the switching and crossing cells derived from typical extinction ratio (ER) values, using standard silicon photonic components and thermo-optic phase shifting \cite{gomez-hidalgoFundamentalBuildingBlocksa} (see Figure~\ref{fig:ch4-optical-performance}(a)).
 
 The crosstalk in the switching cells is strongly dependent on the spectral response in the O-band region, reaching approximately –40 dB at center wavelengths and –20 dB at corner wavelengths.
 This occurs due to the thermo-optic phase shifter response and the uneven splitting ratio of the 2$\times$2 MZI considered in this study.
@@ -114,7 +119,7 @@ In contrast, the ER for the crossings remains below –60 dB and flat across the
     \end{center}
     \caption{Optical performance.
         (a) Extinction ratio of the switching cell (left) and the waveguide crossing (right), representing  the power leakage at the undesired output port and representing crosstalk.
-        (b) Signal-to-noise ratio as a function of wavelength and radix for the five network architectures considered in this study.
+        (b) Signal-to-noise ratio as a function of wavelength and radix for the five network architectures considered in this study, the solid line indicates the mean SNR across all output ports, while the lighter solid lines indicate the maximum and minimum values. The shaded region represents one standard deviation around the mean (mean $\pm$ std).
         (c) Optical loss of the photonic circuit as a function of radix and network topology. Boxplots represent the statistical distribution of loss across the different path combinations within each network.
     }\label{fig:ch4-optical-performance}
 \end{figure}
@@ -127,7 +132,8 @@ In contrast, the PILOSS SNR deteriorates significantly for high radix switches d
 
 For the loss simulations, we considered the values reported in Table~\ref{tab:ch4-sota-bb} for state-of-the-art building blocks.
 In addition, to calculate the overall photonic integrated circuit (PIC) loss, we included other components such as edge couplers, polarization elements, and propagation loss.
-In this case, computing the full matrix of the entire architecture was not necessary; instead, losses were calculated along individual paths by concatenating the corresponding switching and crossing elements.
+In this case, computing the full matrix of the entire architecture was not necessary; instead, losses were calculated along individual paths by summing the contributions from switching and crossing elements together with the waveguide propagation loss.
+The propagation loss was estimated by assuming a uniform effective waveguide length of 5 mm for all routing paths, corresponding to approximately one quarter of the maximum size allowed in a single reticle (usually around 2–3 cm for deep-UV lithography)~\cite{meiling2008performance}, independent of layout-specific implementations.
 The results are shown in Figure~\ref{fig:ch4-optical-performance}(c) for all networks considered in this study.
 Boxplots illustrate the probability distribution of the loss, reflecting the imbalance among IO pairs due to variations in the number of crossings.
 The Benes network exhibits the lowest loss, owing to its reduced number of stages and crossings.
@@ -136,30 +142,29 @@ Dilated architectures show losses below 7 dB with variability under 2 dB for the
 In contrast, the PILOSS network experiences a dramatic increase in loss for high-radix switches—above 25 dB for the 128$\times$128—, primarily due to the large number of stages, which is the main source of loss and limits scalability.
 Only the 32x32 configuration remains with relatively good values below 10 dB.
 \begin{table}[htbp]
+    \renewcommand{\arraystretch}{1.3}
+    \caption{Extracted Physical Layer Parameters\label{tab:ch4-sota-bb}}
     \centering
-    \caption{Extracted physical layer parameters}
-    \begin{tabular}{ll}
-        \hline\hline
-        \textbf{Parameters}         & \textbf{Value}                                                                                   \\ [0.5ex]
-        \hline\hline
-        Switching cell loss         & 0.2 dB \cite{suzukiLargescaleSiliconPhotonics2025a, papadovasilakisCompactBroadbandLowloss2023a} \\ [2ex]
+    \small
+    \begin{tabular}{lll}
         \hline
-        Crossing loss               & 0.002 dB \cite{sacherMonolithicallyIntegratedMultilayer2018}                                     \\ [2ex]
+        \textbf{Parameters}                & {Technology}        & \textbf{Value}                                                                                   \\
         \hline
-        Edge coupler loss           & 0.5 dB \cite{muEdgeCouplersSilicon2020}                                                          \\ [2ex]
-        \hline
-        Polarization component loss & 0.4 dB \cite{leeExperimentalDemonstrationAdiabatic2024}                                          \\ [2ex]
-        \hline
-        Waveguide propagation loss  & 0.5 dB/cm \cite{luLowlossHighuniformitySilicon2025}                                              \\ [1ex]
+        Switching cell loss (thermo-optic) & SOI                 & 0.2 dB \cite{suzukiLargescaleSiliconPhotonics2025a, papadovasilakisCompactBroadbandLowloss2023a} \\
+        Crossing loss                      & Multilayer SiN (3D) & 0.002 dB \cite{sacherMonolithicallyIntegratedMultilayer2018}                                     \\
+        Edge coupler loss                  & SOI                 & 0.5 dB \cite{muEdgeCouplersSilicon2020}                                                          \\
+        Polarization component loss        & SOI                 & 0.4 dB \cite{leeExperimentalDemonstrationAdiabatic2024}                                          \\
+        Waveguide propagation loss         & SOI                 & 0.5 dB/cm \cite{luLowlossHighuniformitySilicon2025}                                              \\
         \hline
     \end{tabular}
-    \label{tab:ch4-sota-bb}
 \end{table}
+
 \section{Blocking probability}\label{sec:blocking_probability} % (fold)
-In this section we simulated the blocking rate of the given architectures under asynchronous switching, i.e., receiving sequential one-by-one port requests.
+Two classical probabilistic models have been proposed by Lee~\cite{leeblocking} and Jacobaeus~\cite{lutton1983blocking} to analyze the blocking behavior of Clos networks in electronic switching fabrics.
+Similar concepts have subsequently been extended to photonic switch to evaluate how topology affects path contention and scalability~\cite{fukushimaRoutingAlgorithmsPacket2008a,xiaohongjiangPerformanceModelingAlloptical2005}.
+In this section we we adapt and replicate these methodologies to simulate the blocking rate of the given architectures under asynchronous switching, i.e., receiving sequential one-by-one port requests.
 We designed two different experiments: the first, referred to as the incremental experiment, evaluates blocking as the switch is loaded from 0 to 1, representing 0\% to 100\% utilization of the switch radix.
 The second, referred to as the dynamic experiment, assigns a lifetime to each port request and includes both the arrival and departure of connections.
-These experimental setups are aligned with approaches commonly used in the literature to characterize blocking behavior in switching networks \cite{taniguchiOpticalCircuitSwitched2024a, fukushimaRoutingAlgorithmsPacket2008a, xiaohongjiangPerformanceModelingAlloptical2005, xiaohongjiangBlockingBehaviorsCrosstalkfree2003}.
 
 \subsection{Incremental experiment}\label{subsection:incremental_experiment}
 The pseudocode of the incremental experiment is shown in Algorithm~\ref{alg:incremental_experiment}.
@@ -214,7 +219,7 @@ Figure~\ref{fig:ch4-incremental-exp} shows the simulation results for the increm
 A total of $10^7$ iterations were simulated to evaluate the blocking rate as a function of switch load.
 The upper panels (Figure~\ref{fig:ch4-incremental-exp}(a)) depict the blocking rate for the random routing strategy, while the lower panels (Figure~\ref{fig:ch4-incremental-exp}(b)) correspond to the sorted routing strategy.
 The sorted algorithm yields lower blocking rates than the random strategy, as it tends to concentrate connections, effectively reserving free regions of the switch for future port requests and highlighting the importance of intelligent routing algorithms for hardware scalability.
-Both conflict types are shown, with conflict of type 2 being more restrictive, as it does not allow node sharing between signals and therefore results in higher blocking rates than conflict of type 1.
+Both conflict types are shown, with conflict of type 2 being more restrictive, as it does not allow switching cell sharing between signals and therefore results in higher blocking rates than conflict of type 1.
 \begin{figure}[h]
     \begin{center}
         \includegraphics{figures/ch4-incremental-exp.pdf}
@@ -373,5 +378,7 @@ However, for higher radices (128 ports and beyond), the required chip area combi
 Finally, Double Dilated Benes can be implemented with today’s silicon photonics technology and represent a practical path toward high-radix optical switching.
 A key concept in making such networks viable is the notion of admissible blocking probability \cite{taniguchiOpticalCircuitSwitched2024a,okiDesignModelThreestage2025}, which defines the maximum tolerable likelihood of a connection request being blocked.
 It is important to note that the dynamic blocking experiments considered here represent a highly conservative scenario: the network is assumed to be fully loaded at all times, and port usage is statistically independent.
-In realistic deployments, such as AI datacenter networks, traffic patterns tend to be more predictable and often scheduled \cite{wangTopoopTCooptimizingNetwork,liaoMixNetRuntimeReconfigurable2025,addankiVermilionTrafficAwareReconfigurable2025a}.
-As a result, the observed blocking rates represent a worst-case estimate, indicating that RNB networks could still be practical in datacenter applications.
+In realistic deployments, such as AI datacenter networks, traffic patterns tend to be more predictable and often scheduled \cite{wangTopoopTCooptimizingNetwork,liaoMixNetRuntimeReconfigurable2025,addankiVermilionTrafficAwareReconfigurable2025a}, although not fully synchronous~\cite{8535157}.
+Therefore, the acceptable level of blocking depends on application characteristics.
+Since our analysis assumes worst-case traffic scenarios, the observed blocking rates can be viewed as an upper bound.
+In practice, scheduling can mitigate collision, making moderate blocking probabilities tolerable~\cite{weintraub2025packetloss, lin2018deep}, indicating that RNB networks could still be practical in datacenter applications.

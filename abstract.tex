@@ -8,16 +8,17 @@
 % Approximately 500 words or less; try not to use formulas or special characters
 % If you don't want an initial indentation, do \noindent at the start of the abstract
 
-Silicon photonics provides a scalable and cost-efficient platform for high-bandwidth, low-power data transmission, making it a promising solution for next-generation data center interconnects.
-In particular, circuit switching enables direct optical connectivity for both scale-up and scale-out network architectures, avoiding optical–electrical–optical conversions.
-However, the practical deployment of large-scale photonic switching fabrics is limited not only by hardware capabilities, but also by the scalable programming and control methodologies.
+Programmable integrated photonics (PIP) is emerging as a flexible and reconfigurable platform for realizing diverse optical functionalities on a single chip, enabling dynamic control of light propagation for communication, computing, and signal processing applications.
+Among the available integration technologies, silicon photonics provides a scalable and cost efficient platform for high bandwidth, low power data transmission, making it a promising solution for next generation data center interconnects.
+In particular, optical circuit switching enables direct optical connectivity for both scale-up and scale-out network architectures, avoiding optical–electrical–optical conversions.
+However, the practical deployment of large scale programmable photonic switching fabrics is limited not only by hardware capabilities, but also by the scalable programming and control methodologies.
 
 This thesis introduces a graph-based programming methodology that translates photonic circuits into weighted graphs, providing a mathematical abstraction of complex circuit fabrics.
-Integrated circuit components and their connections are represented as graph elements with physical metrics, enabling high-level programming, systematic optimization of hardware architectures and control methodologies.
-Using this approach, routing and configuration algorithms are developed to support optical interconnects, multicasting, and circuit switching on a general-purpose photonic processor, demonstrating that diverse networking functions can be realized on a single platform without manual intervention.
-To address scalability challenges in large-scale circuit fabrics, the graph-based methodology is extended to model and benchmark different topologies and routing strategies.
-Incorporating physical-layer metrics such as insertion loss, crosstalk, and signal-to-noise ratio allows quantitative evaluation of trade-offs and informs practical design guidance.
-Finally, a software-defined control plane using model-driven interfaces and gNMI is implemented to enable southbound communication, aligning Layer-1 optical resources with the SDN framework.
+Integrated circuit components and their connections are represented as graph elements with physical metrics, enabling high level programming, systematic optimization of hardware architectures and control methodologies.
+Using this approach, routing and configuration algorithms are developed to support optical interconnects, multicasting, and circuit switching on a general purpose PIP processor, demonstrating that diverse networking functions can be realized on a single platform without manual intervention.
+To address scalability challenges in large scale circuit fabrics, the graph-based methodology is extended to model and benchmark different topologies and routing strategies.
+Incorporating physical layer metrics such as insertion loss, crosstalk, and signal-to-noise ratio allows quantitative evaluation of trade-offs and informs practical design guidance.
+Finally, a software-defined control plane using model driven interfaces and gNMI is implemented to enable southbound communication, aligning Layer-1 optical resources with the SDN framework.
 
-This work shows that a unified, graph-based methodology provides both hardware-level programmability and network-level control for integrated photonic switches.
-It establishes a scalable foundation for integrating photonic circuit switching into AI-driven networking systems, supporting flexible, high-performance, and manageable optical interconnects.
+This work shows that a graph-based methodology provides hardware level programmability and design optimization for integrated photonic switches, while the developed software-defined control plane extends these capabilities to network level control and orchestration.
+Together, these contributions establish a scalable foundation for integrating photonic circuit switching into AI-driven networking systems, supporting flexible, high performance, and manageable optical interconnects.
