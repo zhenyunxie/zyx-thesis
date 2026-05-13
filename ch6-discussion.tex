@@ -65,7 +65,7 @@ While this approach offers greater extinction ratio and flexibility, it also sig
 These observations highlight that crosstalk is strongly dependent on both device level imperfections and wavelength-dependent behavior, making it increasingly difficult to maintain uniform performance at scale.
 
 \subsection{Software-defined control and optimization} \label{subsec:sd_pip_ocs}
-As discussed earlier, the adoption of silicon photonics for OCS in production scale systems remains limited.
+As discussed earlier, the adoption of silicon photonics for OCS in large-scale production systems remains limited.
 A key reason lies in the performance constraints discussed in the previous subsection, particularly insertion loss and crosstalk, which pose challenges for scalability to high radix switching fabrics.
 Nevertheless, these limitations are closely tied to the current state of device and integration technologies, and are expected to improve with continued advances in fabrication, packaging, and component design.
 
@@ -96,7 +96,7 @@ Rather than treating hardware imperfections as static constraints, the system ca
 In addition to topology aware routing, software defined control can also be leveraged to directly calibrate and optimize the underlying photonic hardware.
 In particular, calibration plays a critical role in shaping the crosstalk response of programmable photonic circuits over wavelength.
 
-Conventional optimization of photonic switching elements often focuses on achieving optimal performance at a central wavelength.
+Conventional optimization of photonic switching elements often focuses on achieving optimal performance at a central wavelength \cite{10122910}.
 However, for wavelength division multiplexing systems, uniform performance across the full operating spectrum is typically more important.
 Instead of strictly minimizing crosstalk at the central wavelength, calibration can be used to redistribute the spectral response by slightly relaxing the optimal condition at the center,
 thereby improving performance at edge wavelengths. This results in a more balanced crosstalk profile across the entire wavelength range.
