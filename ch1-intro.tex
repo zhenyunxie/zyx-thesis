@@ -131,33 +131,34 @@ Within this context, it is important to focus on approaches that allow OCS to be
 
 \section{Objectives} \label{sec:objective}
 Considering the critical role of programmable integrated photonic circuits in scaling AI data center interconnects, this thesis develops a comprehensive, software-defined platform for large-scale integrated photonic switching.
-Rather than treating device design, control, and system integration as isolated problems, this work establishes a coupled, cross layer methodology that links physical photonic hardware with abstract programming models and network level control, as summarized in Figure.~\ref{fig:ch1-thesis}.
+Rather than treating circuit design, control, and system integration as isolated problems, this work establishes a coupled, cross layer methodology that links physical photonic hardware with abstract programming models and network level control, as summarized in Figure.~\ref{fig:ch1-thesis}.
 
 \begin{figure}[h]
       \begin{center}
             \includegraphics{figures/ch1-thesis.pdf}
       \end{center}
-      \caption{Cross layer framework for software-defined integrated photonic switching.
-            (a) graph based PIP control.
+      \caption{Cross layer structure for software-defined integrated photonic switching.
+            This thesis addresses three key aspects of the stack:
+            (a) graph based PIP hardware control.
             (b) scalable PIP switching design.
             (c) SDN-enabled system level control.
       }\label{fig:ch1-thesis}
 \end{figure}
 
-To achieve this, the thesis defines and implements a vertically integrated technological stack that enables software-defined device level control and systematic investigation of hardware design through a unified graph-based representation.
+To achieve this, the thesis defines and implements a vertically integrated technological stack that enables software-defined circuit level control and systematic investigation of hardware design through a unified graph-based representation.
 Furthermore, a system level control framework is developed that enables silicon photonic OCS to support SDN.
 Specifically, the contributions are structured along coupled layers:
 \begin{itemize}
       \item \textbf{Circuit abstraction and synthesis:} A graph based model is introduced to represent programmable integrated photonic circuits, enabling translation of high level connectivity requirements into physical device configurations.
             Based on this abstraction, automated synthesis algorithms are developed to support software-defined generation of photonic circuits for networking applications, as shown in Fig.~\ref{fig:ch1-thesis}(a).
 
-      \item \textbf{Architectural design methodology:} Using the unified graph based abstraction methodology, scalable switching architectures are analyzed in terms of hardware complexity, blocking behavior, and signal integrity.
+      \item \textbf{Architecture design methodology:} Using the unified graph based abstraction methodology, scalable switching architectures are analyzed in terms of hardware complexity, blocking behavior, and signal integrity.
             This leads to practical guidelines for large-scale SiPh OCS design, as shown in Fig.~\ref{fig:ch1-thesis}(b).
 
       \item \textbf{System level control and integration:} An SDN based control framework is implemented to enable dynamic configuration of photonic circuits.
             Leveraging a gNMI-based interface, the proposed system integrates OCS into SDN environments, as shown in Fig.~\ref{fig:ch1-thesis}(c).
 \end{itemize}
-Overall, this work provides a unified approach that links device level design, programmable control, and network level integration, enabling scalable and manageable photonic switching systems.
+Overall, this work provides a unified approach that links hardware level design, programmable control, and network level integration, enabling scalable and manageable photonic switching systems.
 
 \section{Structure of the thesis} \label{sec:structure}
 The thesis is organized to offer a comprehensive account of the theoretical background, methodological developments, and experimental validation associated with the research contributions.
