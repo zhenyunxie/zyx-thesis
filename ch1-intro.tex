@@ -7,19 +7,19 @@
 Since the emergence in the mid-20th century, electronic integrated circuits (EICs) have played an important role in technological and economic development~\cite{sedra2011microelectronic}.
 In recent decades, photonic integrated circuits (PICs) have attracted growing interest in both academia and industry as a complementary technology, offering new opportunities to address some fundamental limitations of EICs.
 Specifically, PICs can offer potentially lower power in high speed data transmission, as optical signals avoid resistive losses inherent to electrical interconnects.
-In addition, PICs provide higher bandwidth, because optical signals are not fundamentally limited by electrical resistor–capacitor (RC) time constants, allowing much higher modulation speeds in waveguide transmission~\cite{photonics12080821, 81373}.
+In addition, PICs provide higher bandwidth, because optical signals are not fundamentally limited by electrical resistor–capacitor (RC) time constants, allowing much higher modulation speeds in waveguide transmission~\cite{tian2025photonic, 81373}.
 
 % give the programmability to integrated photonic
-Similar to the evolution of electronic systems toward programmable and software-defined architectures~\cite{oldfield1995field}, programmable integrated photonics (PIP) is a new paradigm in which the photonic circuit can be defined and controlled through software~\cite{pip, bogaerts2020programmable}.
+Similar to the evolution of electronic systems toward programmable and software-defined architectures~\cite{oldfield1995field}, programmable integrated photonics (PIP) is a new paradigm in which the photonic circuit can be defined and controlled through software~\cite{capmany2020programmable, bogaerts2020programmable}.
 PIP leverages a single integrated photonic hardware to implement multiple functionalities or reconfigure circuit behaviors by applying external control signals.
 % operation and application
 The core of PIP lies in its reconfigurable architectures, typically based on integrated waveguide meshes that cascaded by Mach-Zehnder interferometers (MZIs) or microring resonators.
 By applying external control signals to these building block units, the amplitude and phase of optical signals can be independently adjusted, allowing for both feedforward and recirculating propagation.
 Feedforward mesh correspond to acyclic signal propagation through cascaded interferometric units, where light flows in a directed manner from inputs to outputs without forming closed loops.
-Such architectures are particularly suitable for deterministic linear transformations and matrix–vector operations, making them well suited for optical computing and neuromorphic photonics.
+Such architectures are particularly suitable for deterministic linear transformations and matrix vector operations, making them well suited for optical computing and neuromorphic photonics.
 Moreover, the unidirectional propagation inherent in feedforward designs also facilitates high speed signal routing, making these architectures attractive for applications such as optical interconnects and switching.
 In contrast, recirculating propagation arises when feedback loops or closed path waveguide connections are introduced into the mesh, allowing optical signals to circulate within resonant or recurrent structures.
-These loop based dynamics naturally support frequency selective behavior and temporal accumulation effects, which are essential for implementing optical filters, delay lines, and resonant sensing functionalities.
+These loops naturally support frequency selective behavior and temporal accumulation effects, which are essential for implementing optical filters, delay lines, and resonant sensing functionalities.
 
 % programmability
 The flexibility of PIP enables the synthesis of diverse circuit topologies and dynamic reconfiguration of optical paths within the same physical footprint.
@@ -35,7 +35,7 @@ In modern large scale computing systems, data movement across nodes has become a
 % background: development of AI
 Over the past decade, the rapid rise of artificial intelligence (AI) has driven computing systems from relatively simple neural networks toward models containing trillions of parameters \cite{Lu02012019, tu2024overview}.
 Since the introduction of the Transformer architecture in 2017 \cite{transformer}, the computational demand for training large models has grown exponentially, doubling approximately every six months, which is far beyond Moore's Law \cite{9891914, 7878935}.
-This gap between the slowing pace of Moore’s Law transistor scaling and the rapidly increasing computational demands of AI has driven a shift beyond single chip optimization to large-scale distributed computing \cite{distributedcomputing, duan2022distributed}.
+This gap between the slowing pace of Moore’s Law transistor scaling and the rapidly increasing computational demands of AI has driven a shift beyond single chip optimization to large-scale distributed computing \cite{distributedcomputing}.
 As a result, the computing paradigm is no longer confined to a single device or system boundary.
 % How AI reshaped interconnect
 Modern data center (DC) infrastructures are increasingly organized as hierarchical systems, with on-chip and network level communication mechanisms increasingly adopt similar paradigms for scalability and performance \cite{noc, jerger2022chip, kas2012toward}.
@@ -48,7 +48,7 @@ As communication distance increases from micrometers to kilometers, interconnect
 Meanwhile, traffic patterns within network have been gradually evolving.
 Traditional workloads were dominated by north-south traffic between external clients and servers.
 In contrast, modern AI workloads generate east-west traffic, consisting of intensive server-to-server communication within the network \cite{Sbriglia2024AIDataCenter, nooruzzaman2021hyperscale}.
-Such traffic is typically high bandwidth and latency sensitive, and often follows structured and predictable communication patterns across many computing nodes \cite{wang2023topoopt, avin2025revolutionizing}.
+Such traffic is typically high bandwidth and latency sensitive, and often follows structured and predictable communication patterns across many computing nodes \cite{wangTopoopTCooptimizingNetwork, avin2025revolutionizing}.
 These characteristics place significantly different demands on the network compared to traditional burst and independent flows.
 
 % EPS as current datacenter solution
@@ -78,7 +78,7 @@ In addition, once a circuit is configured, data remains in the optical domain, a
 
 % OCS application in datacenter
 OCS is already emerging in practical systems across both scale-out and scale-up domains (Figure~\ref{fig:ch1-ocs-apps}).
-At the scale-out level, Google's Apollo system uses MEMS-based (Micro-Electro-Mechanical Systems) OCS as a reconfigurable spine, enabling flexible topology adaptation and hardware upgrades \cite{urata2023apollo, jupiter}.
+At the scale-out level, Google's Apollo system uses MEMS based (Micro-Electro-Mechanical Systems) OCS as a reconfigurable spine, enabling flexible topology adaptation and hardware upgrades \cite{urata2023apollo, jupiter}.
 NVIDIA has also explored OCS for failure resilience and dynamic network rewiring \cite{patronas2024optical}.
 In scale-up architectures, OCS supports hardware disaggregation by connecting compute nodes to shared memory or storage pools through dedicated optical circuits, improving resource utilization \cite{8293994}.
 It has further been investigated for high bandwidth GPU interconnects beyond the limits of electrical links, extending direct, traffic-aware connections across larger physical domains \cite{addanki2025vermilion}.
@@ -96,33 +96,34 @@ Although MEMS switches offer low insertion loss and high port counts, they are r
 Silicon photonics (SiPh) has emerged as a promising alternative by enabling the monolithic integration of photonic components on a single chip.
 Leveraging CMOS-compatible (Complementary Metal-Oxide-Semiconductor) fabrication processes, SiPh platforms benefit from the maturity, scalability, and high yield of the semiconductor manufacturing ecosystem.
 As a result, SiPh based devices can achieve higher integration density and reduced cost per port compared to discrete optical components.
-From a performance perspective, SiPh-based switching fabrics offer significantly faster reconfiguration speeds, typically ranging from microseconds to sub-milliseconds, depending on the tuning mechanism (e.g., thermo-optic or electro-optic effects) \cite{bogaerts2020programmable}.
-The absence of mechanically moving parts further enhances robustness, reduces wear-out mechanisms, and improves long-term operational stability.
+From a performance perspective, SiPh based switching fabrics offer significantly faster reconfiguration speeds, typically ranging from microseconds to sub-milliseconds, depending on the tuning mechanism (e.g., thermo-optic or electro-optic effects) \cite{bogaerts2020programmable}.
+The absence of mechanically moving parts further enhances robustness, reduces wear out mechanisms, and improves long term operational stability.
 These characteristics make SiPh particularly well suited for deployment in environments where frequent and rapid reconfiguration is required.
 
 Building on these technological advantages, PIP introduces reconfigurability at the circuit level by integrate a large number of tunable photonic elements, such as MZIs and microring resonators.
 This architectural approach enables the realization of flexible and dynamically reconfigurable optical switching fabrics.
-Unlike traditional point-to-point circuit switching, PIP-based systems can support more complex communication patterns, including one-to-many (1×N) optical multicasting, where a single source node transmits identical data streams to multiple destinations simultaneously \cite{samadi2015optical, dinc2024multicasting}.
+Unlike traditional point-to-point circuit switching, PIP based systems can support more complex communication patterns, including one-to-many (1×N) optical multicasting, where a single source node transmits identical data streams to multiple destinations simultaneously \cite{samadi2015optical, dinc2024multicasting}.
 Such communication patterns are common in distributed AI training workloads, particularly in collective operations such as broadcast and all-gather \cite{si2025collective}.
-Taken together, these properties make programmable integrated silicon photonic circuit a suitable foundation for realizing flexible and efficient OCS in AI-driven communication scenarios.
+Taken together, these properties make programmable integrated silicon photonic circuit a suitable foundation for realizing flexible and efficient OCS in AI driven communication scenarios.
 
 \section{Challenges} \label{sec:challenges}
-Despite the advantages of silicon photonics for optical circuit switching, deployment of large scale SiPh-based switching fabric in hyperscale AI networks still faces complexity that has not yet been fully addressed.
+Despite the advantages of silicon photonics for optical circuit switching, deployment of large scale SiPh based switching fabric in hyperscale AI networks still faces complexity that has not yet been fully addressed.
+
 % software defined control mechanism for programmable photonic circuit.
-AI training workloads follow several traffic patterns between computing nodes, which requires the precise coordination of thousands of integrated actuators to real-time reconfiguration of photonic circuit processor \cite{bogaerts2020programmable}.
+AI training workloads follow several traffic patterns between computing nodes, which requires the precise coordination of thousands of integrated actuators to real time reconfiguration of photonic circuit processor \cite{bogaerts2020programmable}.
 Performing such on chip reconfiguration in PIP through the traditional one-by-one sequential tuning of actuators can introduce significant delay, making it operationally impractical for large switching fabrics and potentially disrupting cluster scheduling and training efficiency.
-In this regard, auto-routing algorithms have been explored to develop point-to-point optical interconnects in a programmable photonic circuit, with fault-tolerant and self-healing capabilities but applied in a small scale circuit of a few actuators \cite{lopez2020auto}.
+In this regard, auto-routing algorithms have been explored to develop point-to-point optical interconnects in a programmable photonic circuit, with fault tolerant and self-healing capabilities but applied in a small scale circuit of a few actuators \cite{lopez2020auto}.
 More recently, a novel N$\times$N automated switching algorithm has also been reported theoretically, but experimental validation is still lacking \cite{vanden2023automated}.
 Therefore, there remains room to improve interconnect algorithms in PIP, particularly in efficiently identifying paths in large scale circuits and in supporting more complex communication patterns, while their effectiveness on hardware remains to be validated.
 
 % hardware scalability problem.
-Although small scale SiPh switches have been proven, scaling these systems to meet industrial demands introduces fundamental challenges that necessitate new research \cite{tanizawa2015ultra, suzuki2014ultra, tanizawa2016ultra, suzuki2025band}.
+Although small scale SiPh switches have been proven, scaling these systems to meet industrial demands introduces fundamental challenges that necessitate new research \cite{tanizawa2015ultra, suzukiUltracompact882014, tanizawa2016ultra, suzuki2025band}.
 The high radix scaling and architecture design present significant difficulties.
 Supporting modern clusters may require switches with 128$\times$128, 256$\times$256 or even higher ports, involving tens of thousands of integrated actuators on a single chip \cite{patronas2024optical, perez2025large}.
 At this density, cumulative insertion loss and crosstalk become substantial, and conventional circuit topologies are insufficient, designing these systems demands a careful balance between port count, signal integrity, physical footprint, etc,.
 
 % system level integration.
-Moreover, a major gap exists in system level SDN integration.
+Moreover, a major gap exists in system level Software-Defined Networking (SDN) integration.
 Currently, datacenter networking stacks are primarily optimized for electronic packet switching.
 While standardized management interfaces exist for some Layer-1 optical components (such as ROADMs) \cite{7503119}, the unified, software-defined control of Layer-1 optical resources in network environments remains less mature than electronic switching infrastructures and higher layer network management frameworks.
 This represents a broad and complex challenge in integrating optical circuit switches into modern data centers.
@@ -130,33 +131,34 @@ Within this context, it is important to focus on approaches that allow OCS to be
 
 \section{Objectives} \label{sec:objective}
 Considering the critical role of programmable integrated photonic circuits in scaling AI data center interconnects, this thesis develops a comprehensive, software-defined platform for large-scale integrated photonic switching.
-Rather than treating device design, control, and system integration as isolated problems, this work establishes a coupled, cross layer methodology that links physical photonic hardware with abstract programming models and network level control, as summarized in Figure.~\ref{fig:ch1-thesis}.
+Rather than treating circuit design, control, and system integration as isolated problems, this work establishes a coupled, cross layer methodology that links physical photonic hardware with abstract programming models and network level control, as summarized in Figure.~\ref{fig:ch1-thesis}.
 
 \begin{figure}[h]
       \begin{center}
             \includegraphics{figures/ch1-thesis.pdf}
       \end{center}
-      \caption{Cross layer framework for software-defined integrated photonic switching.
-            (a) graph based PIP control.
+      \caption{Cross layer structure for software-defined integrated photonic switching.
+            This thesis addresses three key aspects of the stack:
+            (a) graph based PIP hardware control.
             (b) scalable PIP switching design.
             (c) SDN-enabled system level control.
       }\label{fig:ch1-thesis}
 \end{figure}
 
-To achieve this, the thesis defines and implements a vertically integrated technological stack that enables software-defined device level control and systematic investigation of hardware design through a unified graph-based representation.
+To achieve this, the thesis defines and implements a vertically integrated technological stack that enables software-defined circuit level control and systematic investigation of hardware design through a unified graph-based representation.
 Furthermore, a system level control framework is developed that enables silicon photonic OCS to support SDN.
 Specifically, the contributions are structured along coupled layers:
 \begin{itemize}
       \item \textbf{Circuit abstraction and synthesis:} A graph based model is introduced to represent programmable integrated photonic circuits, enabling translation of high level connectivity requirements into physical device configurations.
             Based on this abstraction, automated synthesis algorithms are developed to support software-defined generation of photonic circuits for networking applications, as shown in Fig.~\ref{fig:ch1-thesis}(a).
 
-      \item \textbf{Architectural design methodology:} Using the unified graph based abstraction formalism, scalable switching architectures are analyzed in terms of hardware complexity, blocking behavior, and signal integrity.
+      \item \textbf{Architecture design methodology:} Using the unified graph based abstraction methodology, scalable switching architectures are analyzed in terms of hardware complexity, blocking behavior, and signal integrity.
             This leads to practical guidelines for large-scale SiPh OCS design, as shown in Fig.~\ref{fig:ch1-thesis}(b).
 
       \item \textbf{System level control and integration:} An SDN based control framework is implemented to enable dynamic configuration of photonic circuits.
             Leveraging a gNMI-based interface, the proposed system integrates OCS into SDN environments, as shown in Fig.~\ref{fig:ch1-thesis}(c).
 \end{itemize}
-Overall, this work provides a unified approach that links device level design, programmable control, and network level integration, enabling scalable and manageable photonic switching systems.
+Overall, this work provides a unified approach that links hardware level design, programmable control, and network level integration, enabling scalable and manageable photonic switching systems.
 
 \section{Structure of the thesis} \label{sec:structure}
 The thesis is organized to offer a comprehensive account of the theoretical background, methodological developments, and experimental validation associated with the research contributions.
@@ -168,7 +170,7 @@ The thesis is structured into the following chapters:
             The chapter then defines the research objectives and outlines the main contributions of the thesis, providing an overview of the structure of the subsequent chapters.
       \item Chapter 2: \nameref{chap:fundamentals} This chapter presents the theoretical foundations for programmable photonic integrated circuits.
             It introduces key integrated photonic components and circuit topologies, then demonstrates a graph-theory-based framework for circuit modeling and routing, which enables automated control and programming at the photonic layer.
-            It also outlines Software-Defined Networking (SDN) principles to support the design of an SDN-based control layer for integrating optical circuit switching into networks.
+            It also outlines SDN principles to support the design of an SDN based control layer for integrating optical circuit switching into networks.
       \item Chapter 3: \nameref{chap:applications_on_pip} This chapter demonstrates optical networking applications implemented on hexagonal programmable photonic processors.
             By applying graph-theory-based routing algorithms, the work replaces manual and sequential tuning procedures with automated programming methods.
             The chapter presents implementations of optical interconnects, multicasting and circuit switching functions on a single processor, followed by a systematic evaluation of performance metrics.
