@@ -158,7 +158,7 @@ Overall, while physical layer constraints impose fundamental limits on the scala
 \section{Conclusions} \label{section:conclusions}
 This thesis develops a clear framework for the design and implementation of large scale silicon photonic optical circuit switches, covering the process from graph based modeling to practical controlling.
 
-At its core, this work develops a graph-theoretic modeling and programming framework.
+At its core, this work develops a graph-theoretic modeling and programming method.
 A key finding is that the complexity of photonic integrated circuits, particularly those involving hundreds of interferometric elements, can be effectively abstracted into nodes connections and edge weights.
 This abstraction is for automation, enabling the translation of high-level connectivity requirements into device-level PUCs states.
 This approach was first validated through the iPronics Smartlight platform.
@@ -170,7 +170,7 @@ The results indicate that while some architectures perform well at small scales,
 Dilated Benes-like architectures are the most suitable for 128-port and 256-port silicon photonic switches within current CMOS-compatible fabrication limits.
 Furthermore, the analysis of blocking behavior highlights the importance of routing strategies and acceptable performance trade-offs in practical deployments.
 
-Another key conclusion of this thesis work is that the physical performance of a photonic switch depends on how well it can be managed by a network orchestrator.
+Another key conclusion of this thesis work is that the practical deployment of photonic switches in datacenter depends on how well it can be managed by a network orchestrator.
 The development of a software-defined networking control framework, utilizing gNMI and a custom YANG model, bridging the gap between photonic switching hardware and data center control planes.
 The experimental validation demonstrated that internal operations can be abstracted into standardized interfaces.
 This research proves that silicon photonic OCS can operate as standard equipments in a software-defined environment, supporting features like path configuration and telemetry that are essential for practical used.
