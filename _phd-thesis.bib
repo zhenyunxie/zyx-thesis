@@ -253,29 +253,29 @@
   series    = {ICCAD '22}
 }
 
-@inproceedings{tirumala2024nvidia,
-  author    = { Tirumala, Ajay and Wong, Raymond },
-  booktitle = { 2024 IEEE Hot Chips 36 Symposium (HCS) },
-  title     = {{ NVIDIA Blackwell Platform: Advancing Generative AI and Accelerated Computing }},
-  year      = {2024},
-  volume    = {},
-  issn      = {},
-  pages     = {1-33},
-  abstract  = { NVIDIA Blackwell Platform - Data Center Scale Architecture },
-  keywords  = {Data centers;Generative AI;Computer architecture;Hardware acceleration},
-  doi       = {10.1109/HCS61935.2024.10665247},
-  url       = {https://doi.ieeecomputersociety.org/10.1109/HCS61935.2024.10665247},
-  publisher = {IEEE Computer Society},
-  address   = {Los Alamitos, CA, USA},
-  month     = Aug
-}
-
 @misc{nvidia_nvlink,
   author = {{NVIDIA Corporation}},
   title  = {NVIDIA NVLink and NVLink Switch},
   year   = {2026},
   url    = {https://www.nvidia.com/en-us/data-center/nvlink/},
   note   = {Accessed: 2026-03-25}
+}
+
+@misc{ualink_consortium,
+  author = {{UALink Consortium}},
+  title  = {About UALink},
+  year   = {2026},
+  url    = {https://ualinkconsortium.org/about-ualink/},
+  note   = {Accessed: 2026-03-25}
+}
+
+@misc{velaga2025sue,
+  author       = {Ram Velaga},
+  title        = {Scale-up is simple. Ethernet makes it smarter.},
+  year         = {2025},
+  organization = {Broadcom},
+  url          = {https://www.broadcom.com/blog/scale-up-is-simple-ethernet-makes-it-smarter},
+  urldate      = {2026-06-19}
 }
 
 @article{song2025survey,
@@ -290,6 +290,29 @@
   issn           = {1999-5903},
   abstract       = {Nowadays, driven by the exponential growth of parameters and training data of AI applications and Large Language Models, a single GPU is no longer sufficient in terms of computing power and storage capacity. Building high-performance multi-GPU systems or a GPU cluster via vertical scaling (scale-up) has thus become an effective approach to break the bottleneck and has further emerged as a key research focus. Given that traditional inter-GPU communication technologies fail to meet the requirement of GPU interconnection in vertical scaling, a variety of high-performance inter-GPU communication protocols tailored for the scale-up domain have been proposed recently. Notably, due to the emerging nature of these demands and technologies, academic research in this field remains scarce, with limited deep participation from the academic community. Inspired by this trend, this article identifies the challenges and requirements of a scale-up network, analyzes the bottlenecks of traditional technologies like PCIe in a scale-up network, and surveys the emerging scale-up targeted technologies, including NVLink, OISA, UALink, SUE, and other X-Links. Then, an in-depth comparison and discussion is conducted, and we express our insights in protocol design and related technologies. We also highlight that existing emerging protocols and technologies still face limitations, with certain technical mechanisms requiring further exploration. Finally, this article presents future research directions and opportunities. As the first review article fully focusing on intra-node GPU interconnection in a scale-up network, this article aims to provide valuable insights and guidance for future research in this emerging field, and we hope to establish a foundation that will inspire and direct subsequent studies.},
   doi            = {10.3390/fi17120537}
+}
+
+@misc{lumentum_ocs,
+  author = {{Lumentum}},
+  title  = {Optical Circuit Switches},
+  year   = {2026},
+  url    = {https://www.lumentum.com/en/products/data-center/optical-circuit-switches},
+  note   = {Accessed: 2026-06-19}
+}
+
+@misc{coherent_ocs,
+  author = {{Coherent Corp.}},
+  title  = {Optical Circuit Switch (OCS)},
+  url    = {https://www.coherent.com/networking/optical-circuit-switch},
+  year   = {2024},
+  note   = {Accessed: 2026-06-19}
+}
+
+@misc{polatis7000,
+  author       = {{Polatis / HUBER+SUHNER}},
+  title        = {Series 7000 384x384 Port Software-Defined Optical Circuit Switch (SDN Enabled)},
+  howpublished = {\url{https://www.polatis.com/series-7000-384x384-port-software-controlled-optical-circuit-switch-sdn-enabled.asp}},
+  note         = {Accessed: 2026-06-19}
 }
 
 @article{pfister2001introduction,
@@ -752,18 +775,6 @@
   pages    = {466-475},
   keywords = {Directional couplers;Interferometers;Polarization;Interference;Crosstalk;Magnetic separation;Distributed control;Performance loss;Fabrication;Couplings;Crosstalk;directional coupler (DC);integrated optics;multimode interference (MMI) devices;polarization;ridge waveguides},
   doi      = {10.1109/JSTQE.2004.846521}
-}
-
-@article{tang2024broadband,
-  title     = {Broadband and fabrication-tolerant 3-dB couplers with topological valley edge modes},
-  author    = {Tang, Guo-Jing and Chen, Xiao-Dong and Sun, Lu and Guo, Chao-Heng and Li, Meng-Yu and Tian, Zhong-Tao and Chen, Hou-Hong and Wang, Hong-Wei and Sun, Qi-Yao and Pan, Ying-Di and others},
-  journal   = {Light: Science \& Applications},
-  volume    = {13},
-  number    = {1},
-  pages     = {166},
-  year      = {2024},
-  publisher = {Nature Publishing Group UK London},
-  doi       = {https://doi.org/10.1038/s41377-024-01512-3}
 }
 
 @misc{ansys_mmi_coupler,
@@ -2315,4 +2326,20 @@
   pages    = {1-6},
   keywords = {Optical switches;Calibration;Heating systems;Monitoring;Fabrics;Computer architecture;Silicon;Optical switch calibration;optical switch fabric;Si mach-zehnder interferometer (MZI);Spanke-Benes},
   doi      = {10.1109/JPHOT.2023.3275073}
+}
+
+@inproceedings{nvc2c,
+  author    = {Werner, Felix and Weisgut, Marcel and Rabl, Tilmann},
+  title     = {Towards Memory Disaggregation via NVLink C2C: Benchmarking CPU-Requested GPU Memory Access},
+  year      = {2025},
+  isbn      = {9798400714702},
+  publisher = {Association for Computing Machinery},
+  address   = {New York, NY, USA},
+  url       = {https://doi.org/10.1145/3723851.3723853},
+  doi       = {10.1145/3723851.3723853},
+  booktitle = {Proceedings of the 4th Workshop on Heterogeneous Composable and Disaggregated Systems},
+  pages     = {8–14},
+  numpages  = {7},
+  location  = {},
+  series    = {HCDS '25}
 }

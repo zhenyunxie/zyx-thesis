@@ -5,39 +5,61 @@ The rapid advancement of silicon photonics has transitioned integrated optical s
 This evolution enables the dynamic manipulation of optical signals, allowing a single hardware platform to support reconfigurable networking functions, adaptive interconnects, and scalable optical switching \cite{bogaerts2020programmable}.
 As programmable integrated photonic circuits continue to increase in scale and complexity, efficient methodologies for circuit abstraction, automated configuration, and software-defined control become essential for practical deployment.
 
-This chapter introduces the theoretical foundations and programming methodologies required to model, program, and control PIP circuits.
-It begins with the fundamental building blocks, including 50:50 splitters, waveguide crossings, phase shifters, and 2x2 programmable unit cells (PUCs).
+This chapter begins with the fundamental building blocks, including 50:50 power splitters, waveguide crossings, phase shifters, and 2x2 programmable unit cells (PUCs).
 The transfer-matrix models of these components are presented to describe the optical behavior and signal transformations of these components within integrated circuits.
 
 Building upon these device level elements, the chapter introduces programmable mesh topologies constructed from interconnected unit cells, including feedforward and recirculating mesh architectures.
-To address the growing complexity of large scale programmable photonic fabrics, a graph theoretic abstraction is developed to represent photonic circuits as weighted graphs composed of nodes and edges, enabling automated routing, path computation, and configuration synthesis.
+To address the growing complexity of large scale programmable photonic fabrics, a graph theoretic abstraction is developed to represent photonic circuits as weighted graphs composed of nodes and edges, enabling automated routing, path computation, and synthesis.
 
 In parallel with hardware abstraction and programming, scalable operation of programmable photonic systems also requires integration with higher layer network control frameworks.
 Therefore, the chapter additionally introduces the principles of Software-Defined Networking (SDN), model driven management, and southbound communication interfaces, establishing the foundation for the software-defined control methodologies developed in later chapters.
 
 \section{Basic building blocks} \label{sec:functional_blocks} % (fold)
-\subsection{50:50 splitter} \label{sub:splitter} % (fold)
-The 50:50 splitter, or 3dB coupler, serves as the foundational element for signal distribution and interferometric modulation within photonic integrated circuits, functioning primarily through two distinct physical mechanisms: evanescent coupling \cite{ansys_evanescent_coupler} and self-imaging \cite{soldano2002optical}.
+\subsection{50:50 power splitter} \label{sub:splitter} % (fold)
+The 50:50 power splitter, or 3dB coupler, serves as the foundational element for signal distribution and interferometric modulation within photonic integrated circuits, functioning primarily through two distinct physical mechanisms: evanescent coupling \cite{ansys_evanescent_coupler} and self-imaging \cite{soldano2002optical}.
+From a mathematical perspective, a 50:50 power splitter can be described using a linear transfer relation between the complex optical field amplitudes at its input and output ports.
+Denoting the input fields as $E_1^{in}$ and $E_2^{in}$, and the corresponding outputs as $E_1^{out}$ and $E_2^{out}$, the splitter can be represented by a unitary transformation:
+\begin{equation}
+    \begin{bmatrix}
+        E_1^{out} \\
+        E_2^{out}
+    \end{bmatrix}
+    =
+    \frac{1}{\sqrt{2}}
+    \begin{bmatrix}
+        1 & j \\
+        j & 1
+    \end{bmatrix}
+    \begin{bmatrix}
+        E_1^{in} \\
+        E_2^{in}
+    \end{bmatrix}
+\end{equation}
+Here, $E_1^{in/out}$ and $E_2^{in/out}$ are the complex optical field amplitudes at the two ports, including both magnitude and phase information.
+The diagonal terms represent the self coupling contribution of each input port to its corresponding output port, while the off diagonal terms describe cross coupling between the two waveguide modes.
+The factor $1/\sqrt{2}$ ensures power conservation in the ideal lossless case, and the imaginary unit $j$ captures the $\pi/2$ phase shift associated with the coupling process in a symmetric 3 dB splitter.
+
 % DCs
-Directional Couplers (DCs) serve as passive splitting elements by placing two waveguides in extreme proximity, typically separated by a gap of only a few hundred nanometers \cite{AGRAWAL202157, tormen2005wavelength, chen2017broadband}.
+Directional Couplers (DCs) serve as passive splitting elements by placing two waveguides in close proximity, typically separated by a gap of only a few hundred nanometers \cite{AGRAWAL202157, tormen2005wavelength, chen2017broadband}.
 The structure schematic is shown in top panel of Figure~\ref{fig:ch2-splitters}(a).
 This arrangement facilitates evanescent coupling, a physical phenomenon where light tunnels between adjacent cores as their electromagnetic fields overlap, as illustrated in the bottom panel of Figure~\ref{fig:ch2-splitters}(a).
-While DCs are valued for their exceptionally low insertion loss (typically ranging from 0.1 to 0.5 dB), they are inherently sensitive to environmental and manufacturing conditions \cite{xu2019low, darmawan2005rigorous}.
-Because the power-splitting ratio is a strict function of the coupling length and waveguide separation, even nanometric deviations during fabrication or shifts in the operating wavelength can result in significant power imbalances.
-Consequently, while DCs offer high performance, their delicate nature makes them susceptible to yield issues in large-scale systems \cite{tang2024broadband}.
+While DCs are valued for their exceptionally low insertion loss (typically ranging from 0.1 to 0.5 dB), they exhibit a relatively narrow operating bandwidth and are sensitive to environmental and fabrication variations \cite{xu2019low, darmawan2005rigorous}[CITE].
+Since the power splitting ratio depends strongly on the coupling length, waveguide separation, and operating wavelength, small fabrication deviations or wavelength shifts can lead to significant power imbalance.
+consequently, conventional DCs are struggle to maintain a uniform power splitting ratio over the broad wavelength ranges required for wavelength division multiplexed (WDM) communication systems.
+Although broadband alternatives such as adiabatic and rapid adiabatic couplers have been proposed to alleviate these limitations [CITE], standard DCs are generally not preferred for broadband WDM applications in data center networks.
 
 %MMI
 In contrast, Multimode Interferometers (MMIs) offer a more resilient alternative for routing and splitting optical signals by exploiting the self-imaging effect \cite{ansys_mmi_coupler, soldano2002optical}.
 When an optical field enters a widened multimode waveguide region, it excites multiple propagation modes that interfere constructively at specific periodic intervals, forming replicas of the input signal at the output ports, see Figure~\ref{fig:ch2-splitters}(b).
 Although MMIs coupler generally exhibit slightly higher insertion loss compared to directional couplers, they offer significantly improved fabrication tolerance and structural robustness \cite{solehmainen2006adiabatic, hosseini20111, sheng2012compact}.
 Their performance is less sensitive to precise waveguide gap variations, resulting in higher reliability and fabrication yield in high-density photonic integrated circuits.
-Furthermore, MMIs are favored for their broadband specs, maintaining near 50:50 splitting ratios across a wide spectral range, which is critical for wavelength-division multiplexing (WDM) applications \cite{maese2013wavelength}.
+Furthermore, MMIs are favored for their broadband specs, maintaining near 50:50 power splitting ratios across a wide spectral range, which is critical for WDM applications \cite{maese2013wavelength}.
 
 \begin{figure}[h]
     \begin{center}
         \includegraphics{figures/ch2-splitters.pdf}
     \end{center}
-    \caption{50:50 splitter structures and optical field distributions.
+    \caption{50:50 power splitter structures and optical field distributions.
         (a) Top panel is schematic of a directional coupler.
         The bottom panel presents the simulated optical intensity distribution within the coupling section \cite{gomez-hidalgoFundamentalBuildingBlocksa}.
         (b) Top panel is schematic of a multimode interferometer coupler.
@@ -47,10 +69,10 @@ Furthermore, MMIs are favored for their broadband specs, maintaining near 50:50 
 
 Regardless of the chosen architecture, real-world imperfections, such as surface roughness and lithographic variations, inevitably lead to splitting imbalances and unintended phase shifts \cite{feilchenfeld2017silicon}.
 In a switch matrix, a deviation from the ideal 50:50 ratio—even by a few percent—limits the maximum achievable extinction ratio of subsequent Mach-Zehnder Interferometers (MZIs) \cite{wilkes201660}.
-For the large-scale integrated circuits presented in later chapters, the MMI was selected as the primary building block due to its ability to maintain high performance and yield despite the environmental and manufacturing fluctuations inherent in mass-produced silicon photonics.
+For the large scale integrated circuits presented in later chapters, the MMI was selected as the primary building block due to its ability to provide broadband operation and yield despite the environmental and manufacturing fluctuations inherent in mass produced silicon photonics.
 
 \subsection{Phase shifter} \label{sub:phase_shifter} % (fold)
-The phase shifter is the essential active component in programmable photonic integrated circuits, responsible for modulating the phase of the optical field within a waveguide.
+The phase shifter is the essential active component in PIP circuits, responsible for modulating the phase of the optical field within a waveguide.
 By inducing a controllable phase shift, these devices enable the constructive or destructive interference required for switching, routing, and signal processing.
 Mathematically, the accumulated optical phase $\phi$ along a waveguide of length $L$ is given by:
 \begin{equation}
@@ -73,6 +95,11 @@ Conventional metal heaters on oxide cladding suffer from heat leakage into the s
 Vertical trench structures improve lateral thermal confinement, this reduces heat spreading into the surrounding oxide and substrate, lowering power consumption $P\pi$ to typical values of ~10-14 mW, and this structure also enabling tighter actuator spacing due to suppressed lateral heat diffusion \cite{liu2022thermo}.
 In full suspended silicon structures, the silicon waveguide is thermally isolated by removing the underlying substrate and surrounding oxide, leaving it supported by narrow anchors.
 This configuration maximizes thermal confinement and concentrates heat in the waveguide region, which improve the crosstalk and power consumption, with $P\pi$ to the sub-milliwatt level \cite{5712163, gao2023comprehensive}.
+However, this improvement in power efficiency comes with a trade-off in reconfiguration speed.
+In general, stronger thermal isolation leads to a higher thermal resistance and reduced heat dissipation, which increases the effective thermal time constant of the device.
+As a result, non-suspended TOPS typically exhibit 10–90\% response times on the order of tens of microseconds (approximately $10-13\mu$s) \cite{liu2022thermo}.
+In contrast, fully suspended structures, despite their significantly reduced $P_{\pi}$, generally show much slower thermal dynamics, with response times in the range of several hundreds of microseconds (typically $ 120$–$140~\mu$s) \cite{liu2022thermo}.
+This corresponds to roughly an order-of-magnitude reduction in speed compared to non-suspended implementations.
 \begin{figure}[ht]
     \begin{center}
         \includegraphics{figures/ch2-ps.pdf}
@@ -84,8 +111,8 @@ This configuration maximizes thermal confinement and concentrates heat in the wa
 
 \subsection{2x2 programmable unit cell}\label{sub:pucs} % (fold)
 The 2x2 Mach-Zehnder Interferometer (MZI) serves as the physical implementation of the Programmable Unit Cell (PUC), which is defined in this thesis as the fundamental building block of the system.
-Figure~\ref{fig:ch2-puc} structurally demonstrate a PUC, which is composed of a symmetric four-port configuration consisting of an initial 50:50 input splitter, two independent waveguide interference arms of length $L$, at least one active phase shifter integrated into these arms, and a final 50:50 output coupler that recombines the optical fields.
-The operational physics of the device relies on the principle of dual-beam interference, where an incoming optical signal is first divided into two coherent components by the input splitter (MMI or DC),
+Figure~\ref{fig:ch2-puc} structurally demonstrate a PUC, which is composed of a symmetric four-port configuration consisting of an initial 50:50 input power splitter, two independent waveguide interference arms of length $L$, at least one active phase shifter integrated into these arms, and a final 50:50 output coupler that recombines the optical fields.
+The operational physics of the device relies on the principle of dual-beam interference, where an incoming optical signal is first divided into two coherent components by the input power splitter (MMI or DC),
 As these two signals propagate through the interference arms, their relative phase relationship is dynamically adjusted via thermo-optic or electro-optic phase shifters, which modify the effective refractive index ($n_{\mathrm{eff}}$) of the waveguide mode to accumulate a specific optical phase $\phi = 2\pi n_{\mathrm{eff}} L / \lambda$.
 Upon reaching the output coupler, the two optical signals interfere constructively or destructively depending on their accumulated phase difference.
 This interference enables the device to control of both the optical amplitude and phase of the output signals, while also exhibiting a wavelength-dependent response  \cite{mach1892ueber, zehnder1891neuer}.
@@ -96,7 +123,7 @@ Figure~\ref{fig:ch2-puc}(c) illustrates three operating states of the PUC: cross
         \includegraphics{figures/ch2-puc.pdf}
     \end{center}
     \caption{Structure and Operation of the 2x2 PUC
-        (a) Schematic of the 2x2 PUC consisting of two 50:50 splitters and two phase shifters.
+        (a) Schematic of the 2x2 PUC consisting of two 50:50 power splitters and two phase shifters.
         (b) Optical micrograph of the fabricated element.
         (c) Operating states of the device, demonstrating cross, bar, and tunable transmission configurations.
     }\label{fig:ch2-puc}
@@ -117,6 +144,7 @@ In equation~\eqref{eq:ch2-puc}, $\theta$ denotes the interference phase, which i
 For an ideal PUC, the differential phase shift $\theta$ equals zero, indicating that the passive state of the PUC corresponds to the cross state.
 The term $\Delta$ represents the common phase shift, a common drive in both heaters providing a global phase offset that leads to independent control of the device phase without affecting the power ratio, and is calculated as $\Delta = (\phi_{up} + \phi_{lo})/2$.
 
+In typical programmable photonic implementations, the PUC is designed in a balanced configuration with equal arm lengths to enable broadband operation by minimizing wavelength dependent phase errors and group delay mismatch,
 The importance of PUCs in large-scale integrated systems comes from their ability to scale efficiently and their compatibility with high-yield manufacturing using robust components.
 However, when circuits scale to thousands of PUCs, nanometric fabrication deviations in the two arms can induce imbalances \cite{song2022toward}, resulting in residual optical power leaking into unintended ports and accumulating across cascaded stages.
 This phenomenon is detailed in Chapter~\ref{chap:ocs_archs}.
@@ -161,7 +189,7 @@ This section explores the structural properties, and operational principles of t
 
 \subsection{Feedforward mesh}\label{sub:feedforward} % (fold)
 Feedforward meshes are characterized by an acyclic graph structure where optical signals propagate in a strictly unidirectional manner from input to output ports.
-By eliminating feedback loops, these architectures ensure predictable latency and simplified phase control, making them essential topologies in both programmable computing and high-speed switching \cite{shen2017deep, suzukiUltracompact882014}.
+By eliminating feedback loops, these architectures ensure predictable latency and simplified phase control, making them essential topologies in both programmable computing and circuit switching \cite{shen2017deep, suzukiUltracompact882014}.
 While architectures like the Reck and Clements designs have gained significant traction in photonic computing for performing unitary matrix multiplications in optical neural networks ~\cite{reck1994experimental, clements2016optimal},
 this thesis primarily focuses on the application of feedforward meshes within data center networks.
 
@@ -170,7 +198,7 @@ The selection of a specific topology involves a delicate balancing act between c
 Common architectures include Benes, Path-Independent Loss (PILOSS), Banyan, etc \cite{benesMathematicalTheoryConnecting1965a, suzukiUltracompact882014, xiaohongjiangPerformanceModelingAlloptical2005}.
 Despite their advantages, scaling feedforward meshes to the port counts required by modern datacenters introduces bottlenecks.
 Hardware complexity grows rapidly, leading to large chip footprints and increased fabrication risks.
-Furthermore, optical performance is often limited by the accumulation of insertion loss and coherent crosstalk from hundreds of waveguide crossings and splitters, which can severely limit the SNR and lead to internal blocking under certain traffic patterns.
+Furthermore, optical performance is often limited by the accumulation of insertion loss and coherent crosstalk from hundreds of waveguide crossings and power splitters, which can severely limit the SNR and lead to internal blocking under certain traffic patterns.
 A rigorous evaluation of these trade-offs and the optimization of these switching fabrics for large-scale deployment will be discussed in detail in Chapter~\ref{chap:ocs_archs}.
 \subsection{Recirculating mesh}\label{sub:circular} % (fold)
 Recirculating meshes, represent a paradigm shift from application-specific designs toward general-purpose photonic processors \cite{perez2017multipurpose}.
@@ -206,7 +234,7 @@ It should be noted that bottom ports cannot be used as optical I/O; they are not
 \end{figure}
 
 \section{Graph-theoretic modeling}\label{sec:graph}
-Although programmable photonic circuits demonstrate remarkable functional versatility, scaling these architectures to large meshes introduces substantial control complexity.
+Although PIP circuits demonstrate remarkable functional versatility, scaling these architectures to large meshes introduces substantial control complexity.
 Conventional configuration methods typically rely on sequential tuning, where each PUC is manually adjusted one at a time to achieve the desired optical response.
 While feasible for small-scale systems, this approach becomes increasingly impractical as the number of PUCs grows to the hundreds or thousands.
 It is labor-intensive, highly sensitive to cumulative errors, and fundamentally incompatible with the demands of scalable, automated photonic processors.
@@ -233,7 +261,7 @@ The graph representation incorporates performance metrics for each connection, w
     w = c_1 \cdot \textit{IL} + c_2 \cdot \textit{BUL} + c_3 \cdot P + \dots
     \label{eq:ch2-graph_weight}
 \end{equation}
-where IL is the PUC insertion loss, BUL is the PUC basic uni length, and $P_c$ is the PUC power consumption.
+where IL is the PUC insertion loss, BUL is the PUC basic unit length, and $P_c$ is the PUC power consumption.
 Hence the weight can be calculated according to these figures of merit (FoMs) by only changing the distribution of weights {$c_i$} \cite{lopez2020auto}.
 The graph-based mesh can be systematically connected in a predetermined manner, thus enabling symmetrical hexagonal photonic meshes of different sizes to be simulated.
 
