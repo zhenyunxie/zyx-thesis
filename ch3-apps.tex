@@ -3,7 +3,7 @@
 \chapter{Optical Networking Applications Based on General-purpose Programmable Photonics}\label{chap:applications_on_pip} % (fold)
 % Motivation of this chapter
 In the previous chapter, the theoretical foundations and programming methodologies for programmable integrated photonic circuits were introduced.
-The fundamental building blocks of programmable photonic systems, including splitters, crossings, phase shifters, and PUCs.
+The fundamental building blocks of programmable photonic systems, including power splitters, crossings, phase shifters, and PUCs.
 Based on these components, different circuit topologies were discussed, with particular emphasis on general-purpose mesh architectures that enable flexible and software-defined photonic functionality.
 The hexagonal mesh as one of the most predominant topologies in general-purpose programmable photonics, enables the synthesis of a wide range of optical circuits through appropriate configuration of the PUCs.
 
@@ -18,8 +18,18 @@ The corresponding performance metrics are analyzed in detail, highlighting the c
 Reconfigurable optical interconnects are of great interest in optical networks as they enable flexible connections of terabit data rates with high-performance operation \cite{sato2022prospects, sato2023optical}.
 These interconnects demand reduced latency and energy efficiency between input and output (I/O) ports, and therefore minimal insertion loss and shortest distance is highly desired.
 The software layer demonstrated herein provides an interconnect algorithm based on Dijkstra \cite{foead2021systematic, bierlaire_optimization_2018}, which can automatically provide an optimum path configuration.
-This application can also provide self-healing capabilities to allocate alternative optical paths with lower insertion loss when needed.
-
+This application can also provide self-healing capabilities to allocate alternative optical paths with lower insertion loss when needed
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics{figures/ch3-interconnect.pdf}
+    \end{center}
+    \caption{Optical interconnect experiment.
+        (a) Programmable processor configurations considering different input ports.
+        (b)Colormap of the normalized optical power measured at output ports for different interconnect configurations.
+        The white lines indicate the configuration shown in the schematic of the programmable processor
+    }\label{fig:ch3-interconnect}
+\end{figure}
+% figure power interconnect
 The results of the optical interconnect experiments at a central wavelength of 1550 nm and the processor configuration are shown in Figure~\ref{fig:ch3-interconnect}.
 Ports 0, 25, 17, 6 are used as input ports, and up to 27 interconnects to other available output ports are programmed.
 As it can be seen in Figure~\ref{fig:ch3-inter-power}, all the paths are configured successfully, showing diagonal lines in the colormap, each one corresponding to a given interconnect.
@@ -29,16 +39,7 @@ In the experiment, the longest interconnect path consists of 15 PUCs, while the 
 Furthermore, optical power is also measured at the rest of the non-targeted output ports, with an average leakage of -30 dB.
 The algorithm allows the simultaneous identification of up to 400 possible paths with an average time of about 0.4 microseconds per path.
 % figure interconnect
-\begin{figure}[h]
-    \begin{center}
-        \includegraphics{figures/ch3-interconnect.pdf}
-    \end{center}
-    \caption{Optical interconnect experiment.
-        Programmable processor configurations considering different input ports.
-    }\label{fig:ch3-interconnect}
-\end{figure}
-% figure power interconnect
-\begin{figure}[h]
+\begin{figure}[H]
     \begin{center}
         \includegraphics{figures/ch3-inter-power.pdf}
     \end{center}
@@ -72,6 +73,7 @@ A simple example of a 1x3 network is demonstrated in Figure~\ref{fig:ch3-multica
 Building upon this intuitive target, our proposed algorithm implements the shortest-path tree circuit based on the pseudocode in Algorithm~\ref{alg:auto_multicast}
 % Start algorithm
 \begin{algorithm}[h]
+    \footnotesize
     \caption{Pseudo-code of Multicasting Application}
     \label{alg:auto_multicast}
     \begin{algorithmic}[1]
@@ -188,6 +190,7 @@ Here, we document to a deeper extent the second approach that implements the edg
 computational efficiency than the brute-force sequential routing of the first approach, while avoiding the ports constraints in the Spanke-Benes architecture.
 % algorithm
 \begin{algorithm}[h]
+    \footnotesize
     \caption{OCS Auto Switch}
     \label{alg:auto_switch}
     \begin{algorithmic}[1]

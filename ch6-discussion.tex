@@ -1,7 +1,7 @@
 % Author: Zhenyun Xie
 
 \chapter{Discussion and Conclusion}\label{chap:discussion_and_conclusions} % (fold)
-This chapter builds upon the preceding investigations of circuit level control, architectural design, and system level integration of optical circuit switches based on programmable integrated photonics, and discusses their implications in the context of large-scale and practical deployment.
+This chapter builds upon the preceding investigations of circuit level control, architecture design, and system level integration of optical circuit switches based on programmable integrated photonics, and discusses their implications in the context of large-scale and practical deployment.
 
 It begins by discussing with the limitations of programmable integrated photonic systems, with a focus on insertion loss and crosstalk in high-radix switching fabrics.
 It then explores how software defined approaches, including routing and calibration algorithms, can be leveraged to mitigate these limitations and improve system performance and robustness.
@@ -14,7 +14,7 @@ as the accumulated loss and crosstalk introduced by switching elements, waveguid
 thereby directly affecting the feasibility of large scale deployments in data center environments.
 \subsubsection{Insertion loss} \label{subsec:insertion_loss}
 In Chapter~\ref{chap:applications_on_pip}, programmable photonic processors based on hexagonal meshes were investigated as a flexible platform for implementing optical switching functions.
-While such multipurpose architectures provide strong versatility, they inherently suffer from limited scalability when applied to high radix switching fabrics.
+While such general-purpose architectures provide strong versatility, they inherently suffer from limited scalability when applied to high radix switching fabrics.
 As a result, Chapter~\ref{chap:ocs_archs} presents several application specific switching architectures; and for very high radix optical switches in silicon photonics, we further analyzed the insertion loss as a function of the two dominant contributors: switching cells and waveguide crossings.
 Figure~\ref{fig:ch6_pic_loss_projection} demonstrates this projection for 128- and 256-port radices, where the grey dashed lines indicate state-of-the-art building blocks, representing the current technological baseline.
 As shown in Figure~\ref{fig:ch6_pic_loss_projection}(a), for the 128$\times$128 case, all architectures except PILOSS can achieve a total loss below 5 dB provided that the switching cell and crossing losses are reduced to 0.15 dB and 1.5 mdB, respectively.

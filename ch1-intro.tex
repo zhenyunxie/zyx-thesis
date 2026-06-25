@@ -13,17 +13,33 @@ In addition, PICs provide higher bandwidth, because optical signals are not fund
 Similar to the evolution of electronic systems toward programmable and software-defined architectures~\cite{oldfield1995field}, programmable integrated photonics (PIP) is a new paradigm in which the photonic circuit can be defined and controlled through software~\cite{capmany2020programmable, bogaerts2020programmable}.
 PIP leverages a single integrated photonic hardware to implement multiple functionalities or reconfigure circuit behaviors by applying external control signals.
 % operation and application
-The core of PIP lies in its reconfigurable architectures, typically based on integrated waveguide meshes cascaded by Mach-Zehnder interferometers (MZIs) or microring resonators.
-By applying external control signals to these building block units, the amplitude and phase of optical signals can be independently adjusted, allowing for both feedforward and recirculating propagation.
+As illustrated in Figure~\ref{fig:ch1-pip-overview}(a), PIP is built upon reconfigurable photonic elements such as Mach-Zehnder interferometers (MZIs), microring resonators, or crossing array.
+By applying external control signals to these building block units, the amplitude and phase of optical signals can be independently adjusted.
+A typical PIP processor overview is demonstrated in Figure~\ref{fig:ch1-pip-overview}(b), consisting of optical fan-in and fan-out stages for coupling light into and out of the chip, together with an electronic control interface for driving the photonic actuators.
+In addition, optional interfaces for high-speed radiofrequency (RF) signals utilizing modulators and photodetectors.
+The key of PIP lies in its reconfigurable photonic core, which can generally be categorized into feedforward and recirculating architectures according to the signal propagation, as illustrated in Figure~\ref{fig:ch1-pip-overview}(c).
 Feedforward mesh correspond to acyclic signal propagation through cascaded interferometric units, where light flows in a directed manner from inputs to outputs without forming closed loops.
-Such architectures are particularly suitable for deterministic linear transformations and matrix vector operations, making them well suited for optical computing and neuromorphic photonics.
+Such architectures are particularly suitable for deterministic linear transformations and matrix vector multiplications, making them well suited for optical computing and neuromorphic photonics systems.
 Moreover, the unidirectional propagation inherent in feedforward designs also facilitates high speed signal routing, making these architectures attractive for applications such as optical interconnects and switching.
 In contrast, recirculating propagation arises when feedback loops or closed path waveguide connections are introduced into the mesh, allowing optical signals to circulate within resonant or recurrent structures.
 These loops naturally support frequency selective behavior and temporal accumulation effects, which are essential for implementing optical filters, delay lines, and resonant sensing functionalities.
+Furthermore, through appropriate configuration, they can synthesize a wide range of feedforward circuits~\cite{perez2017multipurpose}.
+However, the additional propagation paths and feedback loops generally introduce higher insertion loss and crosstalk, which require more complex control.
 
-% programmability
-The flexibility of PIP enables the synthesis of diverse circuit topologies and dynamic reconfiguration of optical paths within the same physical footprint.
-On top of the hardware reconfigurability, PIP systems can be further abstracted through mathematical modeling, where photonic circuits are represented using frameworks such as linear transformations or graph-based formulations~\cite{chen2020graph, rausell2025programming}.
+\begin{figure}[h]
+      \begin{center}
+            \includegraphics{figures/ch1-pip-overview.pdf}
+      \end{center}
+      \caption{Overview of programmable integrated photonic processor~\cite{perez2025large}
+            (a) Different type of programmable unit cells for PIP.
+            (b) Schematic of PIP processor comprising a photonic core, optical I/O interfaces, control electronics, and RF signal and monitoring interfaces.
+            (c) Comparison between feedforward and recirculating photonic architectures and their representative application domains.
+      }\label{fig:ch1-pip-overview}
+\end{figure}
+
+% software programmability
+The flexibility of PIP enables the synthesis of diverse circuits and dynamic reconfiguration of optical paths within the same physical footprint.
+On top of the hardware reconfigurability, PIP systems can be further abstracted through mathematical modeling, where photonic circuits are represented using frameworks such as linear transformations or graph-based methodology~\cite{chen2020graph, rausell2025programming}.
 This enables high level programming of photonic functionalities, shifting the design paradigm from device level tuning to application driven programming.
 In addition, algorithmic optimization methods can be introduced to improve the efficiency, accuracy, and robustness of circuit synthesis and control~\cite{perez2020principles}.
 
@@ -149,10 +165,10 @@ To achieve this, the thesis defines and implements a vertically integrated techn
 Furthermore, a system level control framework is developed that enables silicon photonic OCS to support SDN.
 Specifically, the contributions are structured along coupled layers:
 \begin{itemize}
-      \item \textbf{Circuit abstraction and synthesis:} A graph based model is introduced to represent PIP circuits, enabling translation of high level connectivity requirements into physical device configurations.
+      \item \textbf{Circuit abstraction and synthesis:} A graph based model is introduced to represent recirculating PIP circuits, enabling translation of high level connectivity requirements into physical device configurations.
             Based on this abstraction, automated synthesis algorithms are developed to support software-defined generation of photonic circuits for networking applications, as shown in Fig.~\ref{fig:ch1-thesis}(a).
 
-      \item \textbf{Architecture design methodology:} Based on graph theoretic abstraction, different switching architectures are designed through alternative interconnection schemes between building blocks, resulting in varying hardware complexity.
+      \item \textbf{Architecture design methodology:} Based on graph theory abstraction, different switching architectures are modelled through alternative connection schemes between building blocks, resulting in varying hardware complexity.
             Routing algorithms are developed on the corresponding switch circuit graphs to characterize blocking behavior, while signal integrity analysis is performed to evaluate optical performance.
             These metrics are jointly used to assess the scalability and performance of the architectures, giving practical guidelines for large-scale SiPh OCS design, as shown in Fig.~\ref{fig:ch1-thesis}(b).
 
