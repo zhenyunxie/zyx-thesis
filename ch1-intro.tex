@@ -21,10 +21,10 @@ The key of PIP lies in its reconfigurable photonic core, which can generally be 
 Feedforward mesh correspond to acyclic signal propagation through cascaded interferometric units, where light flows in a directed manner from inputs to outputs without forming closed loops.
 Such architectures are particularly suitable for deterministic linear transformations and matrix vector multiplications, making them well suited for optical computing and neuromorphic photonics systems.
 Moreover, the unidirectional propagation inherent in feedforward designs also facilitates high speed signal routing, making these architectures attractive for applications such as optical interconnects and switching.
-In contrast, recirculating propagation arises when feedback loops or closed path waveguide connections are introduced into the mesh, allowing optical signals to circulate within resonant or recurrent structures.
-These loops naturally support frequency selective behavior and temporal accumulation effects, which are essential for implementing optical filters, delay lines, and resonant sensing functionalities.
-Furthermore, through appropriate configuration, they can synthesize a wide range of feedforward circuits~\cite{perez2017multipurpose}.
-However, the additional propagation paths and feedback loops generally introduce higher insertion loss and crosstalk, which require more complex control.
+In contrast, recirculating propagation arises when feedback loops are introduced into the mesh, allowing optical signals to circulate within resonant structures.
+These loops naturally support frequency selective behavior, which are essential for implementing optical filters, delay lines, and resonant sensing functionalities.
+Furthermore, through appropriate configuration, recirculating meshes can also synthesize feedforward circuits~\cite{perez2017multipurpose}, although the additional propagation paths and feedback loops generally introduce higher insertion loss and crosstalk.
+Consequently, these recirculating architectures are commonly regarded as general-purpose photonic meshes, and have also been termed multipurpose meshes in the literature.
 
 \begin{figure}[h]
       \begin{center}
@@ -38,7 +38,7 @@ However, the additional propagation paths and feedback loops generally introduce
 \end{figure}
 
 % software programmability
-The flexibility of PIP enables the synthesis of diverse circuits and dynamic reconfiguration of optical paths within the same physical footprint.
+The flexibility of PIP enables the reconfiguration of optical paths and synthesis of diverse circuits within the same physical footprint.
 On top of the hardware reconfigurability, PIP systems can be further abstracted through mathematical modeling, where photonic circuits are represented using frameworks such as linear transformations or graph-based methodology~\cite{chen2020graph, rausell2025programming}.
 This enables high level programming of photonic functionalities, shifting the design paradigm from device level tuning to application driven programming.
 In addition, algorithmic optimization methods can be introduced to improve the efficiency, accuracy, and robustness of circuit synthesis and control~\cite{perez2020principles}.
@@ -109,18 +109,22 @@ It has further been investigated for high bandwidth GPU interconnects beyond the
 % silicon photonic based programmable integrated photonic ocs
 Most current OCS deployments are based on free-space optical switching technologies, including MEMS mirrors, piezo-electric beam steering systems, and liquid-crystal-on-silicon (LCoS) devices \cite{lumentum_ocs, polatis7000, coherent_ocs}.
 These technologies generally offer low insertion losses (typically around 0.5–1.5 dB) and support large port counts, but they are relatively bulky and typically operate on millisecond timescales, limiting responsiveness to dynamic AI workloads \cite{1244924, CignalAI2025OCS4Q25}.
-Silicon photonics (SiPh) has emerged as a promising alternative by enabling the monolithic integration of photonic components on a single chip.
-Leveraging CMOS-compatible (Complementary Metal-Oxide-Semiconductor) fabrication processes, SiPh platforms benefit from the maturity, scalability, and high yield of the semiconductor manufacturing ecosystem.
-As a result, SiPh based devices can achieve higher integration density and reduced cost per port compared to discrete optical components.
-From a performance perspective, SiPh based switching fabrics offer significantly faster reconfiguration speeds, typically ranging from microseconds to sub-milliseconds, depending on the tuning mechanism (e.g., thermo-optic or electro-optic effects) \cite{bogaerts2020programmable}.
-The absence of mechanically moving parts further enhances robustness, reduces wear out mechanisms, and improves long term operational stability.
-These characteristics make SiPh particularly well suited for deployment in environments where frequent and rapid reconfiguration is required.
 
-Building on these technological advantages, PIP introduces reconfigurability at the circuit level by integrate a large number of tunable photonic elements, such as MZIs and microring resonators.
-This architectural approach enables the realization of flexible and dynamically reconfigurable optical switching fabrics.
-Unlike traditional point-to-point circuit switching, PIP based systems can support more complex communication patterns, including one-to-many (1×N) optical multicasting, where a single source node transmits identical data streams to multiple destinations simultaneously \cite{samadi2015optical, dinc2024multicasting}.
-Such communication patterns are common in distributed AI training workloads, particularly in collective operations such as broadcast and all-gather \cite{si2025collective}.
-Taken together, these properties make silicon PIP a suitable foundation for realizing flexible and efficient OCS in AI driven communication scenarios.
+Silicon photonics (SiPh) has emerged as a promising alternative by enabling the monolithic integration of photonic components on a single chip using CMOS-compatible (Complementary Metal-Oxide-Semiconductor) fabrication processes.
+Leveraging the maturity and scalability of the semiconductor manufacturing ecosystem, SiPh platforms achieve high integration density, improved manufacturing yield, and reduced cost per port compared with discrete optical implementations.
+Practical SiPh switching systems typically incorporate polarization management techniques, such as polarization controllers or polarization diversity architectures~\cite{Shahwar2024Polarization}, since most silicon photonic components are optimized for transverse-electric (TE) polarization.
+In addition, semiconductor optical amplifiers (SOAs) are often integrated or co-packaged with SiPh switching fabrics to compensate for accumulated insertion losses and maintain sufficient optical link budgets in large scale switching systems~\cite{7328999}.
+
+Beyond their high integration density, SiPh switching fabrics also provide significant performance advantages.
+Depending on the tuning mechanism, such as thermo-optic or electro-optic modulation, they typically achieve reconfiguration times ranging from microseconds to sub-milliseconds \cite{bogaerts2020programmable}.
+Unlike free-space optical switches, SiPh devices contain no mechanically moving parts, resulting in improved robustness, reduced wear out mechanisms, and enhanced long term operational stability.
+These characteristics make SiPh particularly well suited for optical circuit switching in environments requiring frequent and rapid network reconfiguration.
+
+As discussed in the previous section~\ref{sec:pip}, the reconfigurability offered by PIP naturally extends the advantages of SiPh to optical circuit switching.
+Through software defined optical path configuration, a single PIP chip can realize multiple switching matrices and dynamically adapt network connectivity based on traffic demands without hardware modifications.
+Such flexibility is particularly attractive for AI data center networks, where communication patterns vary across different training workloads and collective communication phases~\cite{si2025collective}.
+The maturity of programmable SiPh technology is further evidenced by the early stage commercial optical switching solutions from companies such as iPronics, Salience Labs, and nEye Systems~\cite{cignal2025startuptracker}.
+Taken together, these characteristics make PIP a promising platform for scalable optical circuit switching in AI driven communication infrastructures.
 
 \section{Challenges} \label{sec:challenges}
 Despite the advantages of silicon photonics for optical circuit switching, deployment of large scale SiPh based switching fabric in hyperscale AI networks still faces complexity that has not yet been fully addressed.
@@ -168,8 +172,8 @@ Specifically, the contributions are structured along coupled layers:
       \item \textbf{Circuit abstraction and synthesis:} A graph based model is introduced to represent recirculating PIP circuits, enabling translation of high level connectivity requirements into physical device configurations.
             Based on this abstraction, automated synthesis algorithms are developed to support software-defined generation of photonic circuits for networking applications, as shown in Fig.~\ref{fig:ch1-thesis}(a).
 
-      \item \textbf{Architecture design methodology:} Based on graph theory abstraction, different switching architectures are modelled through alternative connection schemes between building blocks, resulting in varying hardware complexity.
-            Routing algorithms are developed on the corresponding switch circuit graphs to characterize blocking behavior, while signal integrity analysis is performed to evaluate optical performance.
+      \item \textbf{Architecture design methodology:} Based on graph theory abstraction, different switching architectures are modelled through distinct connection schemes between building blocks, resulting in varying hardware complexity.
+            Routing algorithms are developed on the corresponding switch circuit graphs to characterize blocking behavior, while signal integrity analysis is performed using defined S-parameters model to evaluate optical performance.
             These metrics are jointly used to assess the scalability and performance of the architectures, giving practical guidelines for large-scale SiPh OCS design, as shown in Fig.~\ref{fig:ch1-thesis}(b).
 
       \item \textbf{System level control and integration:} An SDN based control framework is implemented to enable dynamic configuration of photonic circuits.

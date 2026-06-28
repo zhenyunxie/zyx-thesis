@@ -20,20 +20,20 @@ The 50:50 power splitter, or 3dB coupler, serves as the foundational element for
 From a mathematical perspective, a 50:50 power splitter can be described using a linear transfer relation between the complex optical field amplitudes at its input and output ports.
 Denoting the input fields as $E_1^{in}$ and $E_2^{in}$, and the corresponding outputs as $E_1^{out}$ and $E_2^{out}$, the power splitter can be represented by a unitary transformation:
 \begin{equation}
-    \begin{bmatrix}
-        E_1^{out} \\
-        E_2^{out}
-    \end{bmatrix}
-    =
-    \frac{1}{\sqrt{2}}
-    \begin{bmatrix}
-        1 & j \\
-        j & 1
-    \end{bmatrix}
-    \begin{bmatrix}
-        E_1^{in} \\
-        E_2^{in}
-    \end{bmatrix}
+      \begin{bmatrix}
+            E_1^{out} \\
+            E_2^{out}
+      \end{bmatrix}
+      =
+      \frac{1}{\sqrt{2}}
+      \begin{bmatrix}
+            1 & j \\
+            j & 1
+      \end{bmatrix}
+      \begin{bmatrix}
+            E_1^{in} \\
+            E_2^{in}
+      \end{bmatrix}
 \end{equation}
 Here, $E_1^{in/out}$ and $E_2^{in/out}$ are the complex optical field amplitudes at the two ports, including both magnitude and phase information.
 The diagonal terms represent the self coupling contribution of each input port to its corresponding output port, while the off diagonal terms describe cross coupling between the two waveguide modes.
@@ -43,10 +43,10 @@ The factor $1/\sqrt{2}$ ensures power conservation in the ideal lossless case, a
 Directional Couplers (DCs) serve as passive splitting elements by placing two waveguides in close proximity, typically separated by a gap of only a few hundred nanometers \cite{AGRAWAL202157, tormen2005wavelength, chen2017broadband}.
 The structure schematic is shown in top panel of Figure~\ref{fig:ch2-splitters}(a).
 This arrangement facilitates evanescent coupling, a physical phenomenon where light tunnels between adjacent cores as their electromagnetic fields overlap, as illustrated in the bottom panel of Figure~\ref{fig:ch2-splitters}(a).
-While DCs are valued for their exceptionally low insertion loss (typically ranging from 0.1 to 0.5 dB), they exhibit a relatively narrow operating bandwidth and are sensitive to environmental and fabrication variations \cite{xu2019low, darmawan2005rigorous}[CITE].
+While DCs are valued for their exceptionally low insertion loss (typically ranging from 0.1 to 0.5 dB), they exhibit a relatively narrow operating bandwidth and are sensitive to environmental and fabrication variations \cite{xu2019low, darmawan2005rigorous}.
 Since the power splitting ratio depends strongly on the coupling length, waveguide separation, and operating wavelength, small fabrication deviations or wavelength shifts can lead to significant power imbalance.
 Consequently, conventional DCs are struggle to maintain a uniform power splitting ratio over the broad wavelength ranges required for wavelength division multiplexed (WDM) communication systems.
-Although broadband alternatives such as adiabatic and rapid adiabatic couplers have been proposed to alleviate these limitations [CITE], standard DCs are generally not preferred for broadband WDM applications in data center networks.
+Although broadband alternatives such as adiabatic and rapid adiabatic couplers have been proposed to alleviate these limitations~\cite{sun2016adiabatic}, standard DCs are generally not preferred for broadband WDM applications in data center networks.
 
 %MMI
 In contrast, Multimode Interferometers (MMIs) offer a more resilient alternative for routing and splitting optical signals by exploiting the self-imaging effect \cite{ansys_mmi_coupler, soldano2002optical}.
@@ -56,15 +56,15 @@ Their performance is less sensitive to precise waveguide gap variations, resulti
 Furthermore, MMIs are favored for their broadband specs, maintaining near 50:50 power splitting ratios across a wide spectral range, which is critical for WDM applications \cite{maese2013wavelength}.
 
 \begin{figure}[h]
-    \begin{center}
-        \includegraphics{figures/ch2-splitters.pdf}
-    \end{center}
-    \caption{50:50 power splitter structures and optical field distributions.
-        (a) Top panel is schematic of a directional coupler.
-        The bottom panel presents the simulated optical intensity distribution within the coupling section \cite{gomez-hidalgoFundamentalBuildingBlocksa}.
-        (b) Top panel is schematic of a multimode interferometer coupler.
-        The bottom panel illustrates the multimode interference pattern formed inside the MMI region, demonstrating the self-imaging effect and spatial distribution of optical power \cite{gomez-hidalgoFundamentalBuildingBlocksa}.
-    }\label{fig:ch2-splitters}
+      \begin{center}
+            \includegraphics{figures/ch2-splitters.pdf}
+      \end{center}
+      \caption{50:50 power splitter structures and optical field distributions.
+            (a) Top panel is schematic of a directional coupler.
+            The bottom panel presents the simulated optical intensity distribution within the coupling section \cite{gomez-hidalgoFundamentalBuildingBlocksa}.
+            (b) Top panel is schematic of a multimode interferometer coupler.
+            The bottom panel illustrates the multimode interference pattern formed inside the MMI region, demonstrating the self-imaging effect and spatial distribution of optical power \cite{gomez-hidalgoFundamentalBuildingBlocksa}.
+      }\label{fig:ch2-splitters}
 \end{figure}
 
 Regardless of the chosen architecture, real-world imperfections, such as surface roughness and lithographic variations, inevitably lead to splitting imbalances and unintended phase shifts \cite{feilchenfeld2017silicon}.
@@ -76,7 +76,7 @@ The phase shifter is the essential active component in PIP circuits, responsible
 By inducing a controllable phase shift, these devices enable the constructive or destructive interference required for switching, routing, and signal processing.
 Mathematically, the accumulated optical phase $\phi$ along a waveguide of length $L$ is given by:
 \begin{equation}
-    \phi = \frac{2 \pi n_{\mathrm{eff}} L}{\lambda}
+      \phi = \frac{2 \pi n_{\mathrm{eff}} L}{\lambda}
 \end{equation}\label{eq:ch2-phase-shifter}
 where $n_{\mathrm{eff}}$ denotes the effective refractive index of the guided mode and $\lambda$ is the free-space optical wavelength \cite{chrostowski2015silicon}.
 A variation in either $n_{\mathrm{eff}}$ or $L$ produces a corresponding change in the optical phase, which forms the basis of phase-shifting devices.
@@ -101,12 +101,12 @@ As a result, non-suspended TOPS typically exhibit 10–90\% response times on th
 In contrast, fully suspended structures, despite their significantly reduced $P_{\pi}$, generally show much slower thermal dynamics, with response times in the range of several hundreds of microseconds (typically $120 – 140~\mu$s) \cite{liu2022thermo}.
 This corresponds to roughly an order-of-magnitude reduction in speed compared to non-suspended implementations.
 \begin{figure}[ht]
-    \begin{center}
-        \includegraphics{figures/ch2-ps.pdf}
-    \end{center}
-    \caption{Cross-sectional schematic of a thermo-optic phase shifter employing a TiN (titanium nitride) heater.
-        (a) Conventional phase shifter (b) Vertical trenched (c) Full suspended
-    }\label{fig:ch2-ps}
+      \begin{center}
+            \includegraphics{figures/ch2-ps.pdf}
+      \end{center}
+      \caption{Cross-sectional schematic of a thermo-optic phase shifter employing a TiN (titanium nitride) heater.
+            (a) Conventional phase shifter (b) Vertical trenched (c) Full suspended
+      }\label{fig:ch2-ps}
 \end{figure}
 
 \subsection{2x2 programmable unit cell}\label{sub:pucs} % (fold)
@@ -119,26 +119,26 @@ This interference enables the device to control of both the optical amplitude an
 As a result, the device can be configured to operate as a tunable coupler, an optical switch, or a wavelength-selective element.
 Figure~\ref{fig:ch2-puc}(c) illustrates three operating states of the PUC: cross, bar, and tunable.
 \begin{figure}[ht]
-    \begin{center}
-        \includegraphics{figures/ch2-puc.pdf}
-    \end{center}
-    \caption{Structure and Operation of the 2x2 PUC
-        (a) Schematic of the 2x2 PUC consisting of two 50:50 power splitters and two phase shifters.
-        (b) Optical micrograph of the fabricated element.
-        (c) Operating states of the device, demonstrating cross, bar, and tunable transmission configurations.
-    }\label{fig:ch2-puc}
+      \begin{center}
+            \includegraphics{figures/ch2-puc.pdf}
+      \end{center}
+      \caption{Structure and Operation of the 2x2 PUC
+            (a) Schematic of the 2x2 PUC consisting of two 50:50 power splitters and two phase shifters.
+            (b) Optical micrograph of the fabricated element.
+            (c) Operating states of the device, demonstrating cross, bar, and tunable transmission configurations.
+      }\label{fig:ch2-puc}
 \end{figure}
 For an ideal PUC, the scattering matrix incorporates the effects of propagation losses and the inherent $\pi/2$ phase shift introduced by the 3-dB couplers, which is mathematically represented by the imaginary unit $-j$.
 According to the device matrix under ideal lossless conditions, the overall scattering matrix can be expressed in two primary forms depending on the placement of additional phase shifters \cite{capmany2020programmable}:
 \begin{equation}
-    \label{eq:ch2-puc}
-    \begin{aligned}
-        S = -j e^{j\Delta}
-        \begin{pmatrix}
-            \sin\theta & \cos\theta  \\
-            \cos\theta & -\sin\theta
-        \end{pmatrix}
-    \end{aligned}
+      \label{eq:ch2-puc}
+      \begin{aligned}
+            S = -j e^{j\Delta}
+            \begin{pmatrix}
+                  \sin\theta & \cos\theta  \\
+                  \cos\theta & -\sin\theta
+            \end{pmatrix}
+      \end{aligned}
 \end{equation}
 In equation~\eqref{eq:ch2-puc}, $\theta$ denotes the interference phase, which is determined by the differential phase shift between the two heaters and is calculated as $\theta = (\phi_{up} - \phi_{lo})/2$.
 For an ideal PUC, the differential phase shift $\theta$ equals zero, indicating that the passive state of the PUC corresponds to the cross state.
@@ -167,15 +167,15 @@ Gaussian-beam (GB) synthesis crossings are based on mode expander framework and 
 The relative phases of these modes are then controlled so that their constructive interference forms a Gaussian-like beam in the crossing region.
 As shown in Figure.~\ref{fig:ch2-crossings}(c), the synthesized beam exhibits a smooth and well-collimated profile, resulting in minimal scattering, lower insertion loss, and superior broadband performance.
 \begin{figure}[ht]
-    \begin{center}
-        \includegraphics{figures/ch2-crossings.pdf}
-    \end{center}
-    \caption{Waveguide crossing designs and their corresponding optical field distributions \cite{gomez-hidalgoFundamentalBuildingBlocksa}.
-        (a) Multimode interferometer (MMI)-based crossing, where the self-imaging effect concentrates optical power along the central axis.
-        (b) Beam-shaping (BS) crossing, in which the input field is reshaped prior to the intersection to reduce diffraction and scattering.
-        (c) Gaussian-beam (GB) synthesis crossing, where multiple modes interfere constructively to form a Gaussian-like beam profile.
-        The top row illustrates the conceptual device structures, while the bottom row shows the simulated optical intensity distributions, highlighting the different field evolution and confinement characteristics of each design.
-    }\label{fig:ch2-crossings}
+      \begin{center}
+            \includegraphics{figures/ch2-crossings.pdf}
+      \end{center}
+      \caption{Waveguide crossing designs and their corresponding optical field distributions \cite{gomez-hidalgoFundamentalBuildingBlocksa}.
+            (a) Multimode interferometer (MMI)-based crossing, where the self-imaging effect concentrates optical power along the central axis.
+            (b) Beam-shaping (BS) crossing, in which the input field is reshaped prior to the intersection to reduce diffraction and scattering.
+            (c) Gaussian-beam (GB) synthesis crossing, where multiple modes interfere constructively to form a Gaussian-like beam profile.
+            The top row illustrates the conceptual device structures, while the bottom row shows the simulated optical intensity distributions, highlighting the different field evolution and confinement characteristics of each design.
+      }\label{fig:ch2-crossings}
 \end{figure}
 
 In terms of crosstalk, all three design crossings strategies generally exhibit similar performance, typically from -40 to -60 dB \cite{gomez-hidalgoFundamentalBuildingBlocksa}.
@@ -209,15 +209,15 @@ The defining characteristic of these meshes is their ability to synthesize a wid
 By dynamically configuring each PUC into one of three primary states—bar, cross, or tunable (see Fig~\ref{fig:ch2-puc}(c))—the user can effectively configure specific sub-circuits within the physical hardware, such as recursive filters (FIR/IIR) and tunable delay lines \cite{perez2018programmable}.
 While these meshes are theoretically universal and capable of emulating any feedforward topology, doing so requires a higher density of PUCs to manage the internal routing necessary to mimic unidirectional flow.
 \begin{figure}[ht]
-    \begin{center}
-        \includegraphics{figures/ch2-recir-mesh.pdf}
-    \end{center}
-    \caption{Recirculating integrated circuit mesh arrangements. The schematic representation (top) and microscope photography (bottom)
-        (a) Square mesh (b) Triangular mesh (c) General-purpose photonic processor with hexagonal mesh
-    }\label{fig:ch2-recirculating-topologies}
+      \begin{center}
+            \includegraphics{figures/ch2-recir-mesh.pdf}
+      \end{center}
+      \caption{Recirculating integrated circuit mesh arrangements. The schematic representation (top) and microscope photography (bottom)
+            (a) Square mesh (b) Triangular mesh (c) General-purpose photonic processor with hexagonal mesh
+      }\label{fig:ch2-recirculating-topologies}
 \end{figure}
-As illustrated in figure~\ref{fig:ch2-recirculating-topologies}, various grid geometries have been explored, including square \cite{perez2019integrated}, triangular and hexagonal layouts \cite{perez2017multipurpose}.
-Among these, the hexagonal architecture is widely regarded as the superior choice for high-density integration due to its unique topological advantages \cite{bogaerts2020programmable}.
+As illustrated in Figure~\ref{fig:ch2-recirculating-topologies}, various grid geometries have been explored, including square \cite{perez2019integrated}, triangular and hexagonal layouts \cite{perez2017multipurpose}.
+Among these, the hexagonal architecture in Figure~\ref{fig:ch2-recirculating-topologies}(c) is widely regarded as the superior choice for high-density integration due to its unique topological advantages \cite{bogaerts2020programmable}.
 One of the primary benefits of the hexagonal arrangement is its higher spatial utilization and connectivity per unit area, which allows for a more compact and efficient footprint.
 Furthermore, the hexagonal architecture supports greater routing flexibility and increased degrees of freedom for programming, enabling the synthesis of more complex functions with reduced hardware overhead.
 
@@ -236,13 +236,13 @@ Combined with temperature stabilization provided by the thermoelectric cooler (T
 Consequently, all applications development in the Chapter~\ref{chap:applications_on_pip} of this thesis are implemented and validated on this Smartlight platform.
 
 \begin{figure}[ht]
-    \begin{center}
-        \includegraphics{figures/ch2-smartlight-platform.pdf}
-    \end{center}
-    \caption{Smartlight PIP processor.
-        (a) Photography of iPronics SmartLight programmable photonic.
-        (b) Schematic of Smartlight full stack control architecture.
-    }\label{fig:ch2-smartlight-platform}
+      \begin{center}
+            \includegraphics{figures/ch2-smartlight-platform.pdf}
+      \end{center}
+      \caption{Smartlight PIP processor.
+            (a) Photography of iPronics SmartLight programmable photonic.
+            (b) Schematic of Smartlight full stack control architecture.
+      }\label{fig:ch2-smartlight-platform}
 \end{figure}
 
 \section{Graph-theoretic modeling}\label{sec:graph}
@@ -257,8 +257,8 @@ By representing the circuit as a graph G=(V,E), where V is a set of vertices (no
 The flexibility of the graph model allows for different levels of abstraction depending on the circuit topology and the specific application requirements.
 The graph representation incorporates performance metrics for each connection, which means each edge is assigned a weight as expressed by the following equation~\eqref{eq:ch2-graph_weight}:
 \begin{equation}
-    w = c_1 \cdot \textit{IL} + c_2 \cdot \textit{BUL} + c_3 \cdot P + \dots
-    \label{eq:ch2-graph_weight}
+      w = c_1 \cdot \textit{IL} + c_2 \cdot \textit{BUL} + c_3 \cdot P + \dots
+      \label{eq:ch2-graph_weight}
 \end{equation}
 where IL is the PUC insertion loss, BUL is the PUC basic unit length, and $P_c$ is the PUC power consumption.
 Hence the weight can be calculated according to these figures of merit (FoMs) by only changing the distribution of weights {$c_i$} \cite{lopez2020auto}.
@@ -280,15 +280,15 @@ This level of abstraction allows the control software not only to find a valid p
 Moreover, waveguide crossings in a feedforward mesh can be explicitly represented in the graph as yellow nodes, since it often represent critical bottlenecks in terms of insertion loss and crosstalk.
 By incorporating these elements into the graph with appropriate weights, the routing algorithm can proactively avoid performance-critical regions and improve overall system efficiency.
 \begin{figure}[H]
-    \begin{center}
-        \includegraphics{figures/ch2-benes-graph.pdf}
-    \end{center}
-    \caption{Graph-based representation of the benes feedforward mesh.
-        (a) Schematic of 4x4 benes topology.
-        (b) PUC-level graph abstraction.
-        (c) Port-level graph abstraction.
-        The red dashed line highlights how an individual PUC can be represented either as a single node or as four nodes, one for each port.
-    }\label{fig:ch2-benes-graph}
+      \begin{center}
+            \includegraphics{figures/ch2-benes-graph.pdf}
+      \end{center}
+      \caption{Graph-based representation of the benes feedforward mesh.
+            (a) Schematic of 4x4 benes topology.
+            (b) PUC-level graph abstraction.
+            (c) Port-level graph abstraction.
+            The red dashed line highlights how an individual PUC can be represented either as a single node or as four nodes, one for each port.
+      }\label{fig:ch2-benes-graph}
 \end{figure}
 \subsection{Recirculating mesh graph}\label{sub:circulargraph} % (fold)
 One of the main challenges in graph representation of recirculating mesh is the feedback loops in the circuit.
@@ -296,7 +296,7 @@ Unlike in feedforward meshes, where the signal propagation direction is uniquely
 As a result, a conventional graph model may permit physically invalid paths, such as reversal of propagation direction or the simultaneous selection of incompatible coupling states within the same PUC.
 
 The limitation further happens in graph routing algorithms.
-In standard shortest path methods such as Dijkstra’s algorithm, nodes are typically marked as visited and are not revisited during the search process.
+In standard shortest path methods such as Dijkstra’s algorithm, nodes are typically marked as visited and are not revisited during the search process~\cite{chen2020graph}.
 While this assumption is valid for acyclic or strictly feedforward graphs, it may incorrectly eliminate feasible solutions in the presence of recirculating paths, where revisiting a node under different propagation conditions can be physically meaningful to explore alternative propagation paths and reach additional ports.
 
 To address this issue, we chose the directed graph with eight artificial nodes for our model \cite{chen2020graph}, where each port of a PUC is represented with two artificial nodes, corresponding to the inbound and outbound directions of signal propagation.
@@ -305,13 +305,15 @@ This construction explicitly encodes signal directionality and PUC state compati
 Figure~\ref{fig:ch2-hexagonal-graph} shows the graph representation of the hexagonal recirculating mesh in Fig.~\ref{fig:ch2-recirculating-topologies}(c).
 Each PUC, with its four highlighted physical ports ($P_1$)–($P_4$), is expanded into eight artificial nodes representing the inbound and outbound of port, with directed edges representing all physically allowable signal propagations between nodes.
 \begin{figure}[ht]
-    \begin{center}
-        \includegraphics{figures/ch2-hexagonal-graph.pdf}
-    \end{center}
-    \caption{Graph-based representation of the hexagonal recirculating mesh.
-        The inset depicts a detailed representation of the edges and vertices in a PUC.
-    }\label{fig:ch2-hexagonal-graph}
+      \begin{center}
+            \includegraphics{figures/ch2-hexagonal-graph.pdf}
+      \end{center}
+      \caption{Graph-based representation of the hexagonal recirculating mesh.
+            The inset depicts a detailed representation of the edges and vertices in a PUC.
+      }\label{fig:ch2-hexagonal-graph}
 \end{figure}
+
+\section{Silicon photonic optical circuit switch}\label{sec:siph_ocs}
 
 \section{Software-Defined Network (SDN)}\label{sec:sdn}
 \subsection{SDN architecture}\label{sub:sdn_arch}
@@ -331,47 +333,47 @@ while northbound interfaces expose abstracted network capabilities to applicatio
 \usetikzlibrary{positioning}
 
 \begin{figure}[H]
-    \centering
-    \begin{tikzpicture}[baseline=(current bounding box.center),
-            layer/.style={draw, rectangle, minimum width=11cm, minimum height=1.4cm, align=center},
-            arrow/.style={thick,<->},
-            font=\small
-        ]
+      \centering
+      \begin{tikzpicture}[baseline=(current bounding box.center),
+                  layer/.style={draw, rectangle, minimum width=11cm, minimum height=1.4cm, align=center},
+                  arrow/.style={thick,<->},
+                  font=\small
+            ]
 
-        % Layers
-        \node[layer] (app) {
-        \textbf{Application Layer}\\
-        {\footnotesize Network Monitoring and Telemetry, Traffic Engineering, Security, ...}
-        };
+            % Layers
+            \node[layer] (app) {
+            \textbf{Application Layer}\\
+            {\footnotesize Network Monitoring and Telemetry, Traffic Engineering, Security, ...}
+            };
 
-        \node[layer, below=0.8cm of app] (ctrl) {
-        \textbf{SDN Controller}\\
-        {\footnotesize Network State Management, Path Computation, Device Configuration, ...}
-        };
+            \node[layer, below=0.8cm of app] (ctrl) {
+            \textbf{SDN Controller}\\
+            {\footnotesize Network State Management, Path Computation, Device Configuration, ...}
+            };
 
-        \node[layer, below=0.8cm of ctrl] (dev) {
-        \textbf{Infrastructure Layer}\\
-        {\footnotesize
-        \shortstack[l]{
-            Packet Devices: EPS, Router, ...\\
-            Optical Devices: OCS, ROADMs, DWDM Systems, ...
-        }
-        }
-        };
+            \node[layer, below=0.8cm of ctrl] (dev) {
+            \textbf{Infrastructure Layer}\\
+            {\footnotesize
+            \shortstack[l]{
+                  Packet Devices: EPS, Router, ...\\
+                  Optical Devices: OCS, ROADMs, DWDM Systems, ...
+            }
+            }
+            };
 
-        % Arrows
-        \draw[arrow] (app) -- node[right]{
-            Northbound Interface: REST APIs, TAPI, ...
-        } (ctrl);
+            % Arrows
+            \draw[arrow] (app) -- node[right]{
+                  Northbound Interface: REST APIs, TAPI, ...
+            } (ctrl);
 
-        \draw[arrow] (ctrl) -- node[right]{
-            Southbound Interface: gNMI, NETCONF, gNOI, ...
-        } (dev);
+            \draw[arrow] (ctrl) -- node[right]{
+                  Southbound Interface: gNMI, NETCONF, gNOI, ...
+            } (dev);
 
-    \end{tikzpicture}
+      \end{tikzpicture}
 
-    \caption{Layered SDN architecture with model-driven management and standardized interfaces.}
-    \label{fig:ch2-sdn-architecture}
+      \caption{Layered SDN architecture with model-driven management and standardized interfaces.}
+      \label{fig:ch2-sdn-architecture}
 \end{figure}
 
 \subsection{Data models and control protocols}\label{sub:models_and_protocol}

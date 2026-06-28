@@ -7,34 +7,44 @@
 
 \chapter*{Resumen}
 \pdfbookmark[0]{Resumen}{resumen}
-La fotónica integrada programable (PIP, por sus siglas en inglés) está emergiendo como una plataforma flexible y reconfigurable para implementar diversas funcionalidades ópticas en un único chip, permitiendo el control dinámico de la propagación de la luz para aplicaciones de comunicación, computación y procesamiento de señales.
-Entre las tecnologías de integración disponibles, la fotónica de silicio proporciona una plataforma escalable y rentable para la transmisión de datos de alto ancho de banda y bajo consumo energético, lo que la convierte en una solución prometedora para las interconexiones de centros de datos de próxima generación.
-En particular, la conmutación óptica por circuitos permite conectividad óptica directa tanto para arquitecturas de red scale-up como scale-out, evitando conversiones óptico-eléctrico-óptico.
-Sin embargo, el despliegue práctico de grandes tejidos de conmutación fotónica programable está limitado no solo por las capacidades del hardware, sino también por la falta de metodologías escalables de programación y control.
+La fotónica de silicio ha surgido como una tecnología prometedora para las interconexiones de próxima generación en centros de datos, al permitir comunicaciones ópticas de alto ancho de banda y alta eficiencia energética sobre una plataforma integrada y compacta.
+La fotónica integrada programable (Programmable Integrated Photonics, PIP) amplía aún más estas capacidades al posibilitar circuitos fotónicos flexibles, definidos por software y reconfigurables dentro de una plataforma hardware unificada.
+Esta capacidad de reconfiguración hace que la PIP resulte especialmente atractiva para aplicaciones de redes ópticas.
+Entre estas aplicaciones, la conmutación óptica ha despertado un interés particular, ya que permite establecer conectividad óptica directa tanto en arquitecturas de red scale-up como scale-out, evitando al mismo tiempo las conversiones óptico-eléctrico-óptico (O-E-O).
 
-Esta tesis introduce una metodología de programación basada en grafos que traduce circuitos fotónicos en grafos ponderados, proporcionando una abstracción matemática de tejidos de circuitos complejos.
-Los componentes de los circuitos integrados y sus conexiones se representan como elementos de grafo con métricas físicas, permitiendo programación de alto nivel y optimización sistemática de arquitecturas hardware y metodologías de control.
-Mediante este enfoque, se desarrollan algoritmos de encaminamiento y configuración para soportar interconexiones ópticas, multidifusión y conmutación de circuitos sobre un procesador PIP de propósito general, demostrando que diversas funciones de red pueden implementarse en una única plataforma sin intervención manual.
-Para abordar los desafíos de escalabilidad en grandes tejidos de circuitos, la metodología basada en grafos se amplía para modelar y evaluar diferentes topologías y estrategias de encaminamiento.
-La incorporación de métricas de capa física como pérdida de inserción, diafonía y relación señal-ruido permite una evaluación cuantitativa de compromisos de diseño y proporciona orientación práctica para el diseño.
-Finalmente, se implementa un plano de control definido por software utilizando interfaces basadas en modelos y gNMI para habilitar la comunicación southbound, alineando los recursos ópticos de Capa 1 con el marco SDN.
+Sin embargo, a medida que la escala de las redes de centros de datos continúa creciendo, persisten diversos desafíos.
+Entre ellos se encuentran el desarrollo de mecanismos de programación eficientes para la PIP que permitan la reconfiguración en tiempo real de diferentes configuraciones de conmutación; el diseño de arquitecturas hardware escalables capaces de soportar conmutadores de alta radialidad (high-radix switching); y la implementación práctica de estos sistemas dentro de entornos de red.
 
-Este trabajo demuestra que una metodología basada en grafos proporciona programabilidad a nivel hardware y optimización del diseño para conmutadores fotónicos integrados, mientras que el plano de control definido por software desarrollado extiende estas capacidades hacia el control y la orquestación a nivel de red.
-En conjunto, estas contribuciones establecen una base escalable para integrar la conmutación fotónica por circuitos en sistemas de red impulsados por IA, soportando interconexiones ópticas flexibles, de alto rendimiento y fáciles de gestionar.
+Para abordar estos desafíos, introducimos la teoría de grafos como un método de abstracción del hardware PIP mediante un grafo ponderado.
+Esta abstracción proporciona una representación matemática que facilita el desarrollo de algoritmos de encaminamiento para el control a nivel de circuito, favorece la integración del hardware PIP con los marcos de control de red y permite el modelado analítico para la ingeniería y optimización de arquitecturas hardware.
+
+En primer lugar, implementamos algoritmos de encaminamiento sobre un modelo general de PIP basado en grafos para soportar interconexiones ópticas, difusión (multicasting) y conmutación de circuitos, demostrando que diversos circuitos ópticos pueden reconfigurarse automáticamente sobre una única plataforma sin necesidad de intervención manual.
+Con el fin de abordar el desafío de escalar tejidos de conmutación de alta radialidad en hardware PIP, extendemos posteriormente esta metodología basada en grafos para modelar y evaluar diferentes topologías y estrategias de encaminamiento.
+El modelo incorpora métricas de la capa física, como la pérdida por inserción (insertion loss), la diafonía (crosstalk) y la relación señal-ruido (SNR), lo que permite evaluar cuantitativamente los compromisos de diseño y proporciona directrices prácticas para el desarrollo de arquitecturas hardware.
+Finalmente, sobre la base del control a nivel de circuito, implementamos un plano de control definido por software utilizando interfaces basadas en modelos (model-driven interfaces) y el protocolo gNMI para habilitar la comunicación southbound, alineando los recursos ópticos de la capa física (Layer 1) con el marco de redes definidas por software (SDN).
+
+En conjunto, este trabajo demuestra que una metodología basada en grafos permite tanto la programación automatizada como la optimización del diseño de sistemas de conmutación fotónica integrada programable.
+Asimismo, el plano de control definido por software desarrollado extiende estas capacidades hacia la integración y orquestación a nivel de red.
+Estas contribuciones establecen una base escalable para la integración de la conmutación fotónica por circuitos en sistemas de redes impulsados por inteligencia artificial, proporcionando interconexiones ópticas flexibles, de alto rendimiento y fácilmente gestionables.
 
 \chapter*{Resum}
 \pdfbookmark[0]{Resum}{resum}
-La fotònica integrada programable (PIP, per les seues sigles en anglés) està emergint com una plataforma flexible i reconfigurable per a implementar diverses funcionalitats òptiques en un únic xip, permetent el control dinàmic de la propagació de la llum per a aplicacions de comunicació, computació i processament de senyals.
-Entre les tecnologies d’integració disponibles, la fotònica de silici proporciona una plataforma escalable i rendible per a la transmissió de dades d’alt ample de banda i baix consum energètic, fet que la converteix en una solució prometedora per a les interconnexions de centres de dades de pròxima generació.
-En particular, la commutació òptica per circuits permet connectivitat òptica directa tant per a arquitectures de xarxa scale-up com scale-out, evitant conversions òptic-elèctric-òptic.
-No obstant això, el desplegament pràctic de grans teixits de commutació fotònica programable està limitat no sols per les capacitats del maquinari, sinó també per la manca de metodologies escalables de programació i control.
+La fotònica de silici ha emergit com una tecnologia prometedora per a les interconnexions de nova generació dels centres de dades, ja que permet comunicacions òptiques d'elevada amplada de banda i alta eficiència energètica sobre una plataforma integrada i compacta.
+La fotònica integrada programable (Programmable Integrated Photonics, PIP) amplia encara més aquestes capacitats en permetre circuits fotònics flexibles, definits per programari i reconfigurables dins d'una plataforma de maquinari unificada.
+Aquesta capacitat de reconfiguració fa que la PIP siga especialment atractiva per a aplicacions de xarxes òptiques.
+Entre aquestes aplicacions, la commutació òptica ha despertat un interés especial, ja que permet establir connectivitat òptica directa tant en arquitectures de xarxa scale-up com scale-out, evitant al mateix temps les conversions òptic-elèctric-òptic (O-E-O).
 
-Esta tesi introduïx una metodologia de programació basada en grafs que traduïx circuits fotònics en grafs ponderats, proporcionant una abstracció matemàtica de teixits de circuits complexos.
-Els components dels circuits integrats i les seues connexions es representen com a elements de graf amb mètriques físiques, permetent programació d’alt nivell i optimització sistemàtica d’arquitectures de maquinari i metodologies de control.
-Mitjançant este enfocament, es desenvolupen algoritmes d’encaminament i configuració per a donar suport a interconnexions òptiques, multidifusió i commutació de circuits sobre un processador PIP de propòsit general, demostrant que diverses funcions de xarxa poden implementarse en una única plataforma sense intervenció manual.
-Per a abordar els desafiaments d’escalabilitat en grans teixits de circuits, la metodologia basada en grafs s’amplia per a modelar i avaluar diferents topologies i estratègies d’encaminament.
-La incorporació de mètriques de capa física com pèrdua d’inserció, diafonia i relació senyal-soroll permet una avaluació quantitativa dels compromisos de disseny i proporciona orientació pràctica per al disseny.
-Finalment, s’implementa un pla de control definit per programari utilitzant interfícies basades en models i gNMI per a habilitar la comunicació southbound, alineant els recursos òptics de Capa 1 amb el marc SDN.
+Tanmateix, a mesura que continua augmentant l'escala de les xarxes dels centres de dades, encara persisteixen diversos desafiaments.
+Entre aquests destaquen el desenvolupament de mecanismes de programació eficients per a la PIP que permeten la reconfiguració en temps real de diferents configuracions de commutació; el disseny d'arquitectures de maquinari escalables capaces de suportar commutadors d'alta radialitat (high-radix switching); i la implantació pràctica d'aquests sistemes en entorns de xarxa.
 
-Este treball demostra que una metodologia basada en grafs proporciona programabilitat a nivell de maquinari i optimització del disseny per a commutadors fotònics integrats, mentre que el pla de control definit per programari desenvolupat estén estes capacitats cap al control i l’orquestració a nivell de xarxa.
-En conjunt, estes contribucions establixen una base escalable per a integrar la commutació fotònica per circuits en sistemes de xarxa impulsats per IA, donant suport a interconnexions òptiques flexibles, d’alt rendiment i fàcils de gestionar.
+Per tal d'afrontar aquests reptes, introduim la teoria de grafs com a mètode d'abstracció del maquinari PIP mitjançant un graf ponderat.
+Aquesta abstracció proporciona una representació matemàtica que facilita el desenvolupament d'algorismes d'encaminament per al control a nivell de circuit, afavoreix la integració del maquinari PIP amb els marcs de control de xarxa i permet el modelatge analític per a l'enginyeria i l'optimització d'arquitectures de maquinari.
+
+En primer lloc, implementem algorismes d'encaminament sobre un model general de PIP basat en grafs per a donar suport a les interconnexions òptiques, la multidifusió (multicasting) i la commutació de circuits, demostrant que diversos circuits òptics poden reconfigurar-se automàticament sobre una única plataforma sense necessitat d'intervenció manual.
+Per tal d'abordar el repte d'escalar teixits de commutació d'alta radialitat en maquinari PIP, ampliem posteriorment aquesta metodologia basada en grafs per a modelar i avaluar diferents topologies i estratègies d'encaminament.
+El model incorpora mètriques de la capa física, com ara la pèrdua d'inserció (insertion loss), la diafonia (crosstalk) i la relació senyal-soroll (SNR), la qual cosa permet avaluar quantitativament els compromisos de disseny i proporcionar orientacions pràctiques per al desenvolupament d'arquitectures de maquinari.
+Finalment, sobre la base del control a nivell de circuit, implementem un pla de control definit per programari utilitzant interfícies basades en models (model-driven interfaces) i el protocol gNMI per a habilitar la comunicació southbound, alineant els recursos òptics de la capa física (Layer 1) amb el paradigma de les xarxes definides per programari (SDN).
+
+En conjunt, aquest treball demostra que una metodologia basada en grafs permet tant la programació automatitzada com l'optimització del disseny dels sistemes de commutació fotònica integrada programable.
+Així mateix, el pla de control definit per programari desenvolupat estén aquestes capacitats cap a la integració i l'orquestració a nivell de xarxa.
+Aquestes contribucions establixen una base escalable per a la integració de la commutació fotònica per circuits en sistemes de xarxes impulsats per la inteligència artificial, proporcionant interconnexions òptiques flexibles, d'alt rendiment i fàcilment gestionables.
