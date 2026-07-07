@@ -151,7 +151,7 @@ Within this context, it is important to focus on approaches that allow OCS to be
 
 \section{Objectives} \label{sec:objective}
 Considering the critical role of programmable integrated photonics in scaling AI data center interconnects, this thesis develops a comprehensive, software-defined platform for large-scale integrated photonic switching.
-Rather than treating circuit design, control, and system integration as isolated problems, this work establishes a coupled, cross layer methodology that links physical photonic hardware with abstract programming models and network level control, as summarized in Figure.~\ref{fig:ch1-thesis}.
+Rather than treating circuit design, control, and system integration as isolated problems, this work establishes a coupled, cross-layer methodology that links physical photonic hardware with abstract programming models and network-level control, as summarized in Fig.~\ref{fig:ch1-thesis}.
 
 \begin{figure}[h]
       \begin{center}
@@ -166,8 +166,8 @@ Rather than treating circuit design, control, and system integration as isolated
 \end{figure}
 
 To achieve this, the thesis defines and implements a vertically integrated technological stack that enables software-defined circuit level control and systematic investigation of hardware design through a unified graph-based representation.
-Furthermore, a system level control framework is developed that enables silicon photonic optical circuit switch to support software-defined network.
-Specifically, the contributions are structured along coupled layers:
+Furthermore, a system level control framework is developed that enables silicon photonic optical circuit switches to operate within a software-defined network.
+Specifically, the contributions are organized across the following interconnected layers:
 \begin{itemize}
       \item \textbf{Circuit abstraction and synthesis:} A graph based model is introduced to represent recirculating programmable integrated photonic circuits, enabling translation of high level connectivity requirements into physical device configurations.
             Based on this abstraction, automated circuits synthesis algorithms are developed to support software-defined generation of photonic circuits for networking applications, as shown in Fig.~\ref{fig:ch1-thesis}(a).
@@ -194,19 +194,19 @@ The thesis is structured into the following chapters:
             It also outlines SDN principles to support the design of an SDN based control layer for integrating optical circuit switching into networks.
       \item Chapter 3: \nameref{chap:applications_on_pip} This chapter demonstrates optical networking applications implemented on hexagonal programmable photonic processors.
             By applying graph-theory-based routing algorithms, the work replaces manual and sequential tuning procedures with automated programming methods.
-            The chapter presents implementations of optical interconnects, multicasting and circuit switching functions on a single processor, followed by a systematic evaluation of performance metrics.
+            The chapter presents implementations of optical interconnects, multicasting, and circuit switching functions on a single processor, followed by a systematic evaluation of performance metrics.
       \item Chapter 4: \nameref{chap:ocs_archs} This chapter uses graph theory to model high-radix silicon photonic switch architectures, including Benes-like, PILOSS, and Dilated Banyan topologies.
             Different architectures are constructed through their graph connectivity and analyzed in terms of hardware complexity, blocking behavior, and signal integrity.
             Routing algorithms are applied to the corresponding switch graphs to evaluate blocking probability, while optical performance is assessed through insertion loss and signal-to-noise ratio.
             The resulting comparisons provide design guidelines for scalable silicon photonic optical circuit switches.
-      \item Chapter 5: \nameref{chap:sdn_for_ocs} This chapter presents the experimental demonstration of a silicon photonic switch managed via a gNMI-controlled in SDN.
-            It introduces a custom YANG model designed to minimize control overhead while optimizing hardware performance across diverse connection types.
+      \item Chapter 5: \nameref{chap:sdn_for_ocs} This chapter presents the experimental demonstration of a silicon photonic switch managed via a gNMI-controlled SDN framework.
+            It introduces a custom YANG model designed to abstract the switching resources and connection configurations of the OCS device, enabling standardized and programmable control.
             The chapter validates the operational flow, showcasing lossless performance through integrated SOA compensation and exceptionally low crosstalk,
             establishing a standardized pathway for integrating OCS into AI infrastructures.
       \item Chapter 6: \nameref{chap:discussion_and_conclusions} This chapter examines the design, modeling, and evaluation of large-scale silicon photonic optical circuit switches in data center networks.
-            It discusses key physical-layer challenges, including optical insertion loss, crosstalk, and analyzes their impact on scalability and performance.
-            Practical deployment considerations, such as integration with existing network architectures and software-defined control are also addressed.
-            Finally, the chapter outlines future directions, including multi-stage switching fabrics, failure-resilient architectures, and approaches toward scalable system-level implementations.
+            It discusses key physical layer challenges, including optical insertion loss and crosstalk, and analyzes their impact on scalability and performance.
+            Practical deployment considerations, such as integration with existing network architectures and software-defined control, are also addressed.
+            Finally, the chapter outlines future directions toward ultra-large-radix switching fabrics, including hardware architectural and application level approaches to extend system scalability and capacity.
 \end{itemize}
 
 At the end of the thesis, a section is provided with a complete list of the author's merits and contributions to scientific journals and conferences.
