@@ -108,6 +108,22 @@
   abstract  = {Programmable integrated photonics is an emerging new paradigm that aims at designing common integrated optical hardware resource configurations, capable of implementing an unconstrained variety of functionalities by suitable programming, following a parallel but not identical path to that of integrated electronics in the past two decades of the last century. Programmable integrated photonics is raising considerable interest, as it is driven by the surge of a considerable number of new applications in the fields of telecommunications, quantum information processing, sensing, and neurophotonics, calling for flexible, reconfigurable, low-cost, compact, and low-power-consuming devices that can cooperate with integrated electronic devices to overcome the limitation expected by the demise of Moore's Law. Integrated photonic devices exploiting full programmability are expected to scale from application-specific photonic chips (featuring a relatively low number of functionalities) up to very complex application-agnostic complex subsystems much in the same way as field programmable gate arrays and microprocessors operate in electronics. Two main differences need to be considered. First, as opposed to integrated electronics, programmable integrated photonics will carry analog operations over the signals to be processed. Second, the scale of integration density will be several orders of magnitude smaller due to the physical limitations imposed by the wavelength ratio of electrons and light wave photons. The success of programmable integrated photonics will depend on leveraging the properties of integrated photonic devices and, in particular, on research into suitable interconnection hardware architectures that can offer a very high spatial regularity as well as the possibility of independently setting (with a very low power consumption) the interconnection state of each connecting element. Integrated multiport interferometers and waveguide meshes provide regular and periodic geometries, formed by replicating unit elements and cells, respectively. In the case of waveguide meshes, the cells can take the form of a square, hexagon, or triangle, among other configurations. Each side of the cell is formed by two integrated waveguides connected by means of a Mach--Zehnder interferometer or a tunable directional coupler that can be operated by means of an output control signal as a crossbar switch or as a variable coupler with independent power division ratio and phase shift. In this paper, we provide the basic foundations and principles behind the construction of these complex programmable circuits. We also review some practical aspects that limit the programming and scalability of programmable integrated photonics and provide an overview of some of the most salient applications demonstrated so far.}
 }
 
+@article{reconfig,
+author = {Daniel P\'{e}rez and Ivana Gasulla and Jos\'{e} Capmany and Richard A. Soref},
+journal = {Opt. Express},
+keywords = {Fiber optics links and subsystems; Optoelectronics; Integrated optics devices; Radio frequency photonics; Coupled resonators; Mach Zehnder interferometers; Optical circuits; Optical directional couplers; Ring resonators; Spatial resolution},
+number = {11},
+pages = {12093--12106},
+publisher = {Optica Publishing Group},
+title = {Reconfigurable lattice mesh designs for programmable photonic processors},
+volume = {24},
+month = {May},
+year = {2016},
+url = {https://opg.optica.org/oe/abstract.cfm?URI=oe-24-11-12093},
+doi = {10.1364/OE.24.012093},
+abstract = {We propose and analyse two novel mesh design geometries for the implementation of tunable optical cores in programmable photonic processors. These geometries are the hexagonal and the triangular lattice. They are compared here to a previously proposed square mesh topology in terms of a series of figures of merit that account for metrics that are relevant to on-chip integration of the mesh. We find that that the hexagonal mesh is the most suitable option of the three considered for the implementation of the reconfigurable optical core in the programmable processor.},
+}
+
 @article{Lu02012019,
   author    = {Yang Lu},
   title     = {Artificial intelligence: a survey on evolution, models, applications and future trends},
@@ -253,29 +269,29 @@
   series    = {ICCAD '22}
 }
 
-@inproceedings{tirumala2024nvidia,
-  author    = { Tirumala, Ajay and Wong, Raymond },
-  booktitle = { 2024 IEEE Hot Chips 36 Symposium (HCS) },
-  title     = {{ NVIDIA Blackwell Platform: Advancing Generative AI and Accelerated Computing }},
-  year      = {2024},
-  volume    = {},
-  issn      = {},
-  pages     = {1-33},
-  abstract  = { NVIDIA Blackwell Platform - Data Center Scale Architecture },
-  keywords  = {Data centers;Generative AI;Computer architecture;Hardware acceleration},
-  doi       = {10.1109/HCS61935.2024.10665247},
-  url       = {https://doi.ieeecomputersociety.org/10.1109/HCS61935.2024.10665247},
-  publisher = {IEEE Computer Society},
-  address   = {Los Alamitos, CA, USA},
-  month     = Aug
-}
-
 @misc{nvidia_nvlink,
   author = {{NVIDIA Corporation}},
   title  = {NVIDIA NVLink and NVLink Switch},
   year   = {2026},
   url    = {https://www.nvidia.com/en-us/data-center/nvlink/},
   note   = {Accessed: 2026-03-25}
+}
+
+@misc{ualink_consortium,
+  author = {{UALink Consortium}},
+  title  = {About UALink},
+  year   = {2026},
+  url    = {https://ualinkconsortium.org/about-ualink/},
+  note   = {Accessed: 2026-03-25}
+}
+
+@misc{velaga2025sue,
+  author       = {Ram Velaga},
+  title        = {Scale-up is simple. Ethernet makes it smarter.},
+  year         = {2025},
+  organization = {Broadcom},
+  url          = {https://www.broadcom.com/blog/scale-up-is-simple-ethernet-makes-it-smarter},
+  urldate      = {2026-06-19}
 }
 
 @article{song2025survey,
@@ -290,6 +306,29 @@
   issn           = {1999-5903},
   abstract       = {Nowadays, driven by the exponential growth of parameters and training data of AI applications and Large Language Models, a single GPU is no longer sufficient in terms of computing power and storage capacity. Building high-performance multi-GPU systems or a GPU cluster via vertical scaling (scale-up) has thus become an effective approach to break the bottleneck and has further emerged as a key research focus. Given that traditional inter-GPU communication technologies fail to meet the requirement of GPU interconnection in vertical scaling, a variety of high-performance inter-GPU communication protocols tailored for the scale-up domain have been proposed recently. Notably, due to the emerging nature of these demands and technologies, academic research in this field remains scarce, with limited deep participation from the academic community. Inspired by this trend, this article identifies the challenges and requirements of a scale-up network, analyzes the bottlenecks of traditional technologies like PCIe in a scale-up network, and surveys the emerging scale-up targeted technologies, including NVLink, OISA, UALink, SUE, and other X-Links. Then, an in-depth comparison and discussion is conducted, and we express our insights in protocol design and related technologies. We also highlight that existing emerging protocols and technologies still face limitations, with certain technical mechanisms requiring further exploration. Finally, this article presents future research directions and opportunities. As the first review article fully focusing on intra-node GPU interconnection in a scale-up network, this article aims to provide valuable insights and guidance for future research in this emerging field, and we hope to establish a foundation that will inspire and direct subsequent studies.},
   doi            = {10.3390/fi17120537}
+}
+
+@misc{lumentum_ocs,
+  author = {{Lumentum}},
+  title  = {Optical Circuit Switches},
+  year   = {2026},
+  url    = {https://www.lumentum.com/en/products/data-center/optical-circuit-switches},
+  note   = {Accessed: 2026-06-19}
+}
+
+@misc{coherent_ocs,
+  author = {{Coherent Corp.}},
+  title  = {Optical Circuit Switch (OCS)},
+  url    = {https://www.coherent.com/networking/optical-circuit-switch},
+  year   = {2024},
+  note   = {Accessed: 2026-06-19}
+}
+
+@misc{polatis7000,
+  author       = {{Polatis / HUBER+SUHNER}},
+  title        = {Series 7000 384x384 Port Software-Defined Optical Circuit Switch (SDN Enabled)},
+  howpublished = {\url{https://www.polatis.com/series-7000-384x384-port-software-controlled-optical-circuit-switch-sdn-enabled.asp}},
+  note         = {Accessed: 2026-06-19}
 }
 
 @article{pfister2001introduction,
@@ -752,18 +791,6 @@
   pages    = {466-475},
   keywords = {Directional couplers;Interferometers;Polarization;Interference;Crosstalk;Magnetic separation;Distributed control;Performance loss;Fabrication;Couplings;Crosstalk;directional coupler (DC);integrated optics;multimode interference (MMI) devices;polarization;ridge waveguides},
   doi      = {10.1109/JSTQE.2004.846521}
-}
-
-@article{tang2024broadband,
-  title     = {Broadband and fabrication-tolerant 3-dB couplers with topological valley edge modes},
-  author    = {Tang, Guo-Jing and Chen, Xiao-Dong and Sun, Lu and Guo, Chao-Heng and Li, Meng-Yu and Tian, Zhong-Tao and Chen, Hou-Hong and Wang, Hong-Wei and Sun, Qi-Yao and Pan, Ying-Di and others},
-  journal   = {Light: Science \& Applications},
-  volume    = {13},
-  number    = {1},
-  pages     = {166},
-  year      = {2024},
-  publisher = {Nature Publishing Group UK London},
-  doi       = {https://doi.org/10.1038/s41377-024-01512-3}
 }
 
 @misc{ansys_mmi_coupler,
@@ -2315,4 +2342,105 @@
   pages    = {1-6},
   keywords = {Optical switches;Calibration;Heating systems;Monitoring;Fabrics;Computer architecture;Silicon;Optical switch calibration;optical switch fabric;Si mach-zehnder interferometer (MZI);Spanke-Benes},
   doi      = {10.1109/JPHOT.2023.3275073}
+}
+
+@inproceedings{nvc2c,
+  author    = {Werner, Felix and Weisgut, Marcel and Rabl, Tilmann},
+  title     = {Towards Memory Disaggregation via NVLink C2C: Benchmarking CPU-Requested GPU Memory Access},
+  year      = {2025},
+  isbn      = {9798400714702},
+  publisher = {Association for Computing Machinery},
+  address   = {New York, NY, USA},
+  url       = {https://doi.org/10.1145/3723851.3723853},
+  doi       = {10.1145/3723851.3723853},
+  booktitle = {Proceedings of the 4th Workshop on Heterogeneous Composable and Disaggregated Systems},
+  pages     = {8–14},
+  numpages  = {7},
+  location  = {},
+  series    = {HCDS '25}
+}
+
+@article{sun2016adiabatic,
+  author    = {Sun, Cheng and Yu, Yu and Ye, Mingbin and others},
+  title     = {An Ultra-Low Crosstalk and Broadband Two-Mode (De)Multiplexer Based on Adiabatic Couplers},
+  journal   = {Scientific Reports},
+  volume    = {6},
+  pages     = {38494},
+  year      = {2016},
+  publisher = {Nature Publishing Group},
+  doi       = {10.1038/srep38494}
+}
+
+@article{Shahwar2024Polarization,
+  title     = {Polarization management in silicon photonics},
+  author    = {Shahwar, Dura and Yoon, Hoon Hahn and Akkanen, Suvi-Tuuli and Li, Diao and Muntaha, Sidra tul and Cherchi, Matteo and Aalto, Timo and Sun, Zhipei},
+  journal   = {npj Nanophotonics},
+  volume    = {1},
+  article   = {35},
+  year      = {2024},
+  doi       = {10.1038/s44310-024-00033-6},
+  publisher = {Springer Nature}
+}
+
+@inproceedings{7328999,
+  author    = {Cheng, Qixiang and Ding, Minsheng and Wonfor, Adrian and Wei, Jinlong and Penty, Richard V. and White, Ian H.},
+  booktitle = {2015 International Conference on Photonics in Switching (PS)},
+  title     = {The feasibility of building a 64×64 port count SOA-based optical switch},
+  year      = {2015},
+  volume    = {},
+  number    = {},
+  pages     = {199-201},
+  keywords  = {Optical switches;Semiconductor optical amplifiers;Optical losses;Switching circuits;Photonics;Semiconductor optical amplifiers;optical switches;Photonic integrated circuits},
+  doi       = {10.1109/PS.2015.7328999}
+}
+
+@misc{cignal2025startuptracker,
+  author       = {{Cignal AI}},
+  title        = {Optical Component Startup Tracker},
+  howpublished = {\url{https://cignal.ai/2025/11/optical-component-startup-tracker/}},
+  year         = {2025},
+  note         = {Accessed: 2026-06-27}
+}
+
+@misc{nvidia2025cpo,
+  author       = {Ashkan Seyedi},
+  title        = {How Industry Collaboration Fosters NVIDIA Co-Packaged Optics},
+  year         = {2025},
+  month        = aug,
+  url          = {https://developer.nvidia.com/blog/how-industry-collaboration-fosters-nvidia-co-packaged-optics/},
+  organization = {NVIDIA Technical Blog},
+  urldate      = {2026-07-07}
+}
+
+@misc{tspa2025passage,
+  author    = {TSPA Semiconductor},
+  title     = {Lightmatter Passage: A Comprehensive Overview},
+  year      = {2025},
+  url       = {https://tspasemiconductor.substack.com/p/lightmatter-passage-a-comprehensive},
+  note       = {Substack article},
+  urldate   = {2026-07-07}
+}
+
+@inproceedings{reticle_stitching,
+  author = {Christopher M. Bottoms and Richard C. Johnson and Romain J. Lallement and Cheuk Wun Wong and Alex R. Hubbard and Sarah N. Chowdhury and Jed H. Rankin},
+  title = {Multi-reticle stitching: applications from packaging to high-NA EUV},
+  volume = {13424},
+  booktitle = {Optical and EUV Nanolithography XXXVIII},
+  editor = {Martin Burkhardt and Claire van Lare},
+  organization = {International Society for Optics and Photonics},
+  publisher = {SPIE},
+  pages = {134240O},
+  keywords = {Reticle stitching, Overlay process control, Advanced packaging, Throughput optiization, Semiconductor manufacturing, Reticle design, feature stitching},
+  year = {2025},
+  doi = {10.1117/12.3051542},
+  URL = {https://doi.org/10.1117/12.3051542}
+}
+
+@misc{gf_silicon_photonics,
+  author       = {{GlobalFoundries}},
+  title        = {Silicon Photonics Technology},
+  year         = {2026},
+  organization = {GlobalFoundries},
+  url          = {https://gf.com/technologies/silicon-photonics/},
+  urldate      = {2026-07-07}
 }

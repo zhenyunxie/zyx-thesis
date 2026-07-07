@@ -1,14 +1,18 @@
 % Author: Zhenyun Xie
-
-\chapter{Optical Networking Applications Based on Programmable Integrated Photonics}\label{chap:applications_on_pip} % (fold)
+\chapter[Optical Networking Applications Based on General-purpose PIP]{
+    Optical Networking Applications Based on General-purpose PIP\blankfootnote{
+        A significant portion of this chapter has been previously published in Z. Xie, D. Sánchez-Jácome, L. Torrijos-Morán, and D. Pérez-López, ``Software-defined optical networking applications enabled by programmable integrated photonics,'' \textit{Journal of Optical Communications and Networking}, 2024, doi: 10.1364/JOCN.521505.
+        This chapter is presented here with permission and has been adapted to fit within the broader context of this dissertation.
+    }
+}\label{chap:applications_on_pip} % (fold)
 % Motivation of this chapter
 In the previous chapter, the theoretical foundations and programming methodologies for programmable integrated photonic circuits were introduced.
-The fundamental building blocks of programmable photonic systems, including splitters, crossings, phase shifters, and PUCs.
-Based on these components, different circuit topologies were discussed, with particular emphasis on recirculating mesh architectures that enable flexible and software-defined photonic functionality.
-The hexagonal mesh as one of the most predominant topologies in programmable integrated photonics, enables the synthesis of a wide range of optical circuits through appropriate configuration of the PUCs.
+The fundamental building blocks of programmable photonic systems, including power splitters, crossings, phase shifters, and PUCs.
+Based on these components, different circuit topologies were discussed, with particular emphasis on general-purpose mesh architectures that enable flexible and software-defined photonic functionality.
+The hexagonal mesh as one of the most predominant topologies in general-purpose programmable photonics, enables the synthesis of a wide range of optical circuits through appropriate configuration of the PUCs.
 
 % Objective of this chapter
-This chapter explores the implementation of optical networking applications using a programmable integrated photonic processor with a hexagonal mesh topology.
+This chapter explores the implementation of optical networking applications using a general-purpose programmable photonic processor with a hexagonal mesh topology.
 By dynamically configuring the PUC states and applying graph-theory-based routing algorithms, different optical networking functionalities can be realized within the same hardware platform.
 Specifically, we experimentally demonstrate several representative optical networking applications, including interconnects, multicasting, and circuit switching.
 The corresponding performance metrics are analyzed in detail, highlighting the capability of programmable photonic processors to support flexible and reconfigurable optical networking functions.
@@ -18,8 +22,18 @@ The corresponding performance metrics are analyzed in detail, highlighting the c
 Reconfigurable optical interconnects are of great interest in optical networks as they enable flexible connections of terabit data rates with high-performance operation \cite{sato2022prospects, sato2023optical}.
 These interconnects demand reduced latency and energy efficiency between input and output (I/O) ports, and therefore minimal insertion loss and shortest distance is highly desired.
 The software layer demonstrated herein provides an interconnect algorithm based on Dijkstra \cite{foead2021systematic, bierlaire_optimization_2018}, which can automatically provide an optimum path configuration.
-This application can also provide self-healing capabilities to allocate alternative optical paths with lower insertion loss when needed.
-
+This application can also provide self-healing capabilities to allocate alternative optical paths with lower insertion loss when needed
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics{figures/ch3-interconnect.pdf}
+    \end{center}
+    \caption{Optical interconnect experiment.
+        (a) Programmable processor configurations considering different input ports.
+        (b)Colormap of the normalized optical power measured at output ports for different interconnect configurations.
+        The white lines indicate the configuration shown in the schematic of the programmable processor
+    }\label{fig:ch3-interconnect}
+\end{figure}
+% figure power interconnect
 The results of the optical interconnect experiments at a central wavelength of 1550 nm and the processor configuration are shown in Figure~\ref{fig:ch3-interconnect}.
 Ports 0, 25, 17, 6 are used as input ports, and up to 27 interconnects to other available output ports are programmed.
 As it can be seen in Figure~\ref{fig:ch3-inter-power}, all the paths are configured successfully, showing diagonal lines in the colormap, each one corresponding to a given interconnect.
@@ -29,16 +43,7 @@ In the experiment, the longest interconnect path consists of 15 PUCs, while the 
 Furthermore, optical power is also measured at the rest of the non-targeted output ports, with an average leakage of -30 dB.
 The algorithm allows the simultaneous identification of up to 400 possible paths with an average time of about 0.4 microseconds per path.
 % figure interconnect
-\begin{figure}[h]
-    \begin{center}
-        \includegraphics{figures/ch3-interconnect.pdf}
-    \end{center}
-    \caption{Optical interconnect experiment.
-        Programmable processor configurations considering different input ports.
-    }\label{fig:ch3-interconnect}
-\end{figure}
-% figure power interconnect
-\begin{figure}[h]
+\begin{figure}[H]
     \begin{center}
         \includegraphics{figures/ch3-inter-power.pdf}
     \end{center}
@@ -50,16 +55,17 @@ The algorithm allows the simultaneous identification of up to 400 possible paths
 \section{Multicasting (1xN)}\label{sec:multicasting}
 Optical multi-casting allows for a single optical signal to be efficiently distributed across multiple receiving nodes or devices simultaneously.
 This is particularly advantageous in scenarios where the same data needs to be delivered to several destinations within a DC or set of clusters, simultaneously.
-This functionality is currently not available in the physical layer of most networks so, if deployed under the right software stack support,
-it has the potential to open the door to new, cost efficient, and disruptive applications.
+This functionality is unavailable in the physical layer of most networks.
+Even in modern MEMs-based optical switches, the optical signal reflects off the mirrors in a way that preserves its inherent unicast (point-to-point) nature.
+If deployed under the right software stack support, native multicasting has the potential to open the door to new, cost efficient, and disruptive applications.
 One added advantage brought in by PIP is the software-defined control of the splitting ratio across the outgoing signals powered by the fine tuning of driving phases applied to the PUCs.
 As a consequence of this, the operator can then control how much power is allocated to different receiving nodes in a dynamic manner.
 
 In this section, we have designed an auto-multicast algorithm that can accommodate any number of desired outputs from a given input.
-It determines the optimum path to each output, and efficiently auto-configures the splitting PUC with a ratio that ensures every output port receives the same power,
-for a traditional multicast operation, or the specified power ratio, under custom operation.
+The algorithm determines the optimum path to each output and auto-configures the splitting PUCs to ensure every output port receives the same power, corresponding to a traditional multicast operation.
+In addition, custom operations may require the configuration of uneven optical powers at each output, such as in a typical 95\%-5\% monitoring scenario.
 To achieve this, the auto-multicast algorithm can be translated into a single-source shortest path problem represented by a directed acyclic graph (directed tree) \cite{perez2018delay_line}.
-A simple example of a 1x3 network is demonstrated in Figure~\ref{fig:ch3-multicast}
+A simple example of a 1x3 network is demonstrated in Figure~\ref{fig:ch3-multicast}.
 % figure multicasting
 \begin{figure}[h]
     \begin{center}
@@ -69,9 +75,10 @@ A simple example of a 1x3 network is demonstrated in Figure~\ref{fig:ch3-multica
         The inset shows the detailed graphs.
     }\label{fig:ch3-multicast}
 \end{figure}
-Building upon this intuitive target, our proposed algorithm implements the shortest-path tree circuit based on the pseudocode in Algorithm~\ref{alg:auto_multicast}
+Building upon this intuitive target, our proposed algorithm implements the shortest-path tree circuit based on the pseudocode in Algorithm~\ref{alg:auto_multicast}.
 % Start algorithm
 \begin{algorithm}[h]
+    \footnotesize
     \caption{Pseudo-code of Multicasting Application}
     \label{alg:auto_multicast}
     \begin{algorithmic}[1]
@@ -182,12 +189,9 @@ The \textit{max\_iter} parameter (see Algorithm~\ref{alg:auto_switch}) regulates
 Analytical decomposition method offers near instantaneous solutions by mapping the switch matrix to a Spanke-Benes network on a hexagonal mesh.
 However, its efficiency is traded for port flexibility, which is constrained by the feed-forward architecture.
 Regarding physical performance, the device's reconfiguration is driven by thermo-optic actuators, achieving microsecond-scale (\textit{μs}) switching speeds—orders of magnitude faster than traditional MEMS-based approaches (\textit{ms}) \cite{1244924}.
-
-The first and the third approaches are straightforward to implement and have been previously documented \cite{lopez2020auto, jia2018six}.
-Here, we document to a deeper extent the second approach that implements the edge penalty algorithm since it offers significantly better
-computational efficiency than the brute-force sequential routing of the first approach, while avoiding the ports constraints in the Spanke-Benes architecture.
 % algorithm
 \begin{algorithm}[h]
+    \footnotesize
     \caption{OCS Auto Switch}
     \label{alg:auto_switch}
     \begin{algorithmic}[1]
@@ -220,6 +224,10 @@ computational efficiency than the brute-force sequential routing of the first ap
     \end{algorithmic}
 \end{algorithm}
 % end algorithm
+
+The first and the third approaches are straightforward to implement and have been previously documented \cite{lopez2020auto, jia2018six}.
+Here, we document to a deeper extent the second approach that implements the edge penalty algorithm since it offers significantly better
+computational efficiency than the brute-force sequential routing of the first approach, while avoiding the ports constraints in the Spanke-Benes architecture.
 Refer to pseudo-code of Algorithm~\ref{alg:auto_switch}, in lines 1 and 2, the best paths for each I/O port pair are identified.
 Next, the algorithm checks for conflict edges within these paths (line 4), as conflicting edges within the identified paths will be penalized
 with a higher weight (line 6). A conflicting edge is defined as a PUC associated with more than two paths that requires a different state (cross/bar)
@@ -229,12 +237,6 @@ preprocessing paths configuration list (lines 7 and 8). If the system detects no
 is saved and the loop terminates. Otherwise, the weight-update cycle continues until a valid solution is found or the \textit{max\_iter} threshold is reached.
 This variable essentially represents the trade-off between the probability of convergence and the total search time for a zero-conflict configuration.
 
-In Figure~\ref{fig:ch3-switch} we present the implementation of a 6x6 optical circuit switch. We have selected six ports from the left side of the hexagonal mesh [0, 27, 26, 25, 24, 23]
-as inputs and another six ports from the right side [15, 16, 17, 18, 19, 20] as outputs; the selected ports from both sides are named from 1-6 in blue color and red color, respectively.
-To evaluate network performance, a laser source with a central wavelength of 1550 nm and an input power of 5 dBm was connected to Port 1.
-The switch was then software defined to synthesize six different configurations between this input and all possible outputs.
-Once the network was defined, the power of each output port was measured and normalized with the input source, resulting in the characterization of six switch matrices.
-This process was replicated for the remaining five input ports, resulting in the characterization of 36 switch matrices in total.
 % figure switch
 \begin{figure}[h]
     \begin{center}
@@ -244,6 +246,12 @@ This process was replicated for the remaining five input ports, resulting in the
         Input ports 0, 27, 26, 25, 24, and 23 and output ports 15, 16, 17, 18, 19, and 20 are numbered from 1-6 each in blue color and red color, respectively.
     }\label{fig:ch3-switch}
 \end{figure}
+In Figure~\ref{fig:ch3-switch} we present the implementation of a 6x6 optical circuit switch. We have selected six ports from the left side of the hexagonal mesh [0, 27, 26, 25, 24, 23]
+as inputs and another six ports from the right side [15, 16, 17, 18, 19, 20] as outputs; the selected ports from both sides are named from 1-6 in blue color and red color, respectively.
+To evaluate network performance, a laser source with a central wavelength of 1550 nm and an input power of 5 dBm was connected to Port 1.
+The switch was then software defined to synthesize six different configurations between this input and all possible outputs.
+Once the network was defined, the power of each output port was measured and normalized with the input source, resulting in the characterization of six switch matrices.
+This process was replicated for the remaining five input ports, resulting in the characterization of 36 switch matrices in total.
 
 As illustrated in Figure~\ref{fig:ch3-switch-power}, each column in the subfigure represents the optical power monitored in a specific output port,
 and distinct marker shapes identifying the six different input ports.
@@ -253,6 +261,7 @@ As a result, we observed -10 dB (±0.5) insertion losses in all six output ports
 Optical crosstalk is determined by checking the difference between the optical power from the specified input/output pair and the highest leakage power from other input ports to the same output port.
 This distinction is visually represented by the distance between two blue lines in Figure~\ref{fig:ch3-switch-power}, with a typical value of -25 dB.
 This metric varies based on the switch configuration; the best scenario of crosstalk observed in our experiments is 26 dB for the switch configuration: [1:4, 2:5, 3:6, 4:1, 5:2, 6:3].
+The source of crosstalk is mainly from PUC performance, as well as small drifts due to auto-calibration and auto-characterization.
 % figure switch measurement
 \begin{figure}[h]
     \begin{center}
@@ -264,7 +273,6 @@ This metric varies based on the switch configuration; the best scenario of cross
         The six input ports are visually represented by six distinct markers in the figure.
     }\label{fig:ch3-switch-power}
 \end{figure}
-The source of crosstalk is mainly from PUC performance, as well as small drifts due to auto-calibration and auto-characterization.
 % Removed, conflict with company interest
 % The reconfiguration speed can be broken down into physical layer reconfiguration,
 % control plane latency, and algorithm computation time as shown in Table~\ref{tab:ch3-switch-speed}.
@@ -291,4 +299,10 @@ We evaluated the algorithm's feasibility using the same set of I/O ports for a 6
 The switching architecture can be classified as rearrangeable non-blocking as it needs to reconfigure already established connections to allocate new ones.
 The algorithm demonstrated its reliability by generating feasible solutions for all 720 cases without any observed instances of failure.
 This fact makes the software layer developed for this work a key differentiator with respect to previous manually implemented solutions.
-
+\section{Conclusion}\label{sec:ch3_conclusion}
+We have just covered how general-purpose photonic mesh processors can implement various optical circuits, with specific demonstrations of the software for point-to-point interconnects and multicast.
+However, general-purpose circuits face severe scalability limits when used to build interconnects in large-scale optical circuit switches.
+As the switch size grows, hardware complexity, optical loss, blocking degree, and control overhead increase significantly.
+To address these limitations, the next chapter introduces a graph-based modelling approach to analyze application-specific silicon photonic switch architectures.
+This model evaluates key metrics such as routing, blocking, hardware complexity, optical loss, and signal-to-noise ratio (SNR).
+These architectures are then benchmarked against current manufacturing capabilities to identify feasible designs for modern high-radix networking applications.

@@ -575,9 +575,8 @@ O{}O{}O{} } { \tl_if_blank:nTF{#1}{ \msg_error:nn { \ClassName } { blank_author 
 		}
 	\int_do_while:nNnn { \g__signature_supno_int } < { \g_supervisor_supervisorcnt_int } {
 			\int_gincr:N  \g__signature_supno_int
-			Certified\ by: \> \seq_item:cn { g_supervisor_name_seq } { \g__signature_supno_int } \\
-			\> \seq_item:cn { g_supervisor_title_seq } { \g__signature_supno_int },\
-			\g_titlepage_supervisor_designation_tl \\[1em]
+			Supervised\ by: \> \seq_item:cn { g_supervisor_name_seq } { \g__signature_supno_int } \\
+			\> \seq_item:cn { g_supervisor_title_seq } { \g__signature_supno_int } \\[1em]
 		}
 	\int_compare:nNnF { \g_acceptor_acceptorcnt_int } = {0} {
 	\int_do_while:nNnn { \g__signature_accno_int } < { \g_acceptor_acceptorcnt_int } {

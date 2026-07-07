@@ -1,9 +1,9 @@
 % Author: Zhenyun Xie
 
 \chapter{Discussion and Conclusion}\label{chap:discussion_and_conclusions} % (fold)
-This chapter builds upon the preceding investigations of circuit level control, architectural design, and system level integration of optical circuit switches based on programmable integrated photonics, and discusses their implications in the context of large-scale and practical deployment.
+This chapter builds upon the preceding investigations of circuit level control, architecture design, and system level integration of optical circuit switches based on programmable integrated photonics, and discusses their implications in the context of large-scale and practical deployment.
 
-It begins by discussing with the limitations of programmable integrated photonic systems, with a focus on insertion loss and crosstalk in high-radix switching fabrics.
+It begins by discussing the limitations of programmable integrated photonic systems, focusing on insertion loss and crosstalk in high-radix switching fabrics.
 It then explores how software defined approaches, including routing and calibration algorithms, can be leveraged to mitigate these limitations and improve system performance and robustness.
 Subsequently, practical challenges associated with integrating optical circuit switching into existing data center infrastructures are considered.
 Finally, the chapter outlines potential research directions toward ultra large scale switching systems and concludes with a summary of the main contributions of this thesis.
@@ -14,7 +14,7 @@ as the accumulated loss and crosstalk introduced by switching elements, waveguid
 thereby directly affecting the feasibility of large scale deployments in data center environments.
 \subsubsection{Insertion loss} \label{subsec:insertion_loss}
 In Chapter~\ref{chap:applications_on_pip}, programmable photonic processors based on hexagonal meshes were investigated as a flexible platform for implementing optical switching functions.
-While such multipurpose architectures provide strong versatility, they inherently suffer from limited scalability when applied to high radix switching fabrics.
+While such general-purpose architectures provide strong versatility, they inherently suffer from limited scalability when applied to high radix switching fabrics.
 As a result, Chapter~\ref{chap:ocs_archs} presents several application specific switching architectures; and for very high radix optical switches in silicon photonics, we further analyzed the insertion loss as a function of the two dominant contributors: switching cells and waveguide crossings.
 Figure~\ref{fig:ch6_pic_loss_projection} demonstrates this projection for 128- and 256-port radices, where the grey dashed lines indicate state-of-the-art building blocks, representing the current technological baseline.
 As shown in Figure~\ref{fig:ch6_pic_loss_projection}(a), for the 128$\times$128 case, all architectures except PILOSS can achieve a total loss below 5 dB provided that the switching cell and crossing losses are reduced to 0.15 dB and 1.5 mdB, respectively.
@@ -33,30 +33,32 @@ These components account for on-chip polarization management, coupling efficienc
 \end{figure*}
 
 One of the important challenges arises from polarization management.
+% polarization loss
 Silicon waveguides are inherently polarization sensitive and typically support only a single polarization mode with low loss.
 However, optical signals transmitted through optical fibers generally arrive with arbitrary polarization states.
 To address this issue, many integrated photonic systems adopt a polarization-diversity scheme, in which the incoming signal is split into two orthogonal polarization components that are processed independently through duplicated switching fabric \cite{tanizawa2016novelpola, kurosu2019high}.
 Although this approach ensures polarization independent operation, it effectively doubles the required switching resources, thereby increasing chip area, integration complexity, and increases the overall optical loss.
 In addition, careful path length matching between the two split signals is required to prevent interference degradation, which further complicates the system design.
-
+% edge coupling
 The coupling efficiency of photonic interfaces is influenced not only by the design of edge couplers but also by packaging and assembly processes.
 Even the improvements in edge couplers by using advanced silicon-nitride with losses of 0.1–0.2 dB can further reduce the total PIC loss \cite{psiquantum2025manufacturable},
 fiber-array attachment and flip-chip integration can introduce mechanical stress and chip warpage, which may affect optical alignment to reduce the coupling efficiency \cite{tian2025photonic, hall2025innovations}.
 In large photonic integrated circuits, even small mechanical deformations can lead to misalignment between optical interfaces \cite{tian2023passive}.
 Typically, maximum deflections in similar packaging contexts are in the ~10–30 µm range, depending on geometry and material properties \cite{ma14133723}.
 As the switching radix getting higher, these tolerances become even more stringent, requiring careful co-design of the photonic layout and packaging process.
-
-A potential approach to mitigate the accumulated losses in large scale switching fabrics is through integrate optical amplification system.
+% SOA compensation
+A potential approach to mitigate the accumulated losses in large scale switching fabrics is through the integration of an optical amplification system.
 SOAs are suitable candidates for this purpose, as we demonstrated in Chapter~\ref{chap:sdn_for_ocs}, where SOAs can provide effective optical gain to compensate the losses across all paths, especially in the O-band.
 However, introducing active components also brings additional system level considerations, as optical amplifiers may introduce noise and signal distortions that affect transmission quality \cite{ASSADIHAGHI2010158, lippiatt2024analysis}.
 Therefore, performance metrics such as SNR, bit-error ratio, and transmitter dispersion eye closure (TDECQ), need to be carefully evaluated to ensure reliable operation \cite{baney2000theory}.
 Taken together, these factors indicate that insertion loss is not only determined by individual components, but emerges from the combined effects of device characteristics, circuit architecture, and system level integration.
 \subsubsection{Crosstalk} \label{subsec:crosstalk}
+% crosstalk is not uniform
 As covered in Chapter~\ref{chap:ocs_archs}, optical crosstalk becomes increasingly critical as the switching fabric scales.
 While the 64$\times$64 dilated Benes-like architecture can achieve signal-to-noise ratios exceeding 45~dB at the central wavelength, its performance degrades noticeably at wavelengths farther from the center.
 This degradation is primarily attributed to the wavelength-dependent behavior of the PUCs, where crosstalk increases significantly at the spectral edges \cite{li2024power}.
 Such behavior is particularly relevant for systems operating over wider wavelength ranges, such as FR4, where uniform performance across channels is required.
-
+% coupling ratio deviation caused by fabrication
 Another factor affecting PUC crosstalk is the coupling ratio deviation caused by fabrication.
 For the CROSS state, crosstalk is highly sensitive to the absolute values of the coupling coefficients, whereas for the BAR state, it is mainly affected by mismatches between the two couplers within a PUC.
 One possible approach to mitigate this issue is to replace fixed couplers with tunable elements, such as Mach–Zehnder interferometer based splitters, allowing the effective coupling ratio to be adjusted during calibration \cite{suzuki2015ultra, bao2025ultra, bao2025silicon}.
@@ -73,18 +75,18 @@ In parallel, software plays an increasingly important role in shaping the capabi
 Rather than relying solely on static hardware design, software defined control introduces an additional degree of flexibility, enabling dynamic adaptation to device characteristics, operating conditions, and system-level requirements.
 
 \subsubsection{Topology aware routing and control} \label{subsec:software_control}
-% routing algorithm and software to improve the optical performance, failure resilience.
+% routing optimization
 One key aspect of software-defined photonic systems lies in routing and control algorithms that are aware of the underlying switching topology.
 As demonstrated in Chapter~\ref{chap:applications_on_pip}, such algorithms can be naturally extended to scalable OCS architectures with feedforward or multi-stage topologies, where each input output pair may have multiple feasible routing paths.
 Given a specific switching configuration, software can select an optimal path according to different objectives.
-
+% routing to minimize insertion loss
 For example, path routing can be optimized to minimize insertion loss by selecting paths with lower loss components, which requires prior characterization of device level parameters such as the insertion loss of PUCs and number of crossings.
 Alternatively, routing strategies can aim to minimize crosstalk by distributing optical paths across the switching fabric, avoiding excessive concentration of signals in localized regions.
 Under the constraint of non-blocking connectivity, such load aware routing can improve overall SNR.
-
+% routing to minimize SNR
 Despite differences in physical implementation, these architectures can be uniformly represented using the same graph theory, where nodes correspond to switching elements and edges represent feasible optical connectivity with associated performance weights.
 This unified representation enables consistent routing across different architectures, allowing path selection to be formulated as a graph optimization problem independent of topology.
-
+% routing for failure resilience
 Beyond performance optimization, the same graph based methodology also enables resilience aware routing.
 Due to fabrication variations, packaging induced imperfections, and long term device degradation, certain switching PUCs may exhibit performance degradation or partial failure.
 Within the graph representation, these effects can be modeled by updating edge weights or removing unreliable nodes and links.
@@ -96,19 +98,28 @@ Rather than treating hardware imperfections as static constraints, the system ca
 In addition to topology aware routing, software defined control can also be leveraged to directly calibrate and optimize the underlying photonic hardware.
 In particular, calibration plays a critical role in shaping the crosstalk response of programmable photonic circuits over wavelength.
 
+% minimizing the crosstalk
+In an ideal lossless $2\times2$ switch element, maximizing the output power at the bar/cross port and minimizing the power at the leakage port to calibrate switching PUCs are equivalent, since energy conservation requires
+\begin{equation}
+    P_{\text{main}} + P_{\text{leak}} = P_{\text{in}}.
+\end{equation}
+where $P_{\text{in}}$ is the input optical power, $P_{\text{main}}$ is the power at the intended (bar or cross) output port, and $P_{\text{leak}}$ is the power leaking into the unintended port.
+In practice, however, insertion loss mean this equality does not same exactly, and $P_{\text{main}}$ can reach a local maximum without $P_{\text{leak}}$ reaching its true minimum.
+For this reason, calibration routing should not rely on a single-port metric, but instead target the extinction ratio directly:
+\begin{equation}
+    J = 10 \log_{10}\!\left(\frac{P_{\text{main}}}{P_{\text{leak}}}\right).
+\end{equation}
+where $J$ (dB) is the extinction ratio used as the calibration cost function.
+Maximizing $J$ jointly enforces high main-port power and low leakage, and better reflects the crosstalk performance the system actually depends on.
+This is particularly important in $N\times N$ switch networks, where leakage may couple into a specific interfering path rather than simply reducing the main-port signal;
+in such cases, the relevant leak port need be monitored explicitly, as main port power alone carries no information about that path.
+
+% calibration within multi wavelengths
 Conventional optimization of photonic switching elements often focuses on achieving optimal performance at a central wavelength \cite{10122910}.
 However, for wavelength division multiplexing systems, uniform performance across the full operating spectrum is typically more important.
 Instead of strictly minimizing crosstalk at the central wavelength, calibration can be used to redistribute the spectral response by slightly relaxing the optimal condition at the center,
 thereby improving performance at edge wavelengths. This results in a more balanced crosstalk profile across the entire wavelength range.
 
-At the device level, the behavior of each PUC under calibration is determined by its phase control settings.
-According to the phase shift relation in Equation~\eqref{eq:ch2-phase-shifter} and the PUC scattering matrix in Equation~\eqref{eq:ch2-puc},
-a given switching state can be realized by multiple control configurations corresponding to different phase solutions,
-for example, $\phi_{\text{target}} \pm 2\pi$, where $\phi_{\text{target}}$ is the target phase required to achieve the cross or bar state.
-Higher control values generally correspond to larger driven phase \(\phi_{\text{target}}\) \cite{di2026high}.
-When operating away from the nominal wavelength, configurations with larger phase shifts exhibit increased sensitivity to wavelength variations, leading to greater deviation from the ideal BAR or CROSS states \cite{rios2022ultra, bao2025ultra}.
-Even if multiple control values achieve the target state at the central wavelength, those with lower driven phase are preferable.
-In practice, operating at lower control values reduces wavelength dependent phase errors and improves the stability of crosstalk across the full wavelength range.
 Overall, this calibration capability highlights that software defined control in PIP systems extends beyond routing and connectivity, enabling fine grained optimization of device level behavior to improve system level performance.
 \subsection{Practical deployment} \label{subsec:deployment}
 Optical circuit switches are not a plug-and-play replacement for existing packet switched infrastructures.
@@ -137,10 +148,10 @@ As discussed in the previous sections, insertion loss and crosstalk remain the p
 Even when following the design guidelines presented in Chapter~\ref{chap:ocs_archs}, which jointly consider loss and crosstalk constraints, silicon-photonic OCS architectures face reticle size limitations in scaling beyond radix sizes on the order of 256 ports.
 However, the continued growth of data center workloads suggests that even higher radix switching fabrics will be required in future systems \cite{song2025survey}.
 
-One possible approach to overcome this limitation is to move beyond single chip implementations and adopt multi stage switching fabrics \cite{garao2013modular}.
-In this paradigm, multiple moderate radix OCS modules are interconnected to form a larger switching network, for example using Clos topologies to achieve scalable non-blocking all-to-all connectivity.
-Such architectures allow the system to scale in a stages manner while keeping the complexity and loss of individual photonic chips within feasible limits.
-Moreover, the graph based modeling framework developed in Chapter~\ref{chap:ocs_archs} can be extended to simulate and optimize the configuration of these multi-stage networks.
+One possible approach to overcome this limitation is to use the reticle stitching technique~\cite{reticle_stitching}, whereby multiple exposure fields are patterned onto adjacent regions of the wafer and aligned at their boundaries to form a single, continuous structure larger than any individual reticle.
+This approach is already used commercially: Lightmatter's Passage M1000 is fabricated on the GlobalFoundries Fotonix platform~\cite{gf_silicon_photonics} as a multi-reticle active photonic interposer exceeding 4,000\,mm$^2$, with modulators, a reconfigurable WDM waveguide network, and solid-state optical switching integrated directly into the same photonic layer~\cite{tspa2025passage}.
+Applied to an ultra large radix switching fabric, this would allow the entire network to be scaled beyond a single reticle.
+However, photonic components in the switching fabric are sensitive to geometric variation; any stitching boundary intersecting a phase shifter or coupler directly affects device performance.
 
 In addition to spectral multiplexing, such as WDM, which enables multiple data channels to be transmitted over a single physical port and thereby increases system capacity \cite{guo2019wdm, papadimitriou2003optical},
 further improvements in port efficiency can be achieved through bidirectional operation \cite{lubidirectionalcon}.
@@ -156,30 +167,30 @@ By enabling native multicast at the photonic layer, the number of required point
 Overall, while physical layer constraints impose fundamental limits on the scalability of silicon photonic interconnect, a combination of architectural, spectral, and application level approaches provides viable pathways to extend system capacity beyond the limits of single chip implementations.
 
 \section{Conclusions} \label{section:conclusions}
-This thesis develops a clear framework for the design and implementation of large scale silicon photonic optical circuit switches, covering the process from graph based modeling to practical controlling.
+This thesis establishes a comprehensive framework for the design, modeling, and software control of large-scale silicon photonic optical circuit switches, spanning from abstract graph-theoretic concepts to practical commercial product adoption.
 
-At its core, this work develops a graph-theoretic modeling and programming method.
-A key finding is that the complexity of photonic integrated circuits, particularly those involving hundreds of interferometric elements, can be effectively abstracted into nodes connections and edge weights.
-This abstraction is for automation, enabling the translation of high-level connectivity requirements into device-level PUCs states.
-This approach was first validated through the iPronics Smartlight platform.
-The successful commercial release and public demonstration of iPronics Smartlight at OFC 2023 proved that different networking applications including optical interconnect, multicasting and circuit switching can be easily programmed and reconfigured on a single silicon processor~\cite{ipronics_smartlight}.
+At its core, this work introduces a graph modeling and programming methodology.
+A key finding is that the complexity of photonic integrated circuits, particularly those containing hundreds of interferometric elements, can be effectively abstracted into nodes and edges.
+This abstraction enables automated configurations by translating circuit synthesis requirements into hardware configuration states.
+The successful commercial release and public demonstration of iPronics Smartlight at OFC 2023 proved that diverse networking applications, including optical interconnects, multicasting, and circuit switching, can be seamlessly programmed and reconfigured on a single silicon processor~\cite{ipronics_smartlight}.
 
-Taking the graph theory based modeling approach for the integrated photonic circuits, this thesis explores application specific OCS designs, as general-purpose topologies is inherently limited to scale in high radix data center switching.
-Different topologies are analyzed and compared in terms of hardware complexity, insertion loss, signal-to-noise ratio, and blocking behavior.
-The results indicate that while some architectures perform well at small scales, their hardware requirements limit scalability.
-Dilated Benes-like architectures are the most suitable for 128-port and 256-port silicon photonic switches within current CMOS-compatible fabrication limits.
-Furthermore, the analysis of blocking behavior highlights the importance of routing strategies and acceptable performance trade-offs in practical deployments.
+Extending this graph-based modeling approach, this thesis explores application-specific photonic circuits for OCS designs, recognizing that general-purpose topologies face inherent scalability limits in high-radix data center switching.
+Various topologies were modeled, deeply analyzed and benchmarked in terms of hardware complexity, insertion loss, signal-to-noise ratio, and blocking behavior.
+The methodology involved the development of graph modeling, simulation toolbox development of high-density circuits and its final implementation.
+The results indicate that while certain architectures perform well at smaller scales, their soaring hardware requirements restrict scalability.
+Ultimately, dilated Benes-like architectures emerged as the most viable option for 128-port and 256-port silicon photonic switches within current CMOS-compatible fabrication limits.
+Furthermore, the routing analysis highlights how optimizing path selection and accepting strategic performance trade-offs can mitigate blocking behavior in practical deployments.
 
-Another key conclusion of this thesis work is that the practical deployment of photonic switches in datacenter depends on how well it can be managed by a network orchestrator.
-The development of a software-defined networking control framework, utilizing gNMI and a custom YANG model, bridging the gap between photonic switching hardware and data center control planes.
-The experimental validation demonstrated that internal operations can be abstracted into standardized interfaces.
-This research proves that silicon photonic OCS can operate as standard equipments in a software-defined environment, supporting features like path configuration and telemetry that are essential for practical used.
-The inclusion of specialized data nodes in the YANG model sets a precedent for the standardization of photonic parameters.
+Another primary conclusion of this work is that the real world deployment of photonic switches in data centers depends heavily on seamless integration with network orchestrators.
+To bridge the gap between photonic hardware and data center control planes, a software-defined network control framework was developed utilizing the gRPC network management interface and a custom YANG data model.
+Experimental validation demonstrated that complex internal switch operations can be abstracted into standardized interfaces.
+This research proves that silicon photonic OCS can operate as standard equipment within an SDN environment, supporting vital features like real time path configuration and telemetry.
+Additionally, the inclusion of specialized optical data nodes in the YANG model sets a new precedent for the standardization of photonic parameters.
 
-The outcomes of this research are then reflected in the development of the iPronics ONE platform.
-Demonstrated at OFC 2025 as the world's first commercial silicon photonic OCS, iPronics ONE provides practical support for validation of the concepts presented in this thesis \cite{ipronics_one32_2025}.
-The key design decisions behind the platform—such as the design of scalable topologies, gNMI-controlled software and Yang model are directly derived from the proposed modeling framework and its associated software development tools in this thesis.
+The outcomes of this research are reflected in the development of the iPronics ONE platform.
+Demonstrated at OFC 2025 as the world's first commercial silicon photonic OCS, iPronics ONE provides practical support for validation of the concepts presented in this thesis~\cite{ipronics_one32_2025}.
+The design decisions behind the platform, including its scalable topologies, gNMI-controlled software architecture, and custom YANG model, were directly derived from the modeling framework and software tools developed in this work.
 
-In summary, this research advances silicon photonic switching toward practical deployment.
-While OCS is not a universal replacement for electrical packet switching, it provides an essential high capacity layer for the AI era.
-By establishing a comprehensive framework spanning from the graph theory abstraction of optical mesh to the standardized software control of a commercial product, this thesis provides a structured foundation for future optical interconnect systems.
+In summary, this research advances silicon photonic switching from a laboratory concept toward practical, field deployed infrastructure.
+While OCS is not a universal replacement for electrical packet switching, it provides an essential, high-capacity layer tailored for the rigorous demands of the AI era.
+By establishing a comprehensive framework that spans from the graph theory abstraction of optical mesh to the standardized software control of a commercial product, this thesis provides a structured foundation for future optical interconnect systems.

@@ -1,8 +1,12 @@
 % Author: Zhenyun Xie
-
-\chapter{Scalability Analysis of Silicon Photonic Optical Circuit Switch Architectures}\label{chap:ocs_archs} % (fold)
+\chapter[Scalability Analysis of Silicon Photonic OCS Architectures]{
+    Scalability Analysis of Silicon Photonic Optical Circuit Switch Architectures\blankfootnote{
+        A significant portion of this chapter has been previously published in L. Torrijos-Morán, Z. Xie, C. Bixquert-Marrades, I. Belio-Apaolaza, and D. Pérez-López, ``Scalability Analysis of Silicon Photonics Optical Circuit Switch Architectures,'' \textit{Journal of Lightwave Technology}, 2026, doi: 10.1109/JLT.2026.3705998.
+        This chapter is presented here with permission and has been adapted to fit within the broader context of this dissertation.
+    }
+}\label{chap:ocs_archs} % (fold)
 % Motivation of this chapter
-In the previous chapter, optical networking functionalities were demonstrated on a multipurpose integrated photonic processor based on a hexagonal mesh topology.
+In the previous chapter, optical networking functionalities were demonstrated on a general-purpose photonic processor based on a hexagonal mesh topology.
 By properly configuring the PUCs, various optical circuits, including optical interconnects, multicasting, and circuit switching, were implemented within a single reconfigurable platform.
 However, the scalability of this approach becomes limited when implementing large-scale optical circuit switches.
 As the switch radix increases, the number of required programmable elements grows significantly, leading to increased hardware complexity, accumulated optical loss, and higher control overhead.
@@ -11,14 +15,14 @@ These factors make it challenging to efficiently realize high-radix switching fa
 % Objective of this chapter
 In this chapter, we propose the use of graphs to model OCS in silicon photonics, enabling routing analysis, blocking simulation, hardware complexity extraction and optical performance.
 We analyze and benchmark multiple architectures in terms of optical loss, signal-to-noise ratio (SNR), and hardware complexity, comparing them with state-of-the-art silicon photonics integration capabilities to extrapolate feasible scenarios in the near to mid-term \cite{perez2025large, giewont300mmMonolithicSilicon2019}.
-The overall goal of this paper is to provide a comprehensive benchmark among alternative circuit architectures for high-radix silicon photonics OCS that meet the performance requirements of modern networking applications.
+The overall goal of this chapter is to provide a comprehensive benchmark among alternative circuit architectures for high-radix silicon photonics OCS that meet the performance requirements of modern networking applications.
 \section{Graph-based modelling of integrated photonic switches}\label{sec:graph_modelling} % (fold)
 Integrated photonic switches consist of arrangements of basic tunable switching cells, where an input array of signals can be spatially or spectrally routed to an array of optical outputs.
 To study their properties, integrated photonic circuits can be modeled based on the graph layer that presented previous chapter~\ref{chap:fundamentals}.
 This mathematical representation facilitates the analysis of switching networks and their blocking probabilities by applying pathfinding algorithms directly to the graph.
 The performance of the switch strongly depends on its architecture, which ultimately dictates the number of switching and crossing cells, stages to go through, crosstalk and blocking type.
 % figure architectures
-\begin{figure}[h]
+\begin{figure}[H]
     \begin{center}
         \includegraphics{figures/ch4-archs.pdf}
     \end{center}
@@ -40,7 +44,7 @@ We define two types of conflicts that can occur in the network.
 The first captures the blocking that arises when an input port cannot be connected to an output port due to the absence of available paths.
 In this study, rearrangement is not allowed, so even RNB networks may experience blocking.
 This is because interrupting already established connections can significantly impact the network performance, in applications such as data centers running AI workloads, flows are often long-lived and high-bandwidth, making the rearrangement of existing connections inefficient \cite{wuACTINAAdaptingCircuitSwitching2025}.
-Nevertheless, for scheduled traffic \cite{wangTopoopTCooptimizingNetwork}, RNB networks might still find an application and that is the reason why they are included in the study.
+Nevertheless, for scheduled traffic \cite{wangTopoopTCooptimizingNetwork}, low blocking networks might still find applications and that is the reason why they are included in the study.
 The second type of conflict occurs when a single node in the network is shared by two signals, resulting in first-order crosstalk.
 In silicon photonics, 2$\times$2 MZI leakage to the undesired output port is strongly wavelength-dependent and can be relatively high, which affects the signal-to-noise ratio (SNR) and overall link performance.
 
@@ -51,7 +55,7 @@ A conflict occurs between the two paths shown in blue and yellow in Figure~\ref{
 This is physically impossible and is classified as conflict of type 1, due to blocking.
 The second type of conflict is illustrated in Figure~\ref{fig:ch4-routing}(c), where another path in yellow—from input 7 to output 3—shares a node marked with a red cross.
 While two signals can cross in a 2$\times$2 MZI in a photonic circuit, this generates first-order crosstalk, identified as conflict of type 2.
-\begin{figure}[t]
+\begin{figure}[h]
     \begin{center}
         \includegraphics[width=6.5in]{figures/ch4-routing.pdf}
     \end{center}
@@ -148,13 +152,13 @@ Only the 32x32 configuration remains with relatively good values below 10 dB.
     \small
     \begin{tabular}{lll}
         \hline
-        \textbf{Parameters}                & {Material}         & \textbf{Value}                                                                                   \\
+        \textbf{Parameters}                & {Material}           & \textbf{Value}                                                                                   \\
         \hline
-        Switching cell loss (thermo-optic) & Silicon            & 0.2 dB \cite{suzukiLargescaleSiliconPhotonics2025a, papadovasilakisCompactBroadbandLowloss2023a} \\
-        Crossing loss                      & Silicon Nitre (3D) & 0.002 dB \cite{sacherMonolithicallyIntegratedMultilayer2018}                                     \\
-        Edge coupler loss                  & Silicon            & 0.5 dB \cite{muEdgeCouplersSilicon2020}                                                          \\
-        Polarization component loss        & Silicon            & 0.4 dB \cite{leeExperimentalDemonstrationAdiabatic2024}                                          \\
-        Waveguide propagation loss         & Silicon            & 0.5 dB/cm \cite{luLowlossHighuniformitySilicon2025}                                              \\
+        Switching cell loss (thermo-optic) & Silicon              & 0.2 dB \cite{suzukiLargescaleSiliconPhotonics2025a, papadovasilakisCompactBroadbandLowloss2023a} \\
+        Crossing loss                      & Silicon Nitride (3D) & 0.002 dB \cite{sacherMonolithicallyIntegratedMultilayer2018}                                     \\
+        Edge coupler loss                  & Silicon              & 0.5 dB \cite{muEdgeCouplersSilicon2020}                                                          \\
+        Polarization component loss        & Silicon              & 0.4 dB \cite{leeExperimentalDemonstrationAdiabatic2024}                                          \\
+        Waveguide propagation loss         & Silicon              & 0.5 dB/cm \cite{luLowlossHighuniformitySilicon2025}                                              \\
         \hline
     \end{tabular}
 \end{table}
@@ -318,9 +322,9 @@ Overall, these results demonstrate that, under dynamic traffic conditions, the D
     }\label{fig:ch4-dynamic-exp}
 \end{figure}
 
-\section{Comparative analysis of architecture}\label{sec:architecture_comparison} % (fold)
+\section{Architecture comparative analysis}\label{sec:architecture_comparison} % (fold)
 Table~\ref{tab:ch4-summary-metrics} presents the overall comparison in terms of hardware complexity, optical performance, and blocking behavior for the networks considered.
-To assess the integration density of photonic components, an additional metric based on the total number of crossings and the corresponding die size is introduced, assuming footprints of 250$\times$100 $um^{2}$ and 25$\times$25 $um^{2}$ for the switching cell and the crossing cell, respectively.
+To assess the integration density of photonic components, an additional metric based on the total number of crossings and the corresponding die size is introduced, assuming footprints of 250$\times$100 $um^{2}$ for the switching cell and 25$\times$25 $um^{2}$ for the crossing cell, which are typical values reported in the literature from Table~\ref{tab:ch4-sota-bb}.
 Loss and SNR values correspond to the worst-case path and wavelength, using the component-level parameters reported in Table~\ref{tab:ch4-sota-bb}, while blocking is categorized as low, medium, or high relative to the other architectures.
 As shown, Benes-like networks offer reduced hardware utilization—even a high-radix 128$\times$128 switch can be integrated within a 20$\times$20 $mm^{2}$ die—together with relatively low optical loss.
 However, these architectures are RNB, and their blocking probability limits their applicability in scenarios where wide-sense or strictly non-blocking operation is required.
@@ -383,3 +387,12 @@ Therefore, the acceptable level of blocking depends on the application requireme
 This analysis assumes worst-case traffic scenarios, and thus the observed blocking rates can be viewed as an upper bound or a worst-case estimate.
 In practice, scheduling can mitigate collision, making moderate blocking probabilities tolerable~\cite{weintraub2025packetloss, lin2018deep}, indicating that RNB networks could still be practical in datacenter applications.
 Moreover, when blocking events occur due to shared switching cells, first-order crosstalk may be accepted to reduce blocking by sacrificing SNR. Likewise, depending on the application, rearranging could be applied to stablish the new connection while preserving second-order order crosstalk conditions.
+\section{Conclusion}\label{sec:ch4_conclusion}
+To conclude, we have presented a graph-based modelling methodology to analyze and benchmark application-specific silicon photonic switch architectures, addressing the scalability challenges toward high-radix optical circuit switching.
+We demonstrated feasible architectures capable of meeting the radix and performance requirements demanded by modern networking applications, while remaining compatible with current manufacturing capabilities.
+
+However, when deployed in a datacenter network, the radix of a single optical circuit switch is insufficient to satisfy the network connectivity requirements.
+Therefore, multiple switching devices must be interconnected.
+In this scenario, the coordination and management of multiple interconnected switches introduce complexity that cannot be addressed at the device level alone.
+Software-Defined Networking (SDN) becomes essentially within this context, enabling centralized control, dynamic reconfiguration, and efficient orchestration across the network of optical circuit switches.
+In the next chapter addresses this need by introducing a gNMI-based controller for silicon photonic switches, providing the standardized, model-driven management interface required to integrate these devices within an software defined network.
