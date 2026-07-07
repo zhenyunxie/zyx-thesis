@@ -184,7 +184,7 @@ In parallel, subwavelength gratings (SWG) crossings employ metamaterial engineer
 
 \section{Photonics mesh architectures}\label{sec:mesh_architectures}
 By leveraging the interconnectivity of the fundamental building blocks detailed in section~\ref{sec:functional_blocks}, a wide variety of photonic mesh architectures can be synthesized to achieve complex and high-dimensional optical functions.
-These topologies are primarily categorized based on their signal flow characteristics into two classes: feedforward meshes, which maintain a unidirectional light path for linear transformations and switching ~\cite{reck1994experimental, miller2013self}; and recirculating (or circular) meshes, which incorporate feedback loops to enable resource reuse and spectral filtering \cite{zhuang2015programmable, perez2017multipurpose, perez2019integrated}.
+These topologies are primarily categorized based on their signal flow characteristics into two classes: feedforward meshes, which maintain a unidirectional light path for linear transformations and switching ~\cite{reck1994experimental, miller2013self}; and recirculating meshes, which incorporate feedback loops to enable resource reuse and spectral filtering \cite{zhuang2015programmable, perez2017multipurpose, perez2019integrated}.
 This section explores the structural properties, and operational principles of these mesh geometries, which form the physical foundation of software-defined photonic systems.
 
 \subsection{Feedforward mesh}\label{sub:feedforward} % (fold)
@@ -207,7 +207,7 @@ By interconnecting PUCs in a closed-loop grid, the hardware becomes a flexible p
 
 The defining characteristic of these meshes is their ability to synthesize a wide array of optical circuits on-demand.
 By dynamically configuring each PUC into one of three primary states—bar, cross, or tunable (see Fig~\ref{fig:ch2-puc}(c))—the user can effectively configure specific sub-circuits within the physical hardware, such as recursive filters (FIR/IIR) and tunable delay lines \cite{perez2018programmable}.
-While these meshes are theoretically general-propose and capable of emulating any feedforward topology, doing so requires a higher density of PUCs to manage the internal routing necessary to mimic unidirectional flow.
+While these meshes are theoretically general-purpose and capable of emulating any feedforward topology, doing so requires a higher density of PUCs to manage the internal routing necessary to achieve unidirectional flow.
 \begin{figure}[ht]
       \begin{center}
             \includegraphics{figures/ch2-recir-mesh.pdf}

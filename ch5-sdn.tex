@@ -24,19 +24,19 @@
     xrightmargin=5pt,
 }
 \chapter[Software Defined Network for Integrated Photonic Switch]{
-    Software Defined Network for Integrated Photonic Switch\blankfootnote{
-        A significant portion of this chapter has been previously published in Z. Xie, L.  Ginés-Rivas, C. Pascual-Izarra, and D. Pérez-López, ``Experimental Demonstration of gNMI-controlled Silicon Photonic Optical Circuits Switching for Software-Defined Networks,'' \textit{European Conference on Integrated Optics}, 2026.
-        This chapter is presented here with permission and has been adapted to fit within the broader context of this dissertation.
-    }
-}\label{chap:sdn_for_ocs} % (fold)
+  Software Defined Network for Integrated Photonic Switch\blankfootnote{
+      A significant portion of this chapter has been previously published in Z. Xie, L.  Ginés-Rivas, C. Pascual-Izarra, and D. Pérez-López, ``Experimental Demonstration of gNMI-controlled Silicon Photonic Optical Circuits Switching for Software-Defined Networks,'' \textit{European Conference on Integrated Optics}, 2026.
+      This chapter is presented here with permission and has been adapted to fit within the broader context of this dissertation.
+  }
+ }\label{chap:sdn_for_ocs} % (fold)
 % Motivation of this chapter
 Optical circuit switching has emerged as a promising approach for data center interconnects due to its ability to provide communication with high bandwidth, low latency, and low power consumption.
 In the previous chapter, several silicon photonics optical circuit switch architectures were analyzed, highlighting their trade-offs in terms of hardware complexity, optical performance, and blocking characteristics.
-Chapter~\ref{chap:applications_on_pip} also introduced a control mechanism based on graph theory methods for managing the large number of switching elements within device.
+Chapter~\ref{chap:applications_on_pip} also introduced a control mechanism based on graph theory methods for managing the large number of switching elements within the device.
 However, when the network scale increases, flexible management becomes necessary, and manual configuration or device-specific control approaches become impractical.
 A unified and programmable control framework is therefore needed to support dynamic network management and reconfiguration.
 As discussed in Section~\ref{sec:sdn}, Software Defined Networking enables programmable control of network resources by decoupling the control plane from the data plane.
-Applied to optical circuit switching, SDN enables a centralized orchestrators, which dynamically configure the switching fabric and adapt the physical network topology to changing traffic demands and application workloads.
+Applied to optical circuit switching, SDN enables a centralized orchestrator, which dynamically configure the switching fabric and adapt the physical network topology to changing traffic demands and application workloads.
 
 % Objective of this chapter
 In this chapter, we introduce an SDN-based control architecture for silicon photonic OCS.
