@@ -185,9 +185,6 @@ The logical connectivity of the experimental setup is illustrated in Figure~\ref
 
 \subsection{Results}
 To demonstrate the flexibility of the custom YANG model and the efficiency of gNMI-based control, two distinct 32$\times$32 connection matrices-an identity matrix and a reversal matrix—were configured using the bulk connection type.
-Listing~\ref{lst:gnmic_bulk_set} shows an example \texttt{gNMIc} \texttt{SET} command used to configure the identity switching matrix.
-In this configuration, each input port is mapped directly to the corresponding output port.
-For readability, only the first few and last elements of the port lists are shown.
 % The command SET
 \begin{lstlisting}[language=bash, caption={Example gNMIc SET command for configuring a 32$\times$32 switch matrix using bulk connection.}, label={lst:gnmic_bulk_set}]
 gnmic set --update-path "swtchd:/swtchd/connections/connection[uid='bulk_uid']" --encoding json_ietf --update-value 
@@ -197,6 +194,9 @@ gnmic set --update-path "swtchd:/swtchd/connections/connection[uid='bulk_uid']" 
         "uid": "bulk_uid", "type": "bulk"
     }'
 \end{lstlisting}
+Listing~\ref{lst:gnmic_bulk_set} shows an example \texttt{gNMIc} \texttt{SET} command used to configure the identity switching matrix.
+In this configuration, each input port is mapped directly to the corresponding output port.
+For readability, only the first few and last elements of the port lists are shown.
 
 This approach allows the SDN controller to establish the entire 32-port interconnection within a single gNMI transaction, significantly reducing the control plane signaling overhead compared to individual port-pairing commands.
 After sending the configuration command, the controller retrieves the device state using a \texttt{gNMI} \texttt{GET} request to verify that the connection matrix has been correctly set in the switching fabric.
