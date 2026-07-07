@@ -291,15 +291,15 @@ By incorporating these elements into the graph with appropriate weights, the rou
       }\label{fig:ch2-benes-graph}
 \end{figure}
 \subsection{Recirculating mesh graph}\label{sub:circulargraph} % (fold)
-One of the main challenges in graph representation of recirculating mesh is the feedback loops in the circuit.
+One of the main challenges in graph representation of recirculating mesh is caused by the feedback loops in the circuit.
 Unlike in feedforward meshes, where the signal propagation direction is uniquely defined, each port of a PUC in a recirculating mesh can function as either an input or an output depending on the signal path.
 As a result, a conventional graph model may permit physically invalid paths, such as reversal of propagation direction or the simultaneous selection of incompatible coupling states within the same PUC.
 
-The limitation further happens in graph routing algorithms.
+The limitation further extends to graph routing algorithms.
 In standard shortest path methods such as Dijkstra’s algorithm, nodes are typically marked as visited and are not revisited during the search process~\cite{chen2020graph}.
 While this assumption is valid for acyclic or strictly feedforward graphs, it may incorrectly eliminate feasible solutions in the presence of recirculating paths, where revisiting a node under different propagation conditions can be physically meaningful to explore alternative propagation paths and reach additional ports.
 
-To address this issue, we chose the directed graph with eight artificial nodes for our model \cite{chen2020graph}, where each port of a PUC is represented with two artificial nodes, corresponding to the inbound and outbound directions of signal propagation.
+To address this issue, we adopt a directed graph representation in which each PUC is modeled using eight artificial nodes~\cite{chen2020graph}, where each port of a PUC is represented with two artificial nodes, corresponding to the inbound and outbound directions of signal propagation.
 Directed edges are then used to represent phase shifters, which connect between inbound and outbound nodes.
 This construction explicitly encodes signal directionality and PUC state compatibility, ensuring that all paths in the graph correspond to physically valid propagations while remaining compatible with standard graph traversal algorithms.
 Figure~\ref{fig:ch2-hexagonal-graph} shows the graph representation of the hexagonal recirculating mesh in Fig.~\ref{fig:ch2-recirculating-topologies}(c).

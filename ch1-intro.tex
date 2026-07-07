@@ -132,9 +132,9 @@ Taken together, these characteristics make PIP a promising platform for scalable
 Despite the advantages of silicon photonics for optical circuit switching, deployment of large scale SiPh based switching fabric in hyperscale AI networks still faces complexity that has not yet been fully addressed.
 
 % software defined control mechanism for programmable photonic circuit.
-AI training workloads follow several traffic patterns between computing nodes, which requires the precise coordination of thousands of integrated actuators to real time reconfiguration of photonic circuit processor \cite{bogaerts2020programmable}.
+AI training workloads follow several traffic patterns between computing nodes, which require the precise coordination of thousands of integrated actuators to real time reconfiguration of the photonic circuit processor \cite{bogaerts2020programmable}.
 Performing such on chip reconfiguration in PIP through the traditional one-by-one sequential tuning of actuators can introduce significant delay, making it operationally impractical for large switching fabrics and potentially disrupting cluster scheduling and training efficiency.
-In this regard, auto-routing algorithms have been explored to develop point-to-point optical interconnects in a programmable photonic circuit, with fault tolerant and self-healing capabilities but applied in a small scale circuit of a few actuators \cite{lopez2020auto}.
+In this regard, auto-routing algorithms with fault-tolerant and self-healing capabilities have been explored to develop point-to-point optical interconnects in a programmable photonic circuit, but their application has so far been limited to small-scale circuits with a few actuators~\cite{lopez2020auto}.
 More recently, a novel N$\times$N automated switching algorithm has also been reported theoretically, but experimental validation is still lacking \cite{vanden2023automated}.
 Therefore, there remains room to improve interconnect algorithms in PIP, particularly in efficiently identifying paths in large scale circuits and in supporting more complex communication patterns, while their effectiveness on hardware remains to be validated.
 
@@ -142,7 +142,8 @@ Therefore, there remains room to improve interconnect algorithms in PIP, particu
 Although small scale SiPh switches have been proven, scaling these systems to meet industrial demands introduces fundamental challenges that necessitate new research \cite{tanizawa2015ultra, suzukiUltracompact882014, tanizawa2016ultra, suzuki2025band}.
 The high radix scaling and architecture design present significant difficulties.
 Supporting modern clusters may require switches with 128$\times$128, 256$\times$256 or even higher ports, involving tens of thousands of integrated actuators on a single chip \cite{patronas2024optical, perez2025large}.
-At this density, cumulative insertion loss and crosstalk become substantial, and conventional circuit topologies are insufficient, designing these systems demands a careful balance between port count, signal integrity, physical footprint, etc,.
+At this density, cumulative insertion loss and crosstalk become substantial, and conventional circuit topologies are insufficient.
+Designing these systems demands a careful balance between port count, signal integrity, physical footprint, etc.
 
 % system level integration.
 Moreover, a major gap exists in system level Software-Defined Networking (SDN) integration.
