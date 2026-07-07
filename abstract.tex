@@ -13,17 +13,17 @@ Programmable integrated photonics (PIP) further extends this capability by enabl
 Such reconfigurability makes PIP particularly attractive for optical networking applications.
 Among these applications, optical switching has attracted particular interest because it enables direct optical connectivity in both scale-up and scale-out network architectures, while avoiding optical–electrical–optical conversions.
 
-However, as datacenter network scale continues to grow, several challenges remain, including developing efficient programmability of PIP to support real-time reconfiguration of different switching configurations;
+However, as datacenter network scale continues to grow, several challenges remain, including developing efficient programmability of PIP to support real-time reconfiguration of different switching functionalities;
 designing scalable PIP hardware architectures that can support large switching radix; and enabling practical deployment of such systems within network environments.
 
 To address these challenges, we introduce graph theory to abstract the PIP hardware as a weighted graph.
-This abstraction provides a mathematical representation that enables the development of routing algorithm for circuit-level control, facilitates the integration of PIP hardware with software-defined network frameworks,
-and supports analytical modeling for hardware architecture engineering.
+This abstraction provides a mathematical representation that enables the development of routing algorithms for circuit-level control, facilitates the integration of PIP hardware with software-defined network frameworks,
+and supports analytical modeling for hardware architecture design.
 
 We first implement routing algorithms on a graph based general-purpose PIP model to support optical interconnects, multicasting, and circuit switching, demonstrating that diverse optical circuits can be automatically reconfigured on a single platform without manual intervention.
 To address the challenge of scaling high radix switching fabrics on PIP hardware, the graph based methodology is extended to model and benchmark different topologies and routing strategies,
-The model incorporates physical layer metrics such as insertion loss, crosstalk, and signal-to-noise ratio allows quantitative evaluation of design trade-offs and provide practical guidance for hardware design.
-Finally, based on circuit-level control, a software-defined control plane using model driven interfaces and gNMI is implemented to enable southbound communication, aligning Layer-1 optical resources with the SDN framework.
+The model incorporates physical layer metrics such as insertion loss, crosstalk, and signal-to-noise ratio, enabling quantitative evaluation of design trade-offs and providing practical guidance for hardware design.
+Finally, building on this circuit-level control, a software-defined control plane using model driven interfaces and gNMI is implemented to enable southbound communication, aligning Layer-1 optical resources with the SDN framework.
 
 This work demonstrates that a graph based methodology enables automated programming and design optimization for programmable integrated photonic switching, while the developed software-defined control plane extends these capabilities to network-level integration and orchestration.
 Together, these contributions establish a scalable foundation for integrating photonic circuit switching into AI-driven networking systems, supporting flexible, high performance, and manageable optical interconnects.

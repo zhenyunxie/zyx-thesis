@@ -23,8 +23,12 @@
     xleftmargin=5pt,
     xrightmargin=5pt,
 }
-
-\chapter{Software Defined Network for Integrated Photonic Switch}\label{chap:sdn_for_ocs} % (fold)
+\chapter[Software Defined Network for Integrated Photonic Switch]{
+    Software Defined Network for Integrated Photonic Switch\blankfootnote{
+        A significant portion of this chapter has been previously published in Z. Xie, L.  Ginés-Rivas, C. Pascual-Izarra, and D. Pérez-López, ``Experimental Demonstration of gNMI-controlled Silicon Photonic Optical Circuits Switching for Software-Defined Networks,'' \textit{European Conference on Integrated Optics}, 2026.
+        This chapter is presented here with permission and has been adapted to fit within the broader context of this dissertation.
+    }
+}\label{chap:sdn_for_ocs} % (fold)
 % Motivation of this chapter
 Optical circuit switching has emerged as a promising approach for data center interconnects due to its ability to provide communication with high bandwidth, low latency, and low power consumption.
 In the previous chapter, several silicon photonics optical circuit switch architectures were analyzed, highlighting their trade-offs in terms of hardware complexity, optical performance, and blocking characteristics.
@@ -286,3 +290,10 @@ At t≈28~s (indicated by the red dashed line), a subsequent \textit{SET} reques
 
 The successful capture of these transient events with a 100~ms resolution demonstrates that the proposed gNMI controller is capable of providing accurate, low-latency feedback of the hardware state.
 This monitoring capability is essential for fault detection and performance optimization in dynamic data center environments.
+
+\section{Conclusion}\label{sec:ch5_conclusion} % (fold)
+In this chapter, we have presented an SDN-based control architecture for silicon photonic optical circuit switches, comprising a custom YANG data model for hardware abstraction and a gNMI-based controller for programmable configuration and real-time telemetry.
+Experimental validation confirmed reliable connection establishment and monitoring of the optical power state, demonstrating the feasibility of standardized, model-driven management for silicon photonic OCS devices.
+
+Together with the graph-based scalability analysis presented in Chapter~\ref{chap:ocs_archs}, this SDN control framework completes the software stack required to operate silicon photonic optical circuit switches, from device level modelling to network level orchestration.
+The following chapter discusses the broader implications of these results, examines the practical limitations of programmable integrated photonics at scale, and outlines directions for future research toward ultra large radix switching fabrics.

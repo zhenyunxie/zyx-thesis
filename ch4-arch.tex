@@ -1,8 +1,12 @@
 % Author: Zhenyun Xie
-
-\chapter{Scalability Analysis of Silicon Photonic Optical Circuit Switch Architectures}\label{chap:ocs_archs} % (fold)
+\chapter[Scalability Analysis of Silicon Photonic OCS Architectures]{
+    Scalability Analysis of Silicon Photonic Optical Circuit Switch Architectures\blankfootnote{
+        A significant portion of this chapter has been previously published in L. Torrijos-Morán, Z. Xie, C. Bixquert-Marrades, I. Belio-Apaolaza, and D. Pérez-López, ``Scalability Analysis of Silicon Photonics Optical Circuit Switch Architectures,'' \textit{Journal of Lightwave Technology}, 2026, doi: 10.1109/JLT.2026.3705998.
+        This chapter is presented here with permission and has been adapted to fit within the broader context of this dissertation.
+    }
+}\label{chap:ocs_archs} % (fold)
 % Motivation of this chapter
-In the previous chapter, optical networking functionalities were demonstrated on a rpose integrated photonic processor based on a hexagonal mesh topology.
+In the previous chapter, optical networking functionalities were demonstrated on a general-purpose photonic processor based on a hexagonal mesh topology.
 By properly configuring the PUCs, various optical circuits, including optical interconnects, multicasting, and circuit switching, were implemented within a single reconfigurable platform.
 However, the scalability of this approach becomes limited when implementing large-scale optical circuit switches.
 As the switch radix increases, the number of required programmable elements grows significantly, leading to increased hardware complexity, accumulated optical loss, and higher control overhead.
@@ -11,7 +15,7 @@ These factors make it challenging to efficiently realize high-radix switching fa
 % Objective of this chapter
 In this chapter, we propose the use of graphs to model OCS in silicon photonics, enabling routing analysis, blocking simulation, hardware complexity extraction and optical performance.
 We analyze and benchmark multiple architectures in terms of optical loss, signal-to-noise ratio (SNR), and hardware complexity, comparing them with state-of-the-art silicon photonics integration capabilities to extrapolate feasible scenarios in the near to mid-term \cite{perez2025large, giewont300mmMonolithicSilicon2019}.
-The overall goal of this paper is to provide a comprehensive benchmark among alternative circuit architectures for high-radix silicon photonics OCS that meet the performance requirements of modern networking applications.
+The overall goal of this chapter is to provide a comprehensive benchmark among alternative circuit architectures for high-radix silicon photonics OCS that meet the performance requirements of modern networking applications.
 \section{Graph-based modelling of integrated photonic switches}\label{sec:graph_modelling} % (fold)
 Integrated photonic switches consist of arrangements of basic tunable switching cells, where an input array of signals can be spatially or spectrally routed to an array of optical outputs.
 To study their properties, integrated photonic circuits can be modeled based on the graph layer that presented previous chapter~\ref{chap:fundamentals}.
@@ -383,3 +387,12 @@ Therefore, the acceptable level of blocking depends on the application requireme
 This analysis assumes worst-case traffic scenarios, and thus the observed blocking rates can be viewed as an upper bound or a worst-case estimate.
 In practice, scheduling can mitigate collision, making moderate blocking probabilities tolerable~\cite{weintraub2025packetloss, lin2018deep}, indicating that RNB networks could still be practical in datacenter applications.
 Moreover, when blocking events occur due to shared switching cells, first-order crosstalk may be accepted to reduce blocking by sacrificing SNR. Likewise, depending on the application, rearranging could be applied to stablish the new connection while preserving second-order order crosstalk conditions.
+\section{Conclusion}\label{sec:ch4_conclusion}
+To conclude, we have presented a graph-based modelling methodology to analyze and benchmark application-specific silicon photonic switch architectures, addressing the scalability challenges toward high-radix optical circuit switching.
+We demonstrated feasible architectures capable of meeting the radix and performance requirements demanded by modern networking applications, while remaining compatible with current manufacturing capabilities.
+
+However, when deployed in a datacenter network, the radix of a single optical circuit switch is insufficient to satisfy the network connectivity requirements.
+Therefore, multiple switching devices must be interconnected.
+In this scenario, the coordination and management of multiple interconnected switches introduce complexity that cannot be addressed at the device level alone.
+Software-Defined Networking (SDN) becomes essentially within this context, enabling centralized control, dynamic reconfiguration, and efficient orchestration across the network of optical circuit switches.
+In the next chapter addresses this need by introducing a gNMI-based controller for silicon photonic switches, providing the standardized, model-driven management interface required to integrate these devices within an software defined network.
