@@ -36,25 +36,25 @@ Chapter~\ref{chap:applications_on_pip} also introduced a control mechanism based
 However, when the network scale increases, flexible management becomes necessary, and manual configuration or device-specific control approaches become impractical.
 A unified and programmable control framework is therefore needed to support dynamic network management and reconfiguration.
 As discussed in Section~\ref{sec:sdn}, SDN enables programmable control of network resources by decoupling the control plane from the data plane.
-Applied to optical circuit switching, SDN enables a centralized orchestrator, which dynamically configure the switching fabric and adapt the physical network topology to changing traffic demands and application workloads.
+Applied to optical circuit switching, SDN enables a centralized orchestrator, which dynamically configure the switching fabric and adapts the physical network topology to changing traffic demands and application workloads.
 
 % Objective of this chapter
 In this chapter, we introduce an SDN-based control architecture for silicon photonic OCS.
 A custom YANG data model is designed to represent the switching resources and connection configurations of the OCS device.
 Based on this model, a controller using the gNMI protocol is implemented to provide programmable and efficient control of the switching fabric within an SDN framework.
 We further present experimental results demonstrating the complete gNMI-controlled operational workflow.
-\section{Custom Yang Model}\label{sec:yang} % (fold)
+\section{Custom Yang model}\label{sec:yang} % (fold)
 In SDN architectures, device configuration and state management are typically realized through standardized data models.
 Among them, YANG has become a widely adopted modeling language for representing network device capabilities and operational states, enabling programmable control via protocols such as gNMI \cite{rfc7950}.
-However, while YANG models have been extensively developed for EPS and optical transport equipments, a unified data model for OCS has not yet been established \cite{anazawa2025experimental}.
+However, while YANG models have been extensively developed for EPS and optical transport equipment, a unified data model for OCS has not yet been established \cite{anazawa2025experimental}.
 In particular, YANG models specifically designed for silicon photonic switching systems have not been previously proposed.
 
-As discussed in the Chapter~\ref{sec:toc}, silicon photonic OCS devices differ from other optical switching tech platforms.
+As discussed in the Section~\ref{sec:toc}, silicon photonic OCS devices differ from other optical switching technology platforms.
 Figure~\ref{fig:ch5-ocs-tech} illustrates the SiPh OCS technology stack, which consists of multiple functional layers.
 At the bottom layer, the programmable silicon photonic subassembly comprises a polarization controller, a monitoring array for optical power per set channels, a switching core to handle optical interconnection routing.
 A semiconductor optical amplifier (SOA) array subsystem is integrated to provide necessary power to compensate the insertion losses of each channel \cite{stabile2017towards}.
 The electronic layer exposes device control and monitoring capabilities to the software layer, which communicates with the centralized SDN controller through a northbound interface.
-As showcase in the system architecture, multiple OCS devices can be managed simultaneously by a centralized SDN controller via southbound interfaces, enabling topology reconfiguration across the switching fabric.
+As shown in the system architecture, multiple OCS devices can be managed simultaneously by a centralized SDN controller via southbound interfaces, enabling topology reconfiguration across the switching fabric.
 
 \begin{figure}[h]
     \begin{center}
@@ -113,7 +113,7 @@ module: swtchd
 To support programmable control of the silicon photonic OCS, we designed a custom YANG data model that abstracts the device resources and operational states, see Figure~\ref{fig:yang_tree}.
 For hardware abstraction, the model defines a \textit{ports} list where each port is identified by a \textit{port-id} and characterized by attributes such as \textit{type} and \textit{number}.
 To support telemetry, each port includes a read-only \textit{power} node that reports optical power measurements together with a \textit{timestamp}, allowing the controller to monitor the optical power.
-A unique feature of our system, not present in other OCSs is the SOA, which is controlled from the \textit{SOA} container node in the data model.
+A unique feature of our system, not present in other OCSs, is the SOA, which is controlled from the \textit{SOA} container node in the data model.
 Each SOA entry is associated with a \textit{port} identifier and provides read-only telemetry nodes for input and output optical power.
 In addition, a configurable \textit{setting} allows the controller to configure the gain \textit{mode} and \textit{value}, which enables the SDN controller to maintain a stable power budget across different optical paths.
 The model includes a \textit{pca} node for polarization controller adjustments.
@@ -121,8 +121,8 @@ Connection management is implemented through the \textit{connections} node.
 Each interconnection is identified by a unique \textit{uid}.
 Unlike other models that may rely on unidirectional port-pairing, our model supports three different connection types for different traffic scenarios.
 The \textit{simplex} type provides a standard one-to-one mapping, while the \textit{duplex} type allows for the simultaneous management of bidirectional port pairs (e.g., In1 -> Out2 and In2 -> Out1) under a single uid.
-Notably, we introduce a \textit{bulk} connection type, which enables the multiple input and output port groups (e.g., In1,2,3 to Out2,3,5) within a single uid.
-This bulk operation is advantageous for AI workload, as it reduces the control plane overhead and the number of transactions required to establish links.
+Notably, we introduce a \textit{bulk} connection type, which enables the multiple input and output port groups (e.g., In1,2,3 to Out2,3,5) to be connected within a single uid.
+This bulk operation is advantageous for AI workloads, as it reduces the control plane overhead and the number of transactions required to establish links.
 
 \section{gNMI operation flow}\label{sec:gnmi_operation_flow} % (fold)
 In this OCS system, we adopt a solution based on the OpenConfig gNMI framework to perform device control and state monitoring.
@@ -151,8 +151,8 @@ As discussed in Section~\ref{sub:models_and_protocol} of Chapter~\ref{chap:funda
 In the OCS control system presented here, we use the \texttt{SAMPLE} mode to periodically monitor optical power levels of the switching ports.
 To initiate monitoring, the SDN controller sends a \textit{Subscribe} request to the gNMI server, specifying the data nodes associated with the optical power metric of the output ports.
 After receiving the request, the gNMI server establishes the subscription session and returns a \textit{Subscription OK} message to confirm that the telemetry stream has been successfully created.
-As illustrated in Figure~\ref{fig:ch5-gnmi-flow}(right side), a dedicated subscription thread is created within the gNMI server to manage the telemetry process.
-This thread periodically retrieves the relevant data from the datastore, and at each sampling interval, the server sends a \textit{subscription update message} message containing the latest optical power values and associated timestamps to the SDN controller.
+As illustrated in Figure~\ref{fig:ch5-gnmi-flow} (right side), a dedicated subscription thread is created within the gNMI server to manage the telemetry process.
+This thread periodically retrieves the relevant data from the datastore, and at each sampling interval, the server sends a \textit{subscription update message} containing the latest optical power values and associated timestamps to the SDN controller.
 This mechanism enables the controller to track the optical signal conditions of the OCS ports in near real time while maintaining low control-plane overhead.
 The controller can also cancel or modify the subscription by sending a SET request to update the subscription parameters or terminate the monitoring.
 
@@ -173,7 +173,7 @@ Figure~\ref{fig:ch5-exp-setup}(a) illustrates the experimental platform used to 
     }\label{fig:ch5-exp-setup}
 \end{figure}
 The setup consists of a 32$\times$32 integrated photonic switch, two 1$\times$32 MEMS optical switches, a variable optical attenuator (VOA), a 400\,G local area network wavelength division multiplexing (LWDM) optical transceiver, a bit error rate (BER) tester, and a controller running gNMIc command-line interface (CLI) client and component control software.
-At the center of the setup is the 32$\times$32 silicon photonic OCS, which provides 32 input ports and 32 output ports that can be dynamically interconnected under the control of the gNMIc \cite{openconfig_gnmic}.
+At the center of the setup is the 32$\times$32 silicon photonic OCS, which provides 32 input ports and 32 output ports that can be dynamically interconnected under the control of gNMIc \cite{openconfig_gnmic}.
 Two external 1$\times$32 optical switches are used to selectively connect optical signals to different input and output ports of the OCS.
 This configuration enables automated testing of multiple switching paths without manual fiber reconnection.
 A VOA is inserted in the optical path to control the received optical power and ensure that it remains within the dynamic range of the transceiver receiver.
@@ -234,7 +234,7 @@ A simplified example of the returned output is shown in Listing~\ref{lst:gnmic_g
   }
 ]
 \end{lstlisting}
-Note, the \texttt{value} field represents the measured optical power in milliwatts (mW).
+Note that the \texttt{value} field represents the measured optical power in milliwatts (mW).
 
 Based on the above procedure, we measured the optical power at all output ports for the two configured switch matrices.
 The optical power distribution for these two configurations is illustrated in Figure~\ref{fig:ch5-set-get-ber}(a) and (b).
@@ -281,12 +281,12 @@ Figure~\ref{fig:ch5-subscribe} illustrates the normalized optical power recorded
         At 28 seconds, a drop request is executed, marked by the red dashed line.
     }\label{fig:ch5-subscribe}
 \end{figure}
-Initially, from t=0 to t≈6~s, no connection is established to Port 32, and the measured power remains at the noise floor of approximately -58 dB, which is generated by the power-monitoring photodiode
-At t≈6~s (indicated by the green dashed line), the SDN controller issues a gNMI \textit{SET} request to establish a simplex connection from Input 1 to Output 32.
+Initially, from $t=0$ to $t\approx6$~s, no connection is established to Port 32, and the measured power remains at the noise floor of approximately -58 dB, which is generated by the power-monitoring photodiode.
+At $t\approx6$~s (indicated by the green dashed line), the SDN controller issues a gNMI \textit{SET} request to establish a simplex connection from Input 1 to Output 32.
 The configuration update is written to the datastore, from which the telemetry sampling thread retrieves the current value.
-As shown in the figure, the sampled power rises to approximately 0~dB, confirming that the switching fabric has successfully routed the optical signal and the internal consistency of the gNMI server's architecture.
-During the established state (t≈6 to 28~s), the power level remains stable with minimal fluctuations.
-At t≈28~s (indicated by the red dashed line), a subsequent \textit{SET} request is sent to drop the connection, resulting in a return to the idle power level.
+As shown in the figure, the sampled power rises to approximately 0~dB, confirming that the switching fabric has successfully routed the optical signal and verifying the internal consistency of the gNMI server's architecture.
+During the established state ($t\approx6$ to 28~s), the power level remains stable with minimal fluctuations.
+At $t\approx28$~s (indicated by the red dashed line), a subsequent \textit{SET} request is sent to drop the connection, resulting in a return to the idle power level.
 
 The successful capture of these transient events with a 100~ms resolution demonstrates that the proposed gNMI controller is capable of providing accurate, low-latency feedback of the hardware state.
 This monitoring capability is essential for fault detection and performance optimization in dynamic data center environments.
