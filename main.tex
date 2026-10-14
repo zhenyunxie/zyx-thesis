@@ -60,6 +60,12 @@
   \endgroup
 }
 
+\makeatletter
+\AddToHook{cmd/@makecaption/before}{\footnotesize}            % 图注字号
+\renewcommand{\fnum@figure}{\textbf{\figurename~\thefigure}}  % "Figure x.x" 加粗
+\renewcommand{\fnum@table}{\textbf{\tablename~\thetable}}     % "Table x.x" 加粗
+\makeatother
+
 \begin{document}
 
 %%% edit the following commands to match your thesis %%%%%%%%%%
