@@ -23,8 +23,8 @@
     xleftmargin=5pt,
     xrightmargin=5pt,
 }
-\chapter[Software Defined Network for Integrated Photonic Switch]{
-  Software Defined Network for Integrated Photonic Switch\blankfootnote{
+\chapter[Software-Defined Network for Integrated Photonic Switch]{
+  Software-Defined Network for Integrated Photonic Switch\blankfootnote{
       A significant portion of this chapter has been previously published in Z. Xie, L.  Ginés-Rivas, C. Pascual-Izarra, and D. Pérez-López, ``Experimental Demonstration of gNMI-controlled Silicon Photonic Optical Circuits Switching for Software-Defined Networks,'' \textit{European Conference on Integrated Optics}, 2026.
       This chapter is presented here with permission and has been adapted to fit within the broader context of this dissertation.
   }
@@ -35,7 +35,7 @@ In the previous chapter, several silicon photonics optical circuit switch archit
 Chapter~\ref{chap:applications_on_pip} also introduced a control mechanism based on graph theory methods for managing the large number of switching elements within the device.
 However, when the network scale increases, flexible management becomes necessary, and manual configuration or device-specific control approaches become impractical.
 A unified and programmable control framework is therefore needed to support dynamic network management and reconfiguration.
-As discussed in Section~\ref{sec:sdn}, Software Defined Networking enables programmable control of network resources by decoupling the control plane from the data plane.
+As discussed in Section~\ref{sec:sdn}, SDN enables programmable control of network resources by decoupling the control plane from the data plane.
 Applied to optical circuit switching, SDN enables a centralized orchestrator, which dynamically configure the switching fabric and adapt the physical network topology to changing traffic demands and application workloads.
 
 % Objective of this chapter
@@ -52,7 +52,7 @@ In particular, YANG models specifically designed for silicon photonic switching 
 As discussed in the Chapter~\ref{sec:toc}, silicon photonic OCS devices differ from other optical switching tech platforms.
 Figure~\ref{fig:ch5-ocs-tech} illustrates the SiPh OCS technology stack, which consists of multiple functional layers.
 At the bottom layer, the programmable silicon photonic subassembly comprises a polarization controller, a monitoring array for optical power per set channels, a switching core to handle optical interconnection routing.
-A Semiconductor Optical Amplifier (SOA) array subsystem is integrated to provide necessary power to compensate the insertion losses of each channel \cite{stabile2017towards}.
+A semiconductor optical amplifier (SOA) array subsystem is integrated to provide necessary power to compensate the insertion losses of each channel \cite{stabile2017towards}.
 The electronic layer exposes device control and monitoring capabilities to the software layer, which communicates with the centralized SDN controller through a northbound interface.
 As showcase in the system architecture, multiple OCS devices can be managed simultaneously by a centralized SDN controller via southbound interfaces, enabling topology reconfiguration across the switching fabric.
 
@@ -172,7 +172,7 @@ Figure~\ref{fig:ch5-exp-setup}(a) illustrates the experimental platform used to 
         (b) Logical connectivity between the devices.
     }\label{fig:ch5-exp-setup}
 \end{figure}
-The setup consists of a 32$\times$32 integrated photonic switch, two 1$\times$32 MEMS optical switches, a variable optical attenuator (VOA), a 400\,G LWDM optical transceiver, a bit-error-rate (BER) tester, and a controller running gNMIc CLI client and component control software.
+The setup consists of a 32$\times$32 integrated photonic switch, two 1$\times$32 MEMS optical switches, a variable optical attenuator (VOA), a 400\,G local area network wavelength division multiplexing (LWDM) optical transceiver, a bit error rate (BER) tester, and a controller running gNMIc command-line interface (CLI) client and component control software.
 At the center of the setup is the 32$\times$32 silicon photonic OCS, which provides 32 input ports and 32 output ports that can be dynamically interconnected under the control of the gNMIc \cite{openconfig_gnmic}.
 Two external 1$\times$32 optical switches are used to selectively connect optical signals to different input and output ports of the OCS.
 This configuration enables automated testing of multiple switching paths without manual fiber reconnection.
@@ -254,8 +254,8 @@ Conversely, the reversal matrix (Figure~\ref{fig:ch5-set-get-ber}(b)) demonstrat
 Our OCS yields a normalized signal power of approximately 0 dB for the connected ports, where the normalization is referenced to an input port power of 6.5 dBm, which is considerably above the background signal of -50 dB to -70 dB observed for the unconnected port combinations (off-diagonal).
 This confirms that the expected logic is implemented correctly with a high extinction ratio, as well as its lossless characteristic thanks to the SOA compensation.
 
-To further assess the impact of different routing paths on high-speed data transmission, we measured the Bit Error Rate (BER) for a 400G LWDM signal across all 32 output ports for both configurations.
-As shown in Figure~\ref{fig:ch5-set-get-ber}(c), the BER performance for both the identity and reversal matrices remains well below the pre Forward Error Correction (FEC) threshold of $2.4\times10^{-4}$, which is the commonly accepted standard target value in high speed optical communication systems \cite{ran2023module}.
+To further assess the impact of different routing paths on high-speed data transmission, we measured the BER for a 400G LWDM signal across all 32 output ports for both configurations.
+As shown in Figure~\ref{fig:ch5-set-get-ber}(c), the BER performance for both the identity and reversal matrices remains well below the pre-FEC threshold of $2.4\times10^{-4}$, which is the commonly accepted standard target value in high speed optical communication systems \cite{ran2023module}.
 The average BER across all measured paths is approximately $1.9\times10^{-5}$.
 While slight variations in BER are observed across different output ports, likely due to the non-uniform insertion loss of the SiPh switching stages and the manual fiber connection in the experimental setup, the consistency between the two topologies shows that the SDN controller can dynamically reconfigure the network without compromising link stability,
 and the ability to maintain BER within the $10^{-5}$ to $10^{-6}$ range while performing bulk reconfigurations.

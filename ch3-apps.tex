@@ -53,9 +53,9 @@ The algorithm allows the simultaneous identification of up to 400 possible paths
 % section multicast
 \section{Multicasting (1xN)}\label{sec:multicasting}
 Optical multi-casting allows for a single optical signal to be efficiently distributed across multiple receiving nodes or devices simultaneously.
-This is particularly advantageous in scenarios where the same data needs to be delivered to several destinations within a DC or set of clusters, simultaneously.
+This is particularly advantageous in scenarios where the same data needs to be delivered to several destinations within a datacenter or set of clusters, simultaneously.
 This functionality is unavailable in the physical layer of most networks.
-Even in modern MEMs-based optical switches, the optical signal reflects off the mirrors in a way that preserves its inherent unicast (point-to-point) nature.
+Even in modern MEMS-based optical switches, the optical signal reflects off the mirrors in a way that preserves its inherent unicast (point-to-point) nature.
 If deployed under the right software stack support, native multicasting has the potential to open the door to new, cost efficient, and disruptive applications.
 One added advantage brought in by PIP is the software-defined control of the splitting ratio across the outgoing signals powered by the fine tuning of driving phases applied to the PUCs.
 As a consequence of this, the operator can then control how much power is allocated to different receiving nodes in a dynamic manner.
@@ -175,7 +175,7 @@ Note that we could also employ the on-chip photodetectors and the closed feedbac
 \section{Switching (NxN)}\label{sec:switches}
 Optical circuit switching is a technology that allows the physical layer of an optical network to be configured through software instructions.
 When traffic patterns are predictable and deterministic, OCS allows for direct data routing and topology adjustments entirely within the optical domain.
-By eliminating the OEO conversion required by traditional EPS, OCS significantly reduces latency, power consumption, and operational costs for AI/ML workloads in modern data centers.
+By eliminating the O-E-O conversion required by traditional EPS, OCS significantly reduces latency, power consumption, and operational costs for AI and machine learning workloads in modern data centers.
 This section demonstrated the implementation of an on-chip software-defined switch designed for the dynamic control of optical waveguide paths for multiple input and output channels.
 The system is synthesized on the previously introduced hexagonal core and facilitates a 6x6 cross-connect matrix.
 To achieve automated reconfigurability for the full switch matrix, we have adapted three algorithms and implemented them in our software stack.

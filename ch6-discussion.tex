@@ -50,14 +50,14 @@ As the switching radix getting higher, these tolerances become even more stringe
 A potential approach to mitigate the accumulated losses in large scale switching fabrics is through the integration of an optical amplification system.
 SOAs are suitable candidates for this purpose, as we demonstrated in Chapter~\ref{chap:sdn_for_ocs}, where SOAs can provide effective optical gain to compensate the losses across all paths, especially in the O-band.
 However, introducing active components also brings additional system level considerations, as optical amplifiers may introduce noise and signal distortions that affect transmission quality \cite{ASSADIHAGHI2010158, lippiatt2024analysis}.
-Therefore, performance metrics such as SNR, bit-error ratio, and transmitter dispersion eye closure (TDECQ), need to be carefully evaluated to ensure reliable operation \cite{baney2000theory}.
+Therefore, performance metrics such as SNR, BER, and transmitter and dispersion eye closure quaternary (TDECQ) need to be carefully evaluated to ensure reliable operation \cite{baney2000theory}.
 Taken together, these factors indicate that insertion loss is not only determined by individual components, but emerges from the combined effects of device characteristics, circuit architecture, and system level integration.
 \subsubsection{Crosstalk} \label{subsec:crosstalk}
 % crosstalk is not uniform
 As covered in Chapter~\ref{chap:ocs_archs}, optical crosstalk becomes increasingly critical as the switching fabric scales.
 While the 64$\times$64 dilated Benes-like architecture can achieve signal-to-noise ratios exceeding 45~dB at the central wavelength, its performance degrades noticeably at wavelengths farther from the center.
 This degradation is primarily attributed to the wavelength-dependent behavior of the PUCs, where crosstalk increases significantly at the spectral edges \cite{li2024power}.
-Such behavior is particularly relevant for systems operating over wider wavelength ranges, such as FR4, where uniform performance across channels is required.
+Such behavior is particularly relevant for systems operating over wider wavelength ranges, such as 400G-FR4 transceivers that carry four coarse wavelength division multiplexing (CWDM) channels over 2 km, where uniform performance across channels is required.
 % coupling ratio deviation caused by fabrication
 Another factor affecting PUC crosstalk is the coupling ratio deviation caused by fabrication.
 For the CROSS state, crosstalk is highly sensitive to the absolute values of the coupling coefficients, whereas for the BAR state, it is mainly affected by mismatches between the two couplers within a PUC.
@@ -135,7 +135,7 @@ This limitation introduces additional risks for multi-vendor deployments and may
 
 Another key limitation of OCS lies in its reconfiguration speed.
 Unlike packet switching, which operates at nanosecond timescales, OCS relies on the establishment of end-to-end circuits.
-MEMs OCS technologies typically require millisecond-scale switching times, while silicon photonic implementations can reduce this to the microsecond \cite{CignalAI2025OCS4Q25}.
+MEMS OCS technologies typically require millisecond-scale switching times, while silicon photonic implementations can reduce this to the microsecond \cite{CignalAI2025OCS4Q25}.
 However, these reconfiguration times are still one or more orders of magnitude slower than electronic packet switching.
 This disparity is particularly relevant in data center environments.
 While OCS is well suited for high-capacity, long-lived elephant flows, it is less efficient for short-lived mice flows.
@@ -172,7 +172,7 @@ This thesis establishes a comprehensive framework for the design, modeling, and 
 At its core, this work introduces a graph modeling and programming methodology.
 A key finding is that the complexity of photonic integrated circuits, particularly those containing hundreds of interferometric elements, can be effectively abstracted into nodes and edges.
 This abstraction enables automated configurations by translating circuit synthesis requirements into hardware configuration states.
-The successful commercial release and public demonstration of iPronics Smartlight at OFC 2023 proved that diverse networking applications, including optical interconnects, multicasting, and circuit switching, can be seamlessly programmed and reconfigured on a single silicon processor~\cite{ipronics_smartlight}.
+The successful commercial release and public demonstration of iPronics Smartlight at Optical Fiber Communication Conference (OFC) 2023 proved that diverse networking applications, including optical interconnects, multicasting, and circuit switching, can be seamlessly programmed and reconfigured on a single silicon processor~\cite{ipronics_smartlight}.
 
 Extending this graph-based modeling approach, this thesis explores application-specific photonic circuits for OCS designs, recognizing that general-purpose topologies face inherent scalability limits in high-radix data center switching.
 Various topologies were modeled, deeply analyzed and benchmarked in terms of hardware complexity, insertion loss, signal-to-noise ratio, and blocking behavior.
@@ -182,7 +182,7 @@ Ultimately, dilated Benes-like architectures emerged as the most viable option f
 Furthermore, the routing analysis highlights how optimizing path selection and accepting strategic performance trade-offs can mitigate blocking behavior in practical deployments.
 
 Another primary conclusion of this work is that the real world deployment of photonic switches in data centers depends heavily on seamless integration with network orchestrators.
-To bridge the gap between photonic hardware and data center control planes, a software-defined network control framework was developed utilizing the gRPC network management interface and a custom YANG data model.
+To bridge the gap between photonic hardware and data center control planes, a software-defined network control framework was developed utilizing the gNMI and a custom YANG data model.
 Experimental validation demonstrated that complex internal switch operations can be abstracted into standardized interfaces.
 This research proves that silicon photonic OCS can operate as standard equipment within an SDN environment, supporting vital features like real time path configuration and telemetry.
 Additionally, the inclusion of specialized optical data nodes in the YANG model sets a new precedent for the standardization of photonic parameters.
