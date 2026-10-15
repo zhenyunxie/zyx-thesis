@@ -100,13 +100,6 @@ At the scale-out level, Google's Apollo system uses micro-electro-mechanical sys
 NVIDIA has also explored OCS for failure resilience and dynamic network rewiring \cite{patronas2024optical}.
 In scale-up architectures, OCS supports hardware disaggregation by connecting compute nodes to shared memory or storage pools through dedicated optical circuits, improving resource utilization \cite{8293994}.
 It has further been investigated for high bandwidth GPU interconnects beyond the limits of electrical links, extending direct, traffic-aware connections across larger physical domains \cite{addanki2025vermilion}.
-\begin{figure}[h]
-    \begin{center}
-        \includegraphics{figures/ch1-ocs-applications.pdf}
-    \end{center}
-    \caption{Optical circuit switch application in scale-out and scale-up networks.
-    }\label{fig:ch1-ocs-apps}
-\end{figure}
 
 % silicon photonic based programmable integrated photonic ocs
 Most current OCS deployments are based on free-space optical switching technologies, including MEMS mirrors, piezo-electric beam steering systems, and liquid-crystal-on-silicon (LCoS) devices \cite{lumentum_ocs, polatis7000, coherent_ocs}.
@@ -121,6 +114,14 @@ Beyond their high integration density, SiPh switching fabrics also provide signi
 Depending on the tuning mechanism, such as thermo-optic or electro-optic modulation, they typically achieve reconfiguration times ranging from microseconds to sub-milliseconds \cite{bogaerts2020programmable}.
 Unlike free-space optical switches, SiPh devices contain no mechanically moving parts, resulting in improved robustness, reduced wear out mechanisms, and enhanced long term operational stability.
 These characteristics make SiPh particularly well suited for optical circuit switching in environments requiring frequent and rapid network reconfiguration.
+
+\begin{figure}[h]
+    \begin{center}
+        \includegraphics{figures/ch1-ocs-applications.pdf}
+    \end{center}
+    \caption{Optical circuit switch application in scale-out and scale-up networks.
+    }\label{fig:ch1-ocs-apps}
+\end{figure}
 
 As discussed in section~\ref{sec:pip}, the reconfigurability offered by PIP naturally extends the advantages of SiPh to optical circuit switching.
 Through software defined optical path configuration, a single PIP chip can realize multiple switching matrices and dynamically adapt network connectivity based on traffic demands without hardware modifications.
@@ -156,7 +157,7 @@ Within this context, it is important to focus on approaches that allow OCS to be
 Considering the critical role of programmable integrated photonics in scaling AI data center interconnects, this thesis develops a comprehensive, software-defined platform for large-scale integrated photonic switching.
 Rather than treating circuit design, control, and system integration as isolated problems, this work establishes a coupled, cross-layer methodology that links physical photonic hardware with abstract programming models and network-level control, as summarized in Fig.~\ref{fig:ch1-thesis}.
 
-\begin{figure}[h]
+\begin{figure}[H]
     \begin{center}
         \includegraphics{figures/ch1-thesis.pdf}
     \end{center}

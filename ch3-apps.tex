@@ -33,6 +33,7 @@ This application can also provide self-healing capabilities to allocate alternat
     }\label{fig:ch3-interconnect}
 \end{figure}
 % figure power interconnect
+
 The results of the optical interconnect experiments at a central wavelength of 1550 nm and the processor configuration are shown in Figure~\ref{fig:ch3-interconnect}.
 Ports 0, 25, 17, 6 are used as input ports, and up to 27 interconnects to other available output ports are programmed.
 As can be seen in Figure~\ref{fig:ch3-inter-power}, all the paths are configured successfully, showing diagonal lines in the colormap, each one corresponding to a given interconnect.
@@ -74,7 +75,7 @@ A simple example of a 1x3 network is demonstrated in Figure~\ref{fig:ch3-multica
         The inset shows the detailed graphs.
     }\label{fig:ch3-multicast}
 \end{figure}
-Building upon this intuitive target, our proposed algorithm implements the shortest-path tree circuit based on the pseudocode in Algorithm~\ref{alg:auto_multicast}.
+
 % Start algorithm
 \begin{algorithm}[h]
     \footnotesize
@@ -112,6 +113,7 @@ Building upon this intuitive target, our proposed algorithm implements the short
 
     \end{algorithmic}
 \end{algorithm}
+Building upon this intuitive target, our proposed algorithm implements the shortest-path tree circuit based on the pseudocode in Algorithm~\ref{alg:auto_multicast}.
 In the latter, the initialization of variables starts in lines 1-3, and the optimal interconnect paths to each output port are found and saved in the set \textit{PATHS} in line 4.
 The tunable coupler (TC) PUCs are selected from the \textit{PATHS} set under the condition that TCs are those PUCs present in more than two paths with differing states between them (line 5),
 as denoted by \eqref{eq:ch3-t_c}:
@@ -144,6 +146,13 @@ On the other hand, for the insertion losses of a branch (path) that contains a c
 \end{equation}
 In the latter, \(k_q\) represents the coupling factor of the child node $q$ (in this case $TC_2$), \(IL_q\) is the insertion loss of child node $q$ in the cross path, and \(IL_{path}\) is the insertion loss between the parent node and the child node \cite{perez2018delay_line}.
 
+In this demonstration, we showcase the multicasting capabilities of our programmable processor driven by our control software layer. Specifically, we have implemented a 1x26 on-chip multicasting circuit. Port 0, connected to a 5 dBm source, serves as input while the rest of the ports in Figure~\ref{fig:ch3-multicast} act as receiving nodes.
+Figure~\ref{fig:ch3-multicast-power}(a) displays the normalized results measured at a central wavelength of 1550 nm. The experimental characterization began with a 1x1 circuit and was incrementally scaled to a 1x26 configuration.
+Each configuration is represented as a column in the results matrix, so that the first and last columns represent the outgoing power distribution for the 1x1 and 1x26 cases, respectively.
+The resulting visualization of output power distribution versus number of receiving nodes exhibits a horizontal funnel pattern and demonstrates how evenly the signal can be shared across the chip ports.
+The yellow area systematically expands from the left side to the right, while the color tone changes to orange.
+This trend indicates that, with an increasing number of ports, the power allocated to each port decreases, up to a maximum of -22 dB in the 1x26 case.
+
 \begin{figure}[h]
     \begin{center}
         \includegraphics{figures/ch3-multicast-power.pdf}
@@ -154,12 +163,6 @@ In the latter, \(k_q\) represents the coupling factor of the child node $q$ (in 
         (b) Average output power versus the splitting paths, where the blue shadow represents the deviation of the average power.
     }\label{fig:ch3-multicast-power}
 \end{figure}
-In this demonstration, we showcase the multicasting capabilities of our programmable processor driven by our control software layer. Specifically, we have implemented a 1x26 on-chip multicasting circuit. Port 0, connected to a 5 dBm source, serves as input while the rest of the ports in Figure~\ref{fig:ch3-multicast} act as receiving nodes.
-Figure~\ref{fig:ch3-multicast-power}(a) displays the normalized results measured at a central wavelength of 1550 nm. The experimental characterization began with a 1x1 circuit and was incrementally scaled to a 1x26 configuration.
-Each configuration is represented as a column in the results matrix, so that the first and last columns represent the outgoing power distribution for the 1x1 and 1x26 cases, respectively.
-The resulting visualization of output power distribution versus number of receiving nodes exhibits a horizontal funnel pattern and demonstrates how evenly the signal can be shared across the chip ports.
-The yellow area systematically expands from the left side to the right, while the color tone changes to orange.
-This trend indicates that, with an increasing number of ports, the power allocated to each port decreases, up to a maximum of -22 dB in the 1x26 case.
 
 Notably, the power intensity across all configured output ports remains uniform. Figure~\ref{fig:ch3-multicast-power}(b) offers another perspective to the power spreading problem;
 here we demonstrate that the average power exhibits a logarithmic decrease as the number of ports increases.
