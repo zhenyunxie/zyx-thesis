@@ -14,6 +14,8 @@ To address the growing complexity of large scale programmable photonic fabrics, 
 In parallel with hardware abstraction and programming, scalable operation of programmable photonic systems also requires integration with higher layer network control frameworks.
 Therefore, the chapter additionally introduces the principles of software-defined networking (SDN), model driven management, and southbound communication interfaces, establishing the foundation for the software-defined control methodologies developed in later chapters.
 
+Finally, describes the system-level components that turn a programmable photonic chip into a deployable system, such as optical amplification, polarization handling, and optical power monitoring, and presents the two platforms on which the experiments of this thesis are carried out: Smartlight and iPronics ONE.
+
 \section{Basic building blocks} \label{sec:functional_blocks} % (fold)
 \subsection{50:50 power splitter} \label{sub:splitter} % (fold)
 The 50:50 power splitter, or 3 dB coupler, serves as the foundational element for signal distribution and interferometric modulation within photonic integrated circuits, functioning primarily through two distinct physical mechanisms: evanescent coupling \cite{ansys_evanescent_coupler} and self-imaging \cite{soldano2002optical}.
@@ -223,30 +225,6 @@ Among these, the hexagonal architecture in Figure~\ref{fig:ch2-recirculating-top
 One of the primary benefits of the hexagonal arrangement is its higher spatial utilization and connectivity per unit area, which allows for a more compact and efficient footprint.
 Furthermore, the hexagonal architecture supports greater routing flexibility and increased degrees of freedom for programming, enabling the synthesis of more complex functions with reduced hardware overhead.
 
-\subsubsection{Smartlight: A general-purpose photonic processing platform}\label{sub:hexagonal} % (fold)
-The general-purpose photonic processor applications investigated in this thesis are implemented on the first-generation Smartlight platform \cite{ipronics_smartlight}.
-Smartlight is shown in Figure~\ref{fig:ch2-smartlight-platform}(a), which is a field-programmable photonic gate array that integrates the photonic hardware, electronic control unit, and software stack required for the deployment of reconfigurable photonic functions within a single platform.
-The photonic core is based on the hexagonal waveguide mesh and comprises 72 PUCs, as shown in Figure~\ref{fig:ch2-recirculating-topologies}(c).
-The processor provides access to 28 external optical ports that can be configured as inputs or outputs depending on the synthesized circuit.
-It should be noted that the bottom ports cannot be used as optical I/O; they are not directly connected to photodetectors in the hardware design.
-
-A key advantage of Smartlight is its full-stack closed loop control architecture, which enables seamless interaction between the software and the PIP hardware.
-As shown in Figure~\ref{fig:ch2-smartlight-platform}(b), user applications are first specified through the software framework and then translated by the logic unit into a set of actuator control signals.
-These signals are delivered to the PIC through a driving subsystem.
-In parallel, optical power measured from integrated monitoring photodetectors is processed by an optoelectronic readout subsystem and returned to the logic unit.
-Combined with temperature stabilization provided by the thermoelectric cooler (TEC), this closed-loop control architecture enables automated calibration, real time monitoring, and circuit reconfiguration.
-Consequently, all applications developed in the Chapter~\ref{chap:applications_on_pip} are implemented and validated on this Smartlight platform.
-
-\begin{figure}[ht]
-    \begin{center}
-        \includegraphics{figures/ch2-smartlight-platform.pdf}
-    \end{center}
-    \caption{Smartlight PIP processor.
-        (a) Photography of the iPronics Smartlight programmable photonic processor.
-        (b) Schematic of Smartlight full stack control architecture.
-    }\label{fig:ch2-smartlight-platform}
-\end{figure}
-
 \section{Graph-theoretic modeling}\label{sec:graph}
 Although PIP circuits demonstrate remarkable functional versatility, scaling these architectures to large meshes introduces substantial control complexity.
 Conventional configuration methods typically rely on sequential tuning, where each PUC is manually adjusted one at a time to achieve the desired optical response.
@@ -298,7 +276,7 @@ Unlike in feedforward meshes, where the signal propagation direction is uniquely
 As a result, a conventional graph model may permit physically invalid paths, such as reversal of propagation direction or the simultaneous selection of incompatible coupling states within the same PUC.
 
 The limitation further extends to graph routing algorithms.
-In standard shortest path methods such as Dijkstra’s algorithm, nodes are typically marked as visited and are not revisited during the search process~\cite{chen2020graph}.
+In standard shortest path methods such as Dijkstra’s algorithm, nodes are typically marked as visited and are not revisited during the search process~\cite{dijkstra1959note}.
 While this assumption is valid for acyclic or strictly feedforward graphs, it may incorrectly eliminate feasible solutions in the presence of recirculating paths, where revisiting a node under different propagation conditions can be physically meaningful to explore alternative propagation paths and reach additional ports.
 
 To address this issue, we adopt a directed graph representation in which each PUC is modeled using eight artificial nodes~\cite{chen2020graph}, where each port of a PUC is represented with two artificial nodes, corresponding to the inbound and outbound directions of signal propagation.
@@ -306,7 +284,8 @@ Directed edges are then used to represent phase shifters, which connect between 
 This construction explicitly encodes signal directionality and PUC state compatibility, ensuring that all paths in the graph correspond to physically valid propagations while remaining compatible with standard graph traversal algorithms.
 Figure~\ref{fig:ch2-hexagonal-graph} shows the graph representation of the hexagonal recirculating mesh in Fig.~\ref{fig:ch2-recirculating-topologies}(c).
 Each PUC, with its four highlighted physical ports ($P_1$)–($P_4$), is expanded into eight artificial nodes representing the inbound and outbound directions of port, with directed edges representing all physically allowable signal propagations between nodes.
-\begin{figure}[ht]
+
+\begin{figure}[H]
     \begin{center}
         \includegraphics{figures/ch2-hexagonal-graph.pdf}
     \end{center}
@@ -314,6 +293,46 @@ Each PUC, with its four highlighted physical ports ($P_1$)–($P_4$), is expande
         The inset depicts a detailed representation of the edges and vertices in a PUC.
     }\label{fig:ch2-hexagonal-graph}
 \end{figure}
+
+\subsection{Shortest-path search}\label{sub:graph_routing}
+Once a photonic circuit is represented as a weighted directed graph, configuring an optical path reduces to two steps: finding a path between the nodes of the input and output ports, and translating this path into the states of the PUCs that it traverses.
+The optimum path between two ports is the path that minimizes the sum of the edge weights defined in Equation~\eqref{eq:ch2-graph_weight}.
+Since all the weights are non-negative (they are built from insertion loss, length, and power consumption), this path can be computed with Dijkstra's algorithm \cite{dijkstra1959note}, summarized in Algorithm~\ref{alg:ch2-dijkstra}.
+The algorithm maintains a tentative distance $d[v]$ from the source $s$ to every node $v$, initialized to zero for the source and to infinity for all the other nodes.
+At each iteration, it selects the unvisited node $u$ with the smallest tentative distance, marks it as visited, and relaxes all the edges leaving $u$: if the path through $u$ is shorter than the current tentative distance of a neighbor $v$, then $d[v]$ and the predecessor $\mathit{prev}[v]$ are updated.
+When the target node $t$ is selected, $d[t]$ is the minimum path weight, and the path is recovered by following the predecessors from $t$ back to $s$.
+Since a visited node is never updated again, the non-negativity of the weights is essential for the correctness of the algorithm.
+
+\begin{algorithm}[ht]
+    \caption{Dijkstra's shortest-path algorithm}
+    \label{alg:ch2-dijkstra}
+    \begin{algorithmic}[1]
+        \Require Graph $G=(V,E)$, non-negative weights $w$, source $s$, target $t$
+        \For{each $v \in V$}
+        \State $d[v] \gets \infty$, \ $\mathit{prev}[v] \gets \emptyset$
+        \EndFor
+        \State $d[s] \gets 0$, \ $Q \gets V$ \Comment{priority queue ordered by $d$}
+        \While{$Q \neq \emptyset$}
+        \State $u \gets \arg\min_{v \in Q} d[v]$, and remove $u$ from $Q$
+        \If{$u = t$}
+        \State \textbf{break}
+        \EndIf
+        \For{each edge $(u,v) \in E$ with $v \in Q$}
+        \If{$d[u] + w(u,v) < d[v]$}
+        \State $d[v] \gets d[u] + w(u,v)$, \ $\mathit{prev}[v] \gets u$
+        \EndIf
+        \EndFor
+        \EndWhile
+        \State \Return the path obtained by following $\mathit{prev}$ from $t$ back to $s$
+    \end{algorithmic}
+\end{algorithm}
+
+For recirculating meshes, it is the directed port-level representation that makes Dijkstra's algorithm applicable to recirculating meshes: a physical PUC can be traversed more than once by the same path through different pairs of ports, because each traversal uses different nodes of the graph.
+
+For feedforward meshes, whose graph is a DAG, all the paths between an input and an output can also be enumerated with a depth-first search.
+The number of such paths is small for the architectures of interest, for example $N/2$ paths per input--output pair in an $N\times N$ Benes network, so that exhaustive enumeration is feasible.
+Chapter~\ref{chap:ocs_archs} uses this enumeration to build the set of candidate paths for every connection request.
+
 \section{Software-Defined Networking (SDN)}\label{sec:sdn}
 \subsection{SDN architecture}\label{sub:sdn_arch}
 SDN is an architectural paradigm that separates the control plane from the data plane and enables centralized, programmable network management \cite{kreutz2014software}.
@@ -380,6 +399,103 @@ To implement these interfaces in practice, structured and vendor-neutral data mo
 YANG has become a widely adopted modeling language, providing formal representations of device configuration, operational state, and notifications across different network devices and services \cite{rfc7950}.
 Controllers manipulate YANG-defined data using management protocols.
 
+\subsubsection{Basic elements of a YANG model}
+A YANG model is organized as a tree of data nodes.
+The basic unit of definition is the \textit{module}, which declares a namespace and a prefix, and which can import definitions from other modules \cite{rfc7950}.
+The main statements used to build the tree are the following:
+\begin{itemize}
+    \item \textbf{container}: an interior node that groups related nodes and has no value of its own.
+    \item \textbf{list}: a sequence of entries with the same structure, each one uniquely identified by the value of one or more \textbf{key} leaves, for example a list of ports identified by their name.
+    \item \textbf{leaf}: a node that holds a single value of a given type, such as \texttt{string}, \texttt{int32}, \texttt{decimal64}, or \texttt{enumeration}. A \textbf{leaf-list} holds a sequence of values of the same type.
+    \item \textbf{leafref}: a type whose values must exist in another leaf of the tree, identified by a path. It allows one part of the model to refer to another one, for example a connection that refers to existing ports.
+    \item \textbf{config true/false}: a property that distinguishes configuration data, which can be written by the controller, from state data, which is read-only and reflects the operational status of the device, such as measured optical powers.
+\end{itemize}
+
+Listing~\ref{lst:ch2-yang-example} shows a simplified module that uses these statements to describe the ports and connections of a switch.
+Each port is an entry of the list \texttt{port}, identified by the key \texttt{port-id}, and contains a read-only container \texttt{power} with the measured optical power.
+Each connection refers to existing port numbers through a \texttt{leafref}.
+
+\begin{lstlisting}[language={}, keepspaces=true, caption={Simplified example of a YANG module describing the ports and connections of a switch.}, label={lst:ch2-yang-example}]
+module example-switch {
+  yang-version 1.1;
+  namespace "urn:example:switch";
+  prefix exsw;
+  import ietf-yang-types { prefix yang; }
+
+  container switch {
+    container ports {
+      list port {
+        key "port-id";
+        leaf port-id { type string; }
+        leaf number  { type int32; }
+        container power {
+          config false;
+          leaf timestamp { type yang:date-and-time; }
+          leaf value     { type decimal64 { fraction-digits 6; } }
+        }
+      }
+    }
+    container connections {
+      list connection {
+        key "uid";
+        leaf uid { type string; }
+        leaf-list ports-in {
+          type leafref { path "/exsw:switch/exsw:ports/exsw:port/exsw:number"; }
+        }
+      }
+    }
+  }
+}
+\end{lstlisting}
+
+YANG models are usually presented in the compact tree notation of RFC~8340 \cite{rfc8340}, which is shown in Listing~\ref{lst:ch2-yang-tree} for the module above.
+In this notation, each line represents one node of the tree, and the symbols placed before and after the name of the node indicate its properties.
+These symbols are summarized in Table~\ref{tab:ch2-yang-tree-notation}, each one with an example from Listing~\ref{lst:ch2-yang-tree}.
+For instance, the line \texttt{+--rw port* [port-id]} describes a configurable list named \texttt{port} whose entries are identified by the key \texttt{port-id}, whereas \texttt{+--ro power} describes a read-only container that reports a measured value.
+The same notation is used in Chapter~\ref{chap:sdn_for_ocs} to present the YANG model of the OCS.
+
+\begin{table}[H]
+    \centering
+    \small
+    \caption{Symbols of the YANG tree notation defined in RFC~8340}
+    \label{tab:ch2-yang-tree-notation}
+    \begin{tabular}{lll}
+        \toprule
+        \textbf{Symbol} & \textbf{Meaning}                                     & \textbf{Example in Listing~\ref{lst:ch2-yang-tree}} \\
+        \midrule
+        \texttt{+--}    & A node of the tree (\texttt{+}: current definition)  & every node                                          \\
+        \texttt{|}      & Connects sibling nodes at the same level             & \texttt{ports} and \texttt{connections}             \\
+        \texttt{rw}     & Configuration data (read-write)                      & \texttt{+--rw number?}                              \\
+        \texttt{ro}     & State data (read-only)                               & \texttt{+--ro power}                                \\
+        \texttt{*}      & List or leaf-list                                    & \texttt{port*}, \texttt{ports-in*}                  \\
+        \texttt{[ ]}    & Key of a list                                        & \texttt{port* [port-id]}                            \\
+        \texttt{?}      & Optional leaf                                        & \texttt{number?}                                    \\
+        \texttt{->}     & Leafref, followed by the path of the referenced leaf & \texttt{-> /switch/ports/port/number}               \\
+        Type name       & Data type of a leaf or leaf-list                     & \texttt{string}, \texttt{int32}                     \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{lstlisting}[language={}, keepspaces=true, caption={YANG tree diagram of the module in Listing~\ref{lst:ch2-yang-example}.}, label={lst:ch2-yang-tree}]
+module: example-switch
+  +--rw switch
+     +--rw ports
+     |  +--rw port* [port-id]
+     |     +--rw port-id    string
+     |     +--rw number?    int32
+     |     +--ro power
+     |        +--ro timestamp?   yang:date-and-time
+     |        +--ro value?       decimal64
+     +--rw connections
+        +--rw connection* [uid]
+           +--rw uid         string
+           +--rw ports-in*   -> /switch/ports/port/number
+\end{lstlisting}
+
+The data described by a YANG model are exchanged in XML when using NETCONF, or in JSON following RFC~7951 \cite{rfc7951}, which is the \texttt{json\_ietf} encoding of gNMI used in Chapter~\ref{chap:sdn_for_ocs}.
+The distinction between configuration and state data also determines how each node is accessed through gNMI: configuration nodes are written with \textit{Set}, whereas state nodes are read with \textit{Get} or streamed with \textit{Subscribe}.
+
+\subsubsection{Configuration protocol}\label{protocol}
 Network Configuration Protocol (NETCONF), an early southbound protocol, operates over secure channels and supports transactional configuration and rollback, improving reliability compared to traditional command-line based management \cite{rfc6241}.
 More recently, frameworks based on Google remote procedure call (gRPC) have been adopted for higher efficiency and scalability \cite{draft_kumar_rtgwg_grpc_protocol_00}.
 In particular, gRPC Network Management Interface (gNMI) enables model-driven configuration and high-frequency telemetry using a set of remote procedure call (RPC) operations, including \textit{Get}, \textit{Set}, and \textit{Subscribe} \cite{openconfig_gnmi_spec, cisco_gnmi_2018}.
@@ -413,8 +529,102 @@ Although OCS offers flexibility in network configurations, there is currently no
 Open initiatives, such as the Optical Circuit Switching Subproject of the Open Compute Project (OCP), aim to provide open specifications and reference architectures to promote interoperability and accelerate research and deployment of programmable optical networks \cite{opencompute_optical_circuit_switching}.
 
 Building on these developments, we have proposed our SDN-related control software for silicon photonic OCS.
-Our SDN control layer is implemented on the iPronics ONE (Optical Network Engine) platform~\cite{ipronics_one32_2025}.
 The detailed design, implementation, and evaluation of this approach will be presented in Chapter~\ref{chap:sdn_for_ocs}.
+
+\section{Programmable photonic systems}\label{sub:pip_systems}
+The previous sections have described the photonic core of a programmable processor, the graph-based methods used to program it, and the software-defined framework used to integrate it into a network.
+In a deployable system, the photonic core is complemented by several system-level components, which often dominate the end-to-end performance and expose additional resources to the control software.
+This section summarizes these components and presents the two platforms used in this thesis.
+\subsection{System-level components}\label{sub:system_component}
+\subsubsection{Semiconductor optical amplifier}\label{sub:soa}
+The end-to-end insertion loss of an optical path is the sum of a fixed contribution, given by the fiber-to-chip couplers, the polarization-handling components, and the waveguide propagation, and of a contribution that grows with the size of the circuit:
+\begin{equation}
+    \mathrm{IL}_{\text{total}} = \mathrm{IL}_{\text{fixed}} + N_s\,\mathrm{IL}_{\text{cell}} + N_x\,\mathrm{IL}_{\text{x}},
+    \label{eq:ch2-loss-budget}
+\end{equation}
+where $N_s$ and $N_x$ are the numbers of switching cells and waveguide crossings traversed by the path, and $\mathrm{IL}_{\text{cell}}$ and $\mathrm{IL}_{\text{x}}$ are their respective losses.
+For high-radix fabrics, the size-dependent terms can exceed the link budget of the transceivers, as quantified in Chapter~\ref{chap:ocs_archs}.
+SOAs integrated or co-packaged with the switching fabric can compensate this loss and even provide lossless operation \cite{stabile2017towards, 7328999}.
+However, they add amplified spontaneous emission noise and, when operated close to saturation, distort amplitude-modulated signals.
+For this reason, the transmission quality of an amplified system must be verified with bit error rate measurements, and not only with optical power measurements \cite{baney2000theory, lippiatt2024analysis}.
+\subsubsection{Polarization contoller}\label{sub:pol_control}
+Silicon waveguides are strongly birefringent, so most silicon photonic components, including the PUCs and crossings of Section~\ref{sec:functional_blocks}, are designed for TE polarization.
+In contrast, the light arriving from a standard single-mode fiber has an arbitrary state of polarization that changes over time.
+Two solutions are commonly used \cite{Shahwar2024Polarization}.
+In polarization diversity, the input light is split into two orthogonal components that are processed by two identical switching fabrics and recombined at the output.
+This approach is transparent to the input polarization, but it doubles the switching resources \cite{tanizawa2016novelpola, kurosu2019high}.
+In active polarization control, a tunable polarization controller at each input converts the incoming light into TE polarization, using the feedback of an on-chip monitor.
+This approach requires a single switching fabric, but the controller must continuously track the polarization changes of the input fiber.
+\subsubsection{Photodetector}\label{sub:pd}
+On-chip monitors, typically implemented by a weak tap coupler followed by a photodetector, measure the optical power at selected points of the circuit.
+They serve three purposes.
+First, they enable the calibration of the PUCs: by measuring the output power while sweeping the heater power, the relation between electrical power and optical phase, including the power $P_\pi$ required for a $\pi$ phase shift (Section~\ref{sub:phase_shifter}), is characterized for every PUC.
+Second, they provide the feedback required by active components, such as polarization controllers and SOAs.
+Third, they expose the optical power to the SDN controller as telemetry data (Chapter~\ref{chap:sdn_for_ocs}).
+In return, each tap adds a small insertion loss, and the noise floor of the detectors limits the measurable dynamic range.
+
+An electronic layer drives the actuators of the system, i.e., the heaters of the PUCs, the polarization controllers, and the SOA currents, and reads out the monitors.
+On top of it, a software layer translates high-level requests into actuator settings using the graph-based methods of Section~\ref{sec:graph}, and exposes the system to the network through the SDN interfaces of Section~\ref{sec:sdn}.
+
+\subsection{Platforms used in this thesis}\label{sub:platforms}
+Two programmable photonic platforms developed by iPronics are used in this thesis, as summarized in Table~\ref{tab:ch2-platforms}.
+Smartlight is a general-purpose processor based on a recirculating hexagonal mesh, and it is used for the optical networking applications of Chapter~\ref{chap:applications_on_pip}.
+iPronics ONE is an optical circuit switch based on an application-specific feedforward fabric, and it is used for the SDN demonstration of Chapter~\ref{chap:sdn_for_ocs}.
+The switching architecture study was supported by the analysis presented in Chapter~\ref{chap:ocs_archs}.
+
+\begin{table}[ht]
+    \centering
+    \small
+    \caption{Programmable photonic platforms used in this thesis}
+    \label{tab:ch2-platforms}
+    \begin{tabular}{>{\raggedright\arraybackslash}p{0.24\textwidth}>{\raggedright\arraybackslash}p{0.34\textwidth}>{\raggedright\arraybackslash}p{0.34\textwidth}}
+        \toprule
+                              & \textbf{iPronics Smartlight}                          & \textbf{iPronics ONE}          \\
+        \midrule
+        Photonic core         & Hexagonal recirculating mesh (72 PUCs)                & Feedforward switching fabric   \\
+        Optical ports         & 28 configurable inputs/outputs                        & 32 inputs and 32 outputs       \\
+        Functionality         & General purpose (interconnects, multicast, switching) & Optical circuit switching      \\
+        Loss compensation     & Lossy                                                 & SOA array                      \\
+        Polarization handling & No polarization controller                            & Polarization controllers       \\
+        Power monitoring      & Integrated photodetectors                             & Monitoring array per channel   \\
+        Control interface     & Smartlight SDK                                        & gNMI with a custom YANG model  \\
+        Used in               & Chapter~\ref{chap:applications_on_pip}                & Chapter~\ref{chap:sdn_for_ocs} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsubsection{Smartlight: A general-purpose photonic processing platform}\label{sub:hexagonal} % (fold)
+The general-purpose photonic processor applications investigated in this thesis are implemented on the first-generation Smartlight platform \cite{ipronics_smartlight}.
+Smartlight is shown in Figure~\ref{fig:ch2-smartlight-platform}(a), which is a field-programmable photonic gate array that integrates the photonic hardware, electronic control unit, and software stack required for the deployment of reconfigurable photonic functions within a single platform.
+The photonic core is based on the hexagonal waveguide mesh and comprises 72 PUCs, as shown in Figure~\ref{fig:ch2-recirculating-topologies}(c).
+The processor provides access to 28 external optical ports that can be configured as inputs or outputs depending on the synthesized circuit.
+It should be noted that the bottom ports cannot be used as optical I/O; they are not directly connected to photodetectors in the hardware design.
+
+A key advantage of Smartlight is its full-stack closed loop control architecture, which enables seamless interaction between the software and the PIP hardware.
+As shown in Figure~\ref{fig:ch2-smartlight-platform}(b), user applications are first specified through the software framework and then translated by the logic unit into a set of actuator control signals.
+These signals are delivered to the PIC through a driving subsystem.
+In parallel, optical power measured from integrated monitoring photodetectors is processed by an optoelectronic readout subsystem and returned to the logic unit.
+Combined with temperature stabilization provided by the thermoelectric cooler (TEC), this closed-loop control architecture enables automated calibration, real-time monitoring, and circuit reconfiguration.
+Consequently, all applications developed in Chapter~\ref{chap:applications_on_pip} are implemented and validated on this Smartlight platform.
+
+\begin{figure}[ht]
+    \begin{center}
+        \includegraphics{figures/ch2-smartlight-platform.pdf}
+    \end{center}
+    \caption{Smartlight PIP processor.
+        (a) Photography of the iPronics Smartlight programmable photonic processor.
+        (b) Schematic of Smartlight full stack control architecture.
+    }\label{fig:ch2-smartlight-platform}
+\end{figure}
+\subsubsection{iPronics ONE: a silicon photonic optical circuit switch}\label{sub:one}
+iPronics ONE is a $32\times32$ silicon photonic OCS designed for data center interconnects \cite{ipronics_one32_2025}.
+Unlike Smartlight, its photonic core is not a general-purpose mesh but an application-specific feedforward switching fabric, which trades the flexibility of a recirculating mesh for lower loss and a higher port count.
+% TODO: optionally name the architecture family and give key specifications (number of PUCs, reconfiguration time, typical loss) if they can be disclosed.
+The programmable silicon photonic subassembly integrates polarization controllers at the inputs, a monitoring array that measures the optical power of every channel, and the switching core that establishes the optical interconnections.
+% TODO: confirm "one polarization controller per input port".
+An SOA array compensates the insertion loss of each channel, enabling lossless operation between input and output fibers.
+An electronic layer drives the actuators and reads out the monitors, and a software layer exposes these resources to an external SDN controller through gNMI.
+The technology stack of the system and its SDN-based control are described in detail in Chapter~\ref{chap:sdn_for_ocs} (Figure~\ref{fig:ch5-ocs-tech}).
 
 \section{Conclusion}\label{sub:ch2_conclusion}
 In this chapter, we have described the foundations and building blocks of programmable integrated photonic circuits, with a final focus on the modelling and software layers necessary to enable their practical integration and adoption in industrial systems at scale.
