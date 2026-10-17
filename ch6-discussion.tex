@@ -60,7 +60,7 @@ This degradation is primarily attributed to the wavelength-dependent behavior of
 Such behavior is particularly relevant for systems operating over wider wavelength ranges, such as 400G-FR4 transceivers that carry four coarse wavelength division multiplexing (CWDM) channels over 2 km, where uniform performance across channels is required.
 % coupling ratio deviation caused by fabrication
 Another factor affecting PUC crosstalk is the coupling ratio deviation caused by fabrication.
-For the CROSS state, crosstalk is highly sensitive to the absolute values of the coupling coefficients, whereas for the BAR state, it is mainly affected by mismatches between the two couplers within a PUC.
+For the cross state, crosstalk is highly sensitive to the absolute values of the coupling coefficients, whereas for the bar state, it is mainly affected by mismatches between the two couplers within a PUC.
 One possible approach to mitigate this issue is to replace fixed couplers with tunable elements, such as Mach–Zehnder interferometer based splitters, allowing the effective coupling ratio to be adjusted during calibration \cite{suzuki2015ultra, bao2025ultra, bao2025silicon}.
 While this approach offers a greater extinction ratio and flexibility, it also significantly increases the complexity of the calibration process, as a larger parameter space must be explored and stabilized.
 
@@ -105,7 +105,7 @@ In an ideal lossless $2\times2$ switching element, maximizing the output power a
 \end{equation}
 where $P_{\text{in}}$ is the input optical power, $P_{\text{main}}$ is the power at the intended (bar or cross) output port, and $P_{\text{leak}}$ is the power leaking into the unintended port.
 In practice, however, insertion loss means this equality does not hold exactly, and $P_{\text{main}}$ can reach a local maximum without $P_{\text{leak}}$ reaching its true minimum.
-For this reason, calibration routine should not rely on a single-port metric, but instead target the extinction ratio directly:
+For this reason, the calibration routine should not rely on a single-port metric, but instead target the extinction ratio directly:
 \begin{equation}
     J = 10 \log_{10}\!\left(\frac{P_{\text{main}}}{P_{\text{leak}}}\right),
 \end{equation}
@@ -135,7 +135,7 @@ This limitation introduces additional risks for multi-vendor deployments and may
 
 Another key limitation of OCS lies in its reconfiguration speed.
 Unlike packet switching, which operates at nanosecond timescales, OCS relies on the establishment of end-to-end circuits.
-MEMS OCS technologies typically require millisecond-scale switching times, while silicon photonic implementations can reduce this to the microsecond \cite{CignalAI2025OCS4Q25}.
+MEMS OCS technologies typically require millisecond-scale switching times, while silicon photonic implementations can reduce this to the microsecond scale \cite{CignalAI2025OCS4Q25}.
 However, these reconfiguration times are still one or more orders of magnitude slower than electronic packet switching.
 This disparity is particularly relevant in data center environments.
 While OCS is well suited for high-capacity, long-lived elephant flows, it is less efficient for short-lived mice flows.
@@ -161,7 +161,7 @@ In addition to insertion loss and crosstalk, such configurations require careful
 Finally, application level techniques can also contribute to improving the effective utilization of switching resources.
 As demonstrated in Chapter~\ref{chap:applications_on_pip}, general purpose programmable photonic meshes can support multicast operations, which can also be extended to feedforward circuit architectures.
 With the integration of SOAs, the optical power of each split branch can be compensated, mitigating splitting loss and further enhancing scalability.
-This capability is particularly relevant for distributed AI workloads, where collective communication patterns such as broadcast and all gather are common \cite{samadi2015optical, moritz2018ray}.
+This capability is particularly relevant for distributed AI workloads, where collective communication patterns such as broadcast and all-gather are common \cite{samadi2015optical, moritz2018ray}.
 By enabling native multicast at the photonic layer, the number of required point to point connections can be reduced, thereby improving overall network efficiency.
 
 Overall, while physical layer constraints impose fundamental limits on the scalability of silicon photonic interconnect, a combination of architectural, spectral, and application level approaches provides viable pathways to extend system capacity beyond the limits of single chip implementations.

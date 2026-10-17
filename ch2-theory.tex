@@ -5,7 +5,7 @@ The rapid advancement of silicon photonics has transitioned integrated optical s
 This evolution enables the dynamic manipulation of optical signals, allowing a single hardware platform to support reconfigurable networking functions, adaptive interconnects, and scalable optical switching \cite{bogaerts2020programmable}.
 As programmable integrated photonic circuits continue to increase in scale and complexity, efficient methodologies for circuit abstraction, automated configuration, and software-defined control become essential for practical deployment.
 
-This chapter begins with the fundamental building blocks, including 50:50 power splitters, waveguide crossings, phase shifters, and 2x2 programmable unit cells (PUCs).
+This chapter begins with the fundamental building blocks, including 50:50 power splitters, waveguide crossings, phase shifters, and 2$\times$2 programmable unit cells (PUCs).
 The transfer-matrix models of these components are presented to describe their optical behavior and signal transformation within integrated circuits.
 
 Building upon these device level elements, the chapter introduces programmable mesh topologies constructed from interconnected unit cells, including feedforward and recirculating mesh architectures.
@@ -14,7 +14,7 @@ To address the growing complexity of large scale programmable photonic fabrics, 
 In parallel with hardware abstraction and programming, scalable operation of programmable photonic systems also requires integration with higher layer network control frameworks.
 Therefore, the chapter additionally introduces the principles of software-defined networking (SDN), model driven management, and southbound communication interfaces, establishing the foundation for the software-defined control methodologies developed in later chapters.
 
-Finally, describes the system-level components that turn a programmable photonic chip into a deployable system, such as optical amplification, polarization handling, and optical power monitoring, and presents the two platforms on which the experiments of this thesis are carried out: Smartlight and iPronics ONE.
+Finally, the chapter describes the system-level components that turn a programmable photonic chip into a deployable system, such as optical amplification, polarization handling, and optical power monitoring, and presents the two platforms on which the experiments of this thesis are carried out: Smartlight and iPronics ONE.
 
 \section{Basic building blocks} \label{sec:functional_blocks} % (fold)
 \subsection{50:50 power splitter} \label{sub:splitter} % (fold)
@@ -62,9 +62,9 @@ Furthermore, MMIs are favored for their broadband specs, maintaining near 50:50 
         \includegraphics{figures/ch2-splitters.pdf}
     \end{center}
     \caption{50:50 power splitter structures and optical field distributions.
-        (a) The top panel is schematic of a directional coupler.
+        (a) The top panel is a schematic of a directional coupler.
         The bottom panel presents the simulated optical intensity distribution within the coupling section \cite{gomez-hidalgoFundamentalBuildingBlocksa}.
-        (b) The top panel is schematic of a multimode interferometer coupler.
+        (b) The top panel is a schematic of a multimode interferometer coupler.
         The bottom panel illustrates the multimode interference pattern formed inside the MMI region, demonstrating the self-imaging effect and spatial distribution of optical power \cite{gomez-hidalgoFundamentalBuildingBlocksa}.
     }\label{fig:ch2-splitters}
 \end{figure}
@@ -84,7 +84,7 @@ where $n_{\mathrm{eff}}$ denotes the effective refractive index of the guided mo
 A variation in either $n_{\mathrm{eff}}$ or $L$ produces a corresponding change in the optical phase, which forms the basis of phase-shifting devices.
 
 In silicon photonics, integrated phase shifting is primarily achieved through either electro-optic phase shifters (EOPS) or thermo-optic phase shifters (TOPS) \cite{eo_ps, liu2022thermo}.
-While electro-optic shifters based on plasma dispersion offer high-speed modulation on nanoseconds timescales, they often suffer from relatively high insertion losses due to carrier absorption and require complex manufacturing processing.
+While electro-optic shifters based on plasma dispersion offer high-speed modulation on nanosecond timescales, they often suffer from relatively high insertion losses due to carrier absorption and require complex manufacturing processing.
 In contrast, thermo-optic phase shifters exploit silicon's high thermo-optic coefficient to modify the refractive index locally through heat.
 Although slower than electro-optic effects, thermal shifters are simpler to implement, and exhibit negligible insertion loss, making them the preferred choice for high-density circuit \cite{liu2022thermo}.
 Design evolution has focused on enhancing thermal efficiency as actuator density increases.
@@ -92,7 +92,7 @@ Design evolution has focused on enhancing thermal efficiency as actuator density
 % TOPS performance
 The TOPS is mainly determined by two key parameters: the half-wave power ($P_{\pi}$), which indicates the electrical power required to produce a π phase shift;
 and the reconfiguration speed, typically defined by the 10-90\% rise and fall times of the optical response.
-Figure~\ref{fig:ch2-ps} schematics of three different structures of thermo-optic phase shifters \cite{gomez-hidalgoFundamentalBuildingBlocksa}.
+Figure~\ref{fig:ch2-ps} shows schematics of three different structures of thermo-optic phase shifters \cite{gomez-hidalgoFundamentalBuildingBlocksa}.
 Conventional metal heaters on oxide cladding suffer from heat leakage into the substrate, the temperature rise in the waveguide core is limited, resulting in high $P_{\pi}$ with typical value on the order of $\sim$18-19 mW and thermal crosstalk \cite{gupta2018performance}.
 Vertical trench structures improve lateral thermal confinement, this reduces heat spreading into the surrounding oxide and substrate, lowering power consumption $P_{\pi}$ to typical values of $\sim$10-14 mW, and this structure also enables tighter actuator spacing due to suppressed lateral heat diffusion \cite{liu2022thermo}.
 In fully suspended silicon structures, the silicon waveguide is thermally isolated by removing the underlying substrate and surrounding oxide, leaving it supported by narrow anchors.
@@ -111,8 +111,8 @@ This corresponds to roughly an order-of-magnitude reduction in speed compared to
     }\label{fig:ch2-ps}
 \end{figure}
 
-\subsection{2x2 programmable unit cell}\label{sub:pucs} % (fold)
-The 2x2 MZI serves as the physical implementation of the programmable unit cell (PUC), which is defined in this thesis as the fundamental building block of the system.
+\subsection{2$\times$2 programmable unit cell}\label{sub:pucs} % (fold)
+2$\times$2 MZI serves as the physical implementation of the programmable unit cell (PUC), which is defined in this thesis as the fundamental building block of the system.
 Figure~\ref{fig:ch2-puc} shows the structure of a PUC, which is composed of a symmetric four-port configuration consisting of an initial 50:50 input power splitter, two independent waveguide interference arms of length $L$, at least one active phase shifter integrated into these arms, and a final 50:50 output coupler that recombines the optical fields.
 The operational physics of the device relies on the principle of dual-beam interference, where an incoming optical signal is first divided into two coherent components by the input power splitter (MMI or DC).
 As these two signals propagate through the interference arms, their relative phase relationship is dynamically adjusted via thermo-optic or electro-optic phase shifters, which modify the effective refractive index ($n_{\mathrm{eff}}$) of the waveguide mode to accumulate a specific optical phase $\phi = 2\pi n_{\mathrm{eff}} L / \lambda$.
@@ -124,8 +124,8 @@ Figure~\ref{fig:ch2-puc}(c) illustrates three operating states of the PUC: cross
     \begin{center}
         \includegraphics{figures/ch2-puc.pdf}
     \end{center}
-    \caption{Structure and Operation of the 2x2 PUC
-        (a) Schematic of the 2x2 PUC consisting of two 50:50 power splitters and two phase shifters.
+    \caption{Structure and Operation of the 2$\times$2 PUC
+        (a) Schematic of the 2$\times$2 PUC consisting of two 50:50 power splitters and two phase shifters.
         (b) Optical micrograph of the fabricated element.
         (c) Operating states of the device, demonstrating cross, bar, and tunable transmission configurations.
     }\label{fig:ch2-puc}
@@ -153,7 +153,7 @@ However, when circuits scale to thousands of PUCs, nanometric fabrication deviat
 This phenomenon is detailed in Chapter~\ref{chap:ocs_archs}.
 
 \subsection{Crossing}\label{sub:crossing} % (fold)
-In the large-scale, high density PICs, besides PUCs serving as the fundamental switching units, a vast number of waveguide crossings are required for routing.
+In the large-scale, high-density PICs, besides PUCs serving as the fundamental switching units, a vast number of waveguide crossings are required for routing.
 These components are not only passive interconnects, but also constitute a critical bottleneck in system design.
 Without careful optimization, the cumulative effects of hundreds of crossings can severely limit the overall optical bandwidth, introduce significant insertion loss, and generate detrimental optical crosstalk, thereby reducing the signal-to-noise ratio (SNR) of the entire chip.
 
@@ -166,7 +166,7 @@ Beam shaping (BS) crossings rely on wavefront engineering \cite{sakamaki2009loss
 By introducing smoothly varying tapers or tailored geometries, the optical field is reshaped before entering the intersection, reducing diffraction and scattering.
 This behavior is illustrated in Figure~\ref{fig:ch2-crossings}(b), where the field remains tightly guided with reduced spreading compared to the MMI case, leading to improved insertion loss and bandwidth.
 
-Gaussian-beam (GB) synthesis crossings are based on mode-expander framework and intentionally excite multiple higher-order modes through non-adiabatic transitions \cite{dumais2017three}.
+Gaussian-beam (GB) synthesis crossings are based on a mode-expander framework and intentionally excite multiple higher-order modes through non-adiabatic transitions \cite{dumais2017three}.
 The relative phases of these modes are then controlled so that their constructive interference forms a Gaussian-like beam in the crossing region.
 As shown in Figure~\ref{fig:ch2-crossings}(c), the synthesized beam exhibits a smooth and well-collimated profile, resulting in minimal scattering, lower insertion loss, and superior broadband performance.
 \begin{figure}[ht]
@@ -264,14 +264,14 @@ By incorporating these elements into the graph with appropriate weights, the rou
         \includegraphics{figures/ch2-benes-graph.pdf}
     \end{center}
     \caption{Graph-based representation of the Benes feedforward mesh.
-        (a) Schematic of 4x4 Benes topology.
+        (a) Schematic of 4$\times$4 Benes topology.
         (b) PUC-level graph abstraction.
         (c) Port-level graph abstraction.
         The red dashed line highlights how an individual PUC can be represented either as a single node or as four nodes, one for each port.
     }\label{fig:ch2-benes-graph}
 \end{figure}
 \subsection{Recirculating mesh graph}\label{sub:circulargraph} % (fold)
-One of the main challenges in graph representation of recirculating mesh is caused by the feedback loops in the circuit.
+One of the main challenges in graph representation of a recirculating mesh is caused by the feedback loops in the circuit.
 Unlike in feedforward meshes, where the signal propagation direction is uniquely defined, each port of a PUC in a recirculating mesh can function as either an input or an output depending on the signal path.
 As a result, a conventional graph model may permit physically invalid paths, such as reversal of propagation direction or the simultaneous selection of incompatible coupling states within the same PUC.
 
@@ -295,7 +295,7 @@ Each PUC, with its four highlighted physical ports ($P_1$)–($P_4$), is expande
 \end{figure}
 
 \subsection{Shortest-path search}\label{sub:graph_routing}
-Once a photonic circuit is represented as a weighted directed graph, configuring an optical path reduces to two steps: finding a path between the nodes of the input and output ports, and translating this path into the states of the PUCs that it traverses.
+Once a photonic circuit is represented as a weighted directed graph, configuring an optical interconnects reduces to finding a path between the nodes of the input and output ports.
 The optimum path between two ports is the path that minimizes the sum of the edge weights defined in Equation~\eqref{eq:ch2-graph_weight}.
 Since all the weights are non-negative (they are built from insertion loss, length, and power consumption), this path can be computed with Dijkstra's algorithm \cite{dijkstra1959note}, summarized in Algorithm~\ref{alg:ch2-dijkstra}.
 The algorithm maintains a tentative distance $d[v]$ from the source $s$ to every node $v$, initialized to zero for the source and to infinity for all the other nodes.
@@ -327,7 +327,7 @@ Since a visited node is never updated again, the non-negativity of the weights i
     \end{algorithmic}
 \end{algorithm}
 
-For recirculating meshes, it is the directed port-level representation that makes Dijkstra's algorithm applicable to recirculating meshes: a physical PUC can be traversed more than once by the same path through different pairs of ports, because each traversal uses different nodes of the graph.
+For recirculating meshes, it is the directed port-level representation that makes Dijkstra's algorithm applicable: a physical PUC can be traversed more than once by the same path through different pairs of ports, because each traversal uses different nodes of the graph.
 
 For feedforward meshes, whose graph is a DAG, all the paths between an input and an output can also be enumerated with a depth-first search.
 The number of such paths is small for the architectures of interest, for example $N/2$ paths per input--output pair in an $N\times N$ Benes network, so that exhaustive enumeration is feasible.
@@ -448,7 +448,7 @@ module example-switch {
 }
 \end{lstlisting}
 
-YANG models are usually presented in the compact tree notation of RFC~8340 \cite{rfc8340}, which is shown in Listing~\ref{lst:ch2-yang-tree} for the module above.
+YANG models are usually presented in the compact tree notation of Request for Comments (RFC)~8340 \cite{rfc8340}, which is shown in Listing~\ref{lst:ch2-yang-tree} for the module above.
 In this notation, each line represents one node of the tree, and the symbols placed before and after the name of the node indicate its properties.
 These symbols are summarized in Table~\ref{tab:ch2-yang-tree-notation}, each one with an example from Listing~\ref{lst:ch2-yang-tree}.
 For instance, the line \texttt{+--rw port* [port-id]} describes a configurable list named \texttt{port} whose entries are identified by the key \texttt{port-id}, whereas \texttt{+--ro power} describes a read-only container that reports a measured value.
@@ -492,7 +492,7 @@ module: example-switch
            +--rw ports-in*   -> /switch/ports/port/number
 \end{lstlisting}
 
-The data described by a YANG model are exchanged in XML when using NETCONF, or in JSON following RFC~7951 \cite{rfc7951}, which is the \texttt{json\_ietf} encoding of gNMI used in Chapter~\ref{chap:sdn_for_ocs}.
+The data described by a YANG model are exchanged in Extensible Markup Language (XML) when using NETCONF, or in JavaScript Object Notation (JSON) following RFC~7951 \cite{rfc7951}, which is the \texttt{json\_ietf} encoding of gNMI used in Chapter~\ref{chap:sdn_for_ocs}.
 The distinction between configuration and state data also determines how each node is accessed through gNMI: configuration nodes are written with \textit{Set}, whereas state nodes are read with \textit{Get} or streamed with \textit{Subscribe}.
 
 \subsubsection{Configuration protocol}\label{protocol}
@@ -547,7 +547,7 @@ For high-radix fabrics, the size-dependent terms can exceed the link budget of t
 SOAs integrated or co-packaged with the switching fabric can compensate this loss and even provide lossless operation \cite{stabile2017towards, 7328999}.
 However, they add amplified spontaneous emission noise and, when operated close to saturation, distort amplitude-modulated signals.
 For this reason, the transmission quality of an amplified system must be verified with bit error rate measurements, and not only with optical power measurements \cite{baney2000theory, lippiatt2024analysis}.
-\subsubsection{Polarization contoller}\label{sub:pol_control}
+\subsubsection{Polarization contoller}\label{sub:pol_controller}
 Silicon waveguides are strongly birefringent, so most silicon photonic components, including the PUCs and crossings of Section~\ref{sec:functional_blocks}, are designed for TE polarization.
 In contrast, the light arriving from a standard single-mode fiber has an arbitrary state of polarization that changes over time.
 Two solutions are commonly used \cite{Shahwar2024Polarization}.
@@ -570,7 +570,7 @@ On top of it, a software layer translates high-level requests into actuator sett
 Two programmable photonic platforms developed by iPronics are used in this thesis, as summarized in Table~\ref{tab:ch2-platforms}.
 Smartlight is a general-purpose processor based on a recirculating hexagonal mesh, and it is used for the optical networking applications of Chapter~\ref{chap:applications_on_pip}.
 iPronics ONE is an optical circuit switch based on an application-specific feedforward fabric, and it is used for the SDN demonstration of Chapter~\ref{chap:sdn_for_ocs}.
-The switching architecture study was supported by the analysis presented in Chapter~\ref{chap:ocs_archs}.
+Its switching architecture was selected based on the analysis presented in Chapter~\ref{chap:ocs_archs}.
 
 \begin{table}[ht]
     \centering

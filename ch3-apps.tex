@@ -17,7 +17,7 @@ Specifically, we experimentally demonstrate several representative optical netwo
 The corresponding performance metrics are analyzed in detail, highlighting the capability of programmable photonic processors to support flexible and reconfigurable optical networking functions.
 
 % section interconnect
-\section{Interconnects (1x1)}\label{sec:interconnects}
+\section{Interconnects (1$\times$1)}\label{sec:interconnects}
 Reconfigurable optical interconnects are of great interest in optical networks as they enable flexible connections of terabit data rates with high-performance operation \cite{sato2022prospects, sato2023optical}.
 These interconnects demand reduced latency and energy efficiency between input and output (I/O) ports, and therefore minimal insertion loss and shortest distance is highly desired.
 The software layer demonstrated herein provides an interconnect algorithm based on Dijkstra's algorithm \cite{foead2021systematic, bierlaire_optimization_2018}, which can automatically provide an optimum path configuration.
@@ -29,13 +29,13 @@ This application can also provide self-healing capabilities to allocate alternat
     \caption{Optical interconnect experiment.
         (a) Programmable processor configurations considering different input ports.
         (b) Colormap of the normalized optical power measured at output ports for different interconnect configurations.
-        The white lines indicate the configuration shown in the schematic of the programmable processor
+        The white lines indicate the configuration shown in the schematic of the programmable processor.
     }\label{fig:ch3-interconnect}
 \end{figure}
 % figure power interconnect
 
 The results of the optical interconnect experiments at a central wavelength of 1550 nm and the processor configuration are shown in Figure~\ref{fig:ch3-interconnect}.
-Ports 0, 25, 17, 6 are used as input ports, and up to 27 interconnects to other available output ports are programmed.
+Ports 0, 25, 17, and 6 are used as input ports, and up to 27 interconnects to other available output ports are programmed.
 As can be seen in Figure~\ref{fig:ch3-inter-power}, all the paths are configured successfully, showing diagonal lines in the colormap, each one corresponding to a given interconnect.
 The power of the measured output is normalized to the input power of the laser.
 The insertion loss at each target port is between 7.7 dB and 10.5 dB, depending on the number of PUCs used to configure the path.
@@ -48,11 +48,11 @@ The algorithm allows the simultaneous identification of up to 400 possible paths
         \includegraphics{figures/ch3-inter-power.pdf}
     \end{center}
     \caption{Colormap of the normalized optical power measured at output ports for different interconnect configurations.
-        The white lines indicate the configuration shown in the schematic of the programmable processor
+        The white lines indicate the configuration shown in the schematic of the programmable processor.
     }\label{fig:ch3-inter-power}
 \end{figure}
 % section multicast
-\section{Multicasting (1xN)}\label{sec:multicasting}
+\section{Multicasting (1$\times$N)}\label{sec:multicasting}
 Optical multi-casting allows for a single optical signal to be efficiently distributed across multiple receiving nodes or devices simultaneously.
 This is particularly advantageous in scenarios where the same data needs to be delivered to several destinations within a datacenter or set of clusters, simultaneously.
 This functionality is unavailable in the physical layer of most networks.
@@ -65,13 +65,13 @@ In this section, we have designed an auto-multicast algorithm that can accommoda
 The algorithm determines the optimum path to each output and auto-configures the splitting PUCs to ensure every output port receives the same power, corresponding to a traditional multicast operation.
 In addition, custom operations may require the configuration of uneven optical powers at each output, such as in a typical 95\%-5\% monitoring scenario.
 To achieve this, the auto-multicast algorithm can be translated into a single-source shortest path problem represented by a directed acyclic graph (directed tree) \cite{perez2018delay_line}.
-A simple example of a 1x3 network is demonstrated in Figure~\ref{fig:ch3-multicast}.
+A simple example of a 1$\times$3 network is demonstrated in Figure~\ref{fig:ch3-multicast}.
 % figure multicasting
 \begin{figure}[h]
     \begin{center}
         \includegraphics{figures/ch3-multicast.pdf}
     \end{center}
-    \caption{Programmable processor synthesizing a 1x3 multicasting configuration.
+    \caption{Programmable processor synthesizing a 1$\times$3 multicasting configuration.
         The inset shows the detailed graphs.
     }\label{fig:ch3-multicast}
 \end{figure}
@@ -139,19 +139,19 @@ For the paths that contain a leaf node, such as edges c, d, and b in Figure~\ref
     IL_{edge} = \sum IL_{PUC} \label{eq:ch3-il_leaf}
 \end{equation}
 where \(IL_{PUC}\) is the insertion loss of all the PUCs in that particular path, which corresponds to line 13.
-On the other hand, for the insertion losses of a branch (path) that contains a child node (lines 10-11), such as a path a, leading to the $TC_2$ subtree in Figure~\ref{fig:ch3-multicast}, the paths' insertion loss of $TC_1$ can be calculated with \eqref{eq:ch3-il_parent}.
+On the other hand, for the insertion losses of a branch (path) that contains a child node (lines 10-11), such as a path a, which leading to the $TC_2$ subtree in Figure~\ref{fig:ch3-multicast}, the paths' insertion loss of $TC_1$ can be calculated with \eqref{eq:ch3-il_parent}.
 
 \begin{equation}
     IL_{cross(bar)} = 10 \cdot \log \left( k_q \right) + IL_{q,cross} + IL_{path} \label{eq:ch3-il_parent}
 \end{equation}
 In the latter, \(k_q\) represents the coupling factor of the child node $q$ (in this case $TC_2$), \(IL_q\) is the insertion loss of child node $q$ in the cross path, and \(IL_{path}\) is the insertion loss between the parent node and the child node \cite{perez2018delay_line}.
 
-In this demonstration, we showcase the multicasting capabilities of our programmable processor driven by our control software layer. Specifically, we have implemented a 1x26 on-chip multicasting circuit. Port 0, connected to a 5 dBm source, serves as input while the rest of the ports in Figure~\ref{fig:ch3-multicast} act as receiving nodes.
-Figure~\ref{fig:ch3-multicast-power}(a) displays the normalized results measured at a central wavelength of 1550 nm. The experimental characterization began with a 1x1 circuit and was incrementally scaled to a 1x26 configuration.
-Each configuration is represented as a column in the results matrix, so that the first and last columns represent the outgoing power distribution for the 1x1 and 1x26 cases, respectively.
+In this demonstration, we showcase the multicasting capabilities of our programmable processor driven by our control software layer. Specifically, we have implemented a 1$\times$26 on-chip multicasting circuit. Port 0, connected to a 5 dBm source, serves as the input while the rest of the ports in Figure~\ref{fig:ch3-multicast} act as receiving nodes.
+Figure~\ref{fig:ch3-multicast-power}(a) displays the normalized results measured at a central wavelength of 1550 nm. The experimental characterization began with a 1$\times$1 circuit and was incrementally scaled to a 1$\times$26 configuration.
+Each configuration is represented as a column in the results matrix, so that the first and last columns represent the outgoing power distribution for the 1$\times$1 and 1$\times$26 cases, respectively.
 The resulting visualization of output power distribution versus number of receiving nodes exhibits a horizontal funnel pattern and demonstrates how evenly the signal can be shared across the chip ports.
 The yellow area systematically expands from the left side to the right, while the color tone changes to orange.
-This trend indicates that, with an increasing number of ports, the power allocated to each port decreases, up to a maximum of -22 dB in the 1x26 case.
+This trend indicates that, with an increasing number of ports, the power allocated to each port decreases, up to a maximum of -22 dB in the 1$\times$26 case.
 
 \begin{figure}[h]
     \begin{center}
@@ -166,7 +166,7 @@ This trend indicates that, with an increasing number of ports, the power allocat
 
 Notably, the power intensity across all configured output ports remains uniform. Figure~\ref{fig:ch3-multicast-power}(b) offers another perspective to the power spreading problem;
 here we demonstrate that the average power exhibits a logarithmic decrease as the number of ports increases.
-The deviation shows a gradual increase with the number of targets: the minimum deviation is 0.663 dB, and the maximum is 1.31 dB for 1x2 and 1x26 multicasting, respectively.
+The deviation shows a gradual increase with the number of targets: the minimum deviation is 0.663 dB, and the maximum is 1.31 dB for 1$\times$2 and 1$\times$26 multicasting, respectively.
 This increase in deviation is a consequence of the coupling factor dependence on the cross and bar insertion losses of the outgoing paths as shown in \eqref{eq:ch3-k_nonideal}.
 
 The latter entails that, in order to have an accurate compensation of path loss difference, we require a precise measurement of each PUC's insertion loss.
@@ -175,12 +175,12 @@ In addition to path loss difference errors, optical crosstalk originating from a
 In the chip platform used in this work, we have measured that the optical crosstalk of individual PUCs is always below -25 dB.
 Note that we could also employ the on-chip photodetectors and the closed feedback loop to dynamically adjust or fine tune the coupling factors to correct all aforementioned errors starting from the analytical seed provided by the presented algorithm \cite{perez2017multipurpose}.
 % section switch
-\section{Switching (NxN)}\label{sec:switches}
+\section{Switching (N$\times$N)}\label{sec:switches}
 Optical circuit switching is a technology that allows the physical layer of an optical network to be configured through software instructions.
 When traffic patterns are predictable and deterministic, OCS allows for direct data routing and topology adjustments entirely within the optical domain.
 By eliminating the O-E-O conversion required by traditional EPS, OCS significantly reduces latency, power consumption, and operational costs for AI and machine learning workloads in modern data centers.
 This section demonstrates the implementation of an on-chip software-defined switch designed for the dynamic control of optical waveguide paths for multiple input and output channels.
-The system is synthesized on the previously introduced hexagonal core and facilitates a 6x6 cross-connect matrix.
+The system is synthesized on the previously introduced hexagonal core and facilitates a 6$\times$6 cross-connect matrix.
 To achieve automated reconfigurability for the full switch matrix, we have adapted three algorithms and implemented them in our software stack.
 We have explored three routing algorithms: sequential routing \cite{lopez2020auto}, graph-based edge weight penalty \cite{vanden2023automated}, and analytical decomposition \cite{jia2018six}.
 The first two are more general as they make use of iterative algorithms to find the non-conflicting routes between the set of port pairs.
@@ -229,7 +229,7 @@ Regarding physical performance, the device's reconfiguration is driven by thermo
 
 The first and the third approaches are straightforward to implement and have been previously documented \cite{lopez2020auto, jia2018six}.
 Here, we document to a deeper extent the second approach that implements the edge penalty algorithm since it offers significantly better
-computational efficiency than the brute-force sequential routing of the first approach, while avoiding the ports constraint in the Spanke-Benes architecture.
+computational efficiency than the brute-force sequential routing of the first approach, while avoiding the port constraint in the Spanke-Benes architecture.
 Refer to pseudo-code of Algorithm~\ref{alg:auto_switch}, in lines 1, the best paths for each I/O port pair are identified.
 Next, the algorithm checks for conflict edges within these paths (line 5), as conflicting edges within the identified paths will be penalized
 with a higher weight (line 7). A conflicting edge is defined as a PUC associated with more than two paths that requires a different state (cross/bar)
@@ -244,11 +244,11 @@ This variable essentially represents the trade-off between the probability of co
     \begin{center}
         \includegraphics{figures/ch3-switch.pdf}
     \end{center}
-    \caption{Programmable processor 6x6 switch configuration.
+    \caption{Programmable processor 6$\times$6 switch configuration.
         Input ports 0, 27, 26, 25, 24, and 23 and output ports 15, 16, 17, 18, 19, and 20 are numbered from 1-6 each in blue color and red color, respectively.
     }\label{fig:ch3-switch}
 \end{figure}
-In Figure~\ref{fig:ch3-switch} we present the implementation of a 6x6 optical circuit switch. We have selected six ports from the left side of the hexagonal mesh [0, 27, 26, 25, 24, 23]
+In Figure~\ref{fig:ch3-switch} we present the implementation of a 6$\times$6 optical circuit switch. We have selected six ports from the left side of the hexagonal mesh [0, 27, 26, 25, 24, 23]
 as inputs and another six ports from the right side [15, 16, 17, 18, 19, 20] as outputs; the selected ports from both sides are named from 1-6 in blue color and red color, respectively.
 To evaluate network performance, a laser source with a central wavelength of 1550 nm and an input power of 5 dBm was connected to Port 1.
 The switch was then software defined to synthesize six different configurations between this input and all possible outputs.
@@ -269,7 +269,7 @@ The source of crosstalk is mainly from PUC performance, as well as small drifts 
     \begin{center}
         \includegraphics{figures/ch3-switch-power.pdf}
     \end{center}
-    \caption{6 x 6 switch matrix for six different configurations.
+    \caption{6 $\times$ 6 switch matrix for six different configurations.
         Each subplot demonstrates the output of a specific switch configuration,
         with the X-axis depicting the output ports in the mesh and the Y-axis representing the measured optical power levels at the output ports.
         The six input ports are visually represented by six distinct markers in the figure.
@@ -297,7 +297,7 @@ The source of crosstalk is mainly from PUC performance, as well as small drifts 
 %     \label{tab:ch3-switch-speed}
 % \end{table}
 
-We evaluated the algorithm's feasibility using the same set of I/O ports for a 6x6 circuit switch.
+We evaluated the algorithm's feasibility using the same set of I/O ports for a 6$\times$6 circuit switch.
 The switching architecture can be classified as rearrangeable non-blocking as it needs to reconfigure already established connections to allocate new ones.
 The algorithm demonstrated its reliability by generating feasible solutions for all 720 cases without any observed instances of failure.
 This fact makes the software layer developed for this work a key differentiator with respect to previous manually implemented solutions.

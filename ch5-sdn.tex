@@ -36,22 +36,22 @@ Chapter~\ref{chap:applications_on_pip} also introduced a control mechanism based
 However, when the network scale increases, flexible management becomes necessary, and manual configuration or device-specific control approaches become impractical.
 A unified and programmable control framework is therefore needed to support dynamic network management and reconfiguration.
 As discussed in Section~\ref{sec:sdn}, SDN enables programmable control of network resources by decoupling the control plane from the data plane.
-Applied to optical circuit switching, SDN enables a centralized orchestrator, which dynamically configure the switching fabric and adapts the physical network topology to changing traffic demands and application workloads.
+Applied to optical circuit switching, SDN enables a centralized orchestrator, which dynamically configures the switching fabric and adapts the physical network topology to changing traffic demands and application workloads.
 
 % Objective of this chapter
 In this chapter, we introduce an SDN-based control architecture for silicon photonic OCS.
 A custom YANG data model is designed to represent the switching resources and connection configurations of the OCS device.
 Based on this model, a controller using the gNMI protocol is implemented to provide programmable and efficient control of the switching fabric within an SDN framework.
 We further present experimental results demonstrating the complete gNMI-controlled operational workflow.
-\section{Custom Yang model}\label{sec:yang} % (fold)
+\section{Custom YANG model}\label{sec:yang} % (fold)
 In SDN architectures, device configuration and state management are typically realized through standardized data models.
 Among them, YANG has become a widely adopted modeling language for representing network device capabilities and operational states, enabling programmable control via protocols such as gNMI \cite{rfc7950}.
 However, while YANG models have been extensively developed for EPS and optical transport equipment, a unified data model for OCS has not yet been established \cite{anazawa2025experimental}.
 In particular, YANG models specifically designed for silicon photonic switching systems have not been previously proposed.
 
-As discussed in the Section~\ref{sec:toc}, silicon photonic OCS devices differ from other optical switching technology platforms.
+As discussed in Section~\ref{sec:toc}, silicon photonic OCS devices differ from other optical switching technology platforms.
 Figure~\ref{fig:ch5-ocs-tech} illustrates the SiPh OCS technology stack, which consists of multiple functional layers.
-At the bottom layer, the programmable silicon photonic subassembly comprises a polarization controller, a monitoring array for optical power per set channels, a switching core to handle optical interconnection routing.
+At the bottom layer, the programmable silicon photonic subassembly comprises a polarization controller, a monitoring array for optical power per set channel, and a switching core to handle optical interconnection routing.
 A semiconductor optical amplifier (SOA) array subsystem is integrated to provide necessary power to compensate the insertion losses of each channel \cite{stabile2017towards}.
 The electronic layer exposes device control and monitoring capabilities to the software layer, which communicates with the centralized SDN controller through a northbound interface.
 As shown in the system architecture, multiple OCS devices can be managed simultaneously by a centralized SDN controller via southbound interfaces, enabling topology reconfiguration across the switching fabric.
@@ -75,7 +75,7 @@ Connection management is implemented through the \textit{connections} node.
 Each interconnection is identified by a unique \textit{uid}.
 Unlike other models that may rely on unidirectional port-pairing, our model supports three different connection types for different traffic scenarios.
 The \textit{simplex} type provides a standard one-to-one mapping, while the \textit{duplex} type allows for the simultaneous management of bidirectional port pairs (e.g., In1 -> Out2 and In2 -> Out1) under a single uid.
-Notably, we introduce a \textit{bulk} connection type, which enables the multiple input and output port groups (e.g., In1,2,3 to Out2,3,5) to be connected within a single uid.
+Notably, we introduce a \textit{bulk} connection type, which enables multiple input and output port groups (e.g., In1,2,3 to Out2,3,5) to be connected within a single uid.
 This bulk operation is advantageous for AI workloads, as it reduces the control plane overhead and the number of transactions required to establish links.
 
 \begin{figure}[H]
@@ -154,7 +154,7 @@ To initiate monitoring, the SDN controller sends a \textit{Subscribe} request to
 After receiving the request, the gNMI server establishes the subscription session and returns a \textit{Subscription OK} message to confirm that the telemetry stream has been successfully created.
 As illustrated in Figure~\ref{fig:ch5-gnmi-flow} (right side), a dedicated subscription thread is created within the gNMI server to manage the telemetry process.
 This thread periodically retrieves the relevant data from the datastore, and at each sampling interval, the server sends a \textit{subscription update message} containing the latest optical power values and associated timestamps to the SDN controller.
-This mechanism enables the controller to track the optical signal conditions of the OCS ports in near real time while maintaining low control-plane overhead.
+This mechanism enables the controller to track the optical signal conditions of the OCS ports in near real-time while maintaining low control-plane overhead.
 The controller can also cancel or modify the subscription by sending a SET request to update the subscription parameters or terminate the monitoring.
 
 \section{Experimental validation}\label{sec:experimental} % (fold)
@@ -185,7 +185,7 @@ The controller can configure switching connections, retrieve device states, and 
 The logical connectivity of the experimental setup is illustrated in Figure~\ref{fig:ch5-exp-setup}(b).
 
 \subsection{Results}
-To demonstrate the flexibility of the custom YANG model and the efficiency of gNMI-based control, two distinct 32$\times$32 connection matrices-an identity matrix and a reversal matrix—were configured using the bulk connection type.
+To demonstrate the flexibility of the custom YANG model and the efficiency of gNMI-based control, two distinct 32$\times$32 connection matrices—an identity matrix and a reversal matrix—were configured using the bulk connection type.
 % The command SET
 \begin{lstlisting}[language=bash, caption={Example gNMIc SET command for configuring a 32$\times$32 switch matrix using bulk connection.}, label={lst:gnmic_bulk_set}]
 gnmic set --update-path "swtchd:/swtchd/connections/connection[uid='bulk_uid']" --encoding json_ietf --update-value 
