@@ -57,6 +57,10 @@ Although MMI couplers generally exhibit slightly higher insertion loss compared 
 Their performance is less sensitive to precise waveguide gap variations, resulting in higher reliability and fabrication yield in high-density photonic integrated circuits.
 Furthermore, MMIs are favored for their broadband specs, maintaining near 50:50 power splitting ratios across a wide spectral range, which is critical for WDM applications \cite{maese2013wavelength}.
 
+Regardless of the chosen architecture, real-world imperfections, such as surface roughness and lithographic variations, inevitably lead to splitting imbalances and unintended phase shifts \cite{feilchenfeld2017silicon}.
+In a switch matrix, a deviation from the ideal 50:50 ratio—even by a few percent—limits the maximum achievable extinction ratio of subsequent Mach-Zehnder interferometers (MZIs) \cite{wilkes201660}.
+For the large scale integrated circuits presented in later chapters, the MMI was selected as the primary building block due to its ability to provide broadband operation and yield despite the environmental and manufacturing fluctuations inherent in mass produced silicon photonics.
+
 \begin{figure}[h]
     \begin{center}
         \includegraphics{figures/ch2-splitters.pdf}
@@ -68,10 +72,6 @@ Furthermore, MMIs are favored for their broadband specs, maintaining near 50:50 
         The bottom panel illustrates the multimode interference pattern formed inside the MMI region, demonstrating the self-imaging effect and spatial distribution of optical power \cite{gomez-hidalgoFundamentalBuildingBlocksa}.
     }\label{fig:ch2-splitters}
 \end{figure}
-
-Regardless of the chosen architecture, real-world imperfections, such as surface roughness and lithographic variations, inevitably lead to splitting imbalances and unintended phase shifts \cite{feilchenfeld2017silicon}.
-In a switch matrix, a deviation from the ideal 50:50 ratio—even by a few percent—limits the maximum achievable extinction ratio of subsequent Mach-Zehnder interferometers (MZIs) \cite{wilkes201660}.
-For the large scale integrated circuits presented in later chapters, the MMI was selected as the primary building block due to its ability to provide broadband operation and yield despite the environmental and manufacturing fluctuations inherent in mass produced silicon photonics.
 
 \subsection{Phase shifter} \label{sub:phase_shifter} % (fold)
 The phase shifter is the essential active component in PIP circuits, responsible for modulating the phase of the optical field within a waveguide.
@@ -169,7 +169,12 @@ This behavior is illustrated in Figure~\ref{fig:ch2-crossings}(b), where the fie
 Gaussian-beam (GB) synthesis crossings are based on a mode-expander framework and intentionally excite multiple higher-order modes through non-adiabatic transitions \cite{dumais2017three}.
 The relative phases of these modes are then controlled so that their constructive interference forms a Gaussian-like beam in the crossing region.
 As shown in Figure~\ref{fig:ch2-crossings}(c), the synthesized beam exhibits a smooth and well-collimated profile, resulting in minimal scattering, lower insertion loss, and superior broadband performance.
-\begin{figure}[ht]
+
+In terms of crosstalk, all three design crossing strategies generally exhibit similar performance, typically from $-40$ to $-60$ dB \cite{gomez-hidalgoFundamentalBuildingBlocksa}.
+Further reduction can be achieved by adopting partially etched waveguides, which effectively weaken diffraction at the intersection \cite{shih2022partial}.
+In parallel, subwavelength grating (SWG) crossings employ metamaterial engineering through periodically segmented waveguides to artificially tune the effective refractive index, allowing the optical mode to expand adiabatically and cross the intersection with suppressed scattering \cite{bock2010subwavelength, ni2023compact}.
+
+\begin{figure}[h]
     \begin{center}
         \includegraphics{figures/ch2-crossings.pdf}
     \end{center}
@@ -180,10 +185,6 @@ As shown in Figure~\ref{fig:ch2-crossings}(c), the synthesized beam exhibits a s
         The top row illustrates the conceptual device structures, while the bottom row shows the simulated optical intensity distributions, highlighting the different field evolution and confinement characteristics of each design.
     }\label{fig:ch2-crossings}
 \end{figure}
-
-In terms of crosstalk, all three design crossing strategies generally exhibit similar performance, typically from $-40$ to $-60$ dB \cite{gomez-hidalgoFundamentalBuildingBlocksa}.
-Further reduction can be achieved by adopting partially etched waveguides, which effectively weaken diffraction at the intersection \cite{shih2022partial}.
-In parallel, subwavelength grating (SWG) crossings employ metamaterial engineering through periodically segmented waveguides to artificially tune the effective refractive index, allowing the optical mode to expand adiabatically and cross the intersection with suppressed scattering \cite{bock2010subwavelength, ni2023compact}.
 
 \section{Photonic mesh architectures}\label{sec:mesh_architectures}
 By leveraging the interconnectivity of the fundamental building blocks detailed in section~\ref{sec:functional_blocks}, a wide variety of photonic mesh architectures can be synthesized to achieve complex and high-dimensional optical functions.
@@ -303,6 +304,12 @@ At each iteration, it selects the unvisited node $u$ with the smallest tentative
 When the target node $t$ is selected, $d[t]$ is the minimum path weight, and the path is recovered by following the predecessors from $t$ back to $s$.
 Since a visited node is never updated again, the non-negativity of the weights is essential for the correctness of the algorithm.
 
+For recirculating meshes, it is the directed port-level representation that makes Dijkstra's algorithm applicable: a physical PUC can be traversed more than once by the same path through different pairs of ports, because each traversal uses different nodes of the graph.
+
+For feedforward meshes, whose graph is a DAG, all the paths between an input and an output can also be enumerated with a depth-first search.
+The number of such paths is small for the architectures of interest, for example $N/2$ paths per input--output pair in an $N\times N$ Benes network, so that exhaustive enumeration is feasible.
+Chapter~\ref{chap:ocs_archs} uses this enumeration to build the set of candidate paths for every connection request.
+
 \begin{algorithm}[ht]
     \caption{Dijkstra's shortest-path algorithm}
     \label{alg:ch2-dijkstra}
@@ -326,12 +333,6 @@ Since a visited node is never updated again, the non-negativity of the weights i
         \State \Return the path obtained by following $\mathit{prev}$ from $t$ back to $s$
     \end{algorithmic}
 \end{algorithm}
-
-For recirculating meshes, it is the directed port-level representation that makes Dijkstra's algorithm applicable: a physical PUC can be traversed more than once by the same path through different pairs of ports, because each traversal uses different nodes of the graph.
-
-For feedforward meshes, whose graph is a DAG, all the paths between an input and an output can also be enumerated with a depth-first search.
-The number of such paths is small for the architectures of interest, for example $N/2$ paths per input--output pair in an $N\times N$ Benes network, so that exhaustive enumeration is feasible.
-Chapter~\ref{chap:ocs_archs} uses this enumeration to build the set of candidate paths for every connection request.
 
 \section{Software-Defined Networking (SDN)}\label{sec:sdn}
 \subsection{SDN architecture}\label{sub:sdn_arch}
@@ -491,9 +492,6 @@ module: example-switch
            +--rw uid         string
            +--rw ports-in*   -> /switch/ports/port/number
 \end{lstlisting}
-
-The data described by a YANG model are exchanged in Extensible Markup Language (XML) when using NETCONF, or in JavaScript Object Notation (JSON) following RFC~7951 \cite{rfc7951}, which is the \texttt{json\_ietf} encoding of gNMI used in Chapter~\ref{chap:sdn_for_ocs}.
-The distinction between configuration and state data also determines how each node is accessed through gNMI: configuration nodes are written with \textit{Set}, whereas state nodes are read with \textit{Get} or streamed with \textit{Subscribe}.
 
 \subsubsection{Configuration protocol}\label{protocol}
 Network Configuration Protocol (NETCONF), an early southbound protocol, operates over secure channels and supports transactional configuration and rollback, improving reliability compared to traditional command-line based management \cite{rfc6241}.

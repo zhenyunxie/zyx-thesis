@@ -11,7 +11,8 @@ Based on these components, different circuit topologies were discussed, with par
 As one of the most predominant topologies in general-purpose programmable photonics, the hexagonal mesh enables the synthesis of a wide range of optical circuits through appropriate configuration of the PUCs.
 
 % Objective of this chapter
-This chapter explores the implementation of optical networking applications using a general-purpose programmable photonic processor with a hexagonal mesh topology.
+This chapter explores the implementation of optical networking applications using a general-purpose programmable photonic processor with a hexagonal mesh topology,
+the optical ports are identified by the numbering shown in Figure~\ref{fig:ch2-recirculating-topologies}(c), where the 28 ports are numbered from 0 to 27 in clockwise order, starting from the top-left corner of the mesh.
 By dynamically configuring the PUC states and applying graph theory based routing algorithms, different optical networking functionalities can be realized within the same hardware platform.
 Specifically, we experimentally demonstrate several representative optical networking applications, including interconnects, multicasting, and circuit switching.
 The corresponding performance metrics are analyzed in detail, highlighting the capability of programmable photonic processors to support flexible and reconfigurable optical networking functions.
@@ -246,8 +247,9 @@ This variable essentially represents the trade-off between the probability of co
         Input ports 0, 27, 26, 25, 24, and 23 and output ports 15, 16, 17, 18, 19, and 20 are numbered from 1-6 each in blue color and red color, respectively.
     }\label{fig:ch3-switch}
 \end{figure}
-In Figure~\ref{fig:ch3-switch} we present the implementation of a 6$\times$6 optical circuit switch. We have selected six ports from the left side of the hexagonal mesh [0, 27, 26, 25, 24, 23]
-as inputs and another six ports from the right side [15, 16, 17, 18, 19, 20] as outputs; the selected ports from both sides are named from 1-6 in blue color and red color, respectively.
+In Figure~\ref{fig:ch3-switch} we present the implementation of a 6$\times$6 optical circuit switch.
+Six ports on the left side of the mesh [0, 27, 26, 25, 24, 23] are used as inputs, and six ports on the right side [15, 16, 17, 18, 19, 20] are used as outputs.
+For readability, these ports are relabeled from top to bottom as inputs 1--6 (blue) and outputs 1--6 (red) in Figure~\ref{fig:ch3-switch}, and this relabeled numbering is used in the rest of this section.
 To evaluate network performance, a laser source with a central wavelength of 1550 nm and an input power of 5 dBm was connected to Port 1.
 The switch was then software defined to synthesize six different configurations between this input and all possible outputs.
 Once the network was defined, the power of each output port was measured and normalized with the input source, resulting in the characterization of six switch matrices.
