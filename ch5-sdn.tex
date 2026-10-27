@@ -240,7 +240,7 @@ Note that the \texttt{value} field represents the measured optical power in mill
 Based on the above procedure, we measured the optical power at all output ports for the two configured switch matrices.
 The optical power distribution for these two configurations is illustrated in Figure~\ref{fig:ch5-set-get-ber}(a) and (b).
 In the identity matrix configuration (Figure~\ref{fig:ch5-set-get-ber}(a)), the input ports are mapped directly to their corresponding output ports (i.e., input $i$ to output $i$), resulting in a clear diagonal high-power profile.
-Conversely, the reversal matrix (Figure~\ref{fig:ch5-set-get-ber}(b)) demonstrates a mapping of input $i$ to output $32-i$, represented by the reversal-diagonal high-power distribution.
+Conversely, the reversal matrix (Figure~\ref{fig:ch5-set-get-ber}(b)) demonstrates a mapping of input $i$ to output $33-i$, represented by the reversal-diagonal high-power distribution.
 Our OCS yields a normalized signal power of approximately 0 dB for the connected ports, where the normalization is referenced to an input port power of 6.5 dBm, which is considerably above the background signal of -50 dB to -70 dB observed for the unconnected port combinations (off-diagonal).
 This confirms that the expected logic is implemented correctly with a high extinction ratio, as well as its lossless characteristic thanks to the SOA compensation.
 
@@ -248,7 +248,7 @@ This confirms that the expected logic is implemented correctly with a high extin
     \begin{center}
         \includegraphics{figures/ch5-set-get-ber.pdf}
     \end{center}
-    \caption{Optical switching performance of the gNMI-controlled 32x32 silicon photonic OCS.
+    \caption{Optical switching performance of the gNMI-controlled 32$\times$32 silicon photonic OCS.
         (a) Normalized optical power distribution of the identity matrix configuration.
         (b) Normalized optical power distribution of the reversal matrix configuration.
         (c) BER measured at all 32 output ports using a 400G LWDM signal.

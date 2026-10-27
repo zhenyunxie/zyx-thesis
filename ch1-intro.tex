@@ -57,7 +57,7 @@ As a result, the computing paradigm is no longer confined to a single device or 
 % How AI reshaped interconnect
 Modern data center infrastructures are increasingly organized as hierarchical systems, with on-chip and network level communication mechanisms increasingly adopting similar paradigms for scalability and performance \cite{noc, jerger2022chip, kas2012toward}.
 At the lowest level, intra package integration and chiplet links such as NVIDIA's NVLink-C2C enable high bandwidth, low latency cache coherent communication among central processing units (CPUs), graphics processing units (GPUs), and high-bandwidth memory (HBM), facilitating tightly integrated heterogeneous computing systems \cite{10767590, chiplet, nvc2c}.
-At the server level, multiple accelerators (XPUs), such as GPUs or tensor processing units (TPUs), within a single chassis or cabinet are interconnected using high speed scale up fabrics, enabling tightly coupled computing with high bandwidth and low latency.
+At the server level, multiple accelerators (XPUs), such as GPUs or tensor processing units (TPUs), within a single chassis or cabinet are interconnected using high speed scale-up fabrics, enabling tightly coupled computing with high bandwidth and low latency.
 Examples include NVIDIA's NVLink, the UALink provided by AMD and the Scale-Up Ethernet (SUE) interconnect that was developed by Broadcom \cite{nvidia_nvlink, ualink_consortium, velaga2025sue}.
 Beyond the server boundary, large numbers of computing nodes are connected across racks within a data center using high performance networking technologies such as InfiniBand or Ethernet, enabling distributed scale-out workloads \cite{pfister2001introduction, aramide2024ultra}.
 At the largest scale, hyperscale clusters coordinate tens of thousands of accelerators to operate as a single synchronized system for large model training and other data intensive applications \cite{kokolis2025revisiting, broadcom_scale_across_ai}.
@@ -102,7 +102,7 @@ In scale-up architectures, OCS supports hardware disaggregation by connecting co
 It has further been investigated for high bandwidth GPU interconnects beyond the limits of electrical links, extending direct, traffic-aware connections across larger physical domains \cite{addanki2025vermilion}.
 
 % silicon photonic based programmable integrated photonic ocs
-Most current OCS deployments are based on free-space optical switching technologies, including MEMS mirrors, piezo-electric beam steering systems, and liquid-crystal-on-silicon (LCoS) devices \cite{lumentum_ocs, polatis7000, coherent_ocs}.
+Most current OCS deployments are based on free-space optical switching technologies, including MEMS mirrors, piezoelectric beam steering systems, and liquid-crystal-on-silicon (LCoS) devices \cite{lumentum_ocs, polatis7000, coherent_ocs}.
 These technologies generally offer low insertion losses (typically around 0.5-1.5 dB) and support large port counts, but they are relatively bulky and typically operate on millisecond timescales, limiting responsiveness to dynamic AI workloads \cite{1244924, CignalAI2025OCS4Q25}.
 
 Silicon photonics (SiPh) has emerged as a promising alternative by enabling the monolithic integration of photonic components on a single chip, benefiting from the substantial investment made in complementary metal-oxide-semiconductor (CMOS) fabrication infrastructure and process technologies.
@@ -123,25 +123,25 @@ These characteristics make SiPh particularly well suited for optical circuit swi
     }\label{fig:ch1-ocs-apps}
 \end{figure}
 
-As discussed in section~\ref{sec:pip}, the reconfigurability offered by PIP naturally extends the advantages of SiPh to optical circuit switching.
+As discussed in Section~\ref{sec:pip}, the reconfigurability offered by PIP naturally extends the advantages of SiPh to optical circuit switching.
 Through software defined optical path configuration, a single PIP chip can realize multiple switching matrices and dynamically adapt network connectivity based on traffic demands without hardware modifications.
 Such flexibility is particularly attractive for AI data center networks, where communication patterns vary across different training workloads and collective communication phases~\cite{si2025collective}.
 The maturity of programmable SiPh technology is further evidenced by the early stage commercial optical switching solutions from companies such as iPronics, Salience Labs, and nEye Systems~\cite{cignal2025startuptracker}.
 Taken together, these characteristics make PIP a promising platform for scalable optical circuit switching in AI driven communication infrastructures.
 
 \section{Challenges} \label{sec:challenges}
-Despite the advantages of silicon photonics for optical circuit switching, deployment of large scale SiPh based switching fabric in hyperscale AI networks still faces complexity that has not yet been fully addressed.
+Despite the advantages of silicon photonics for optical circuit switching, deployment of large-scale SiPh based switching fabric in hyperscale AI networks still faces complexity that has not yet been fully addressed.
 
 % software defined control mechanism for programmable photonic circuit.
 AI training workloads follow several traffic patterns between computing nodes, which require the precise coordination of thousands of integrated actuators to real-time reconfiguration of the photonic circuit processor \cite{bogaerts2020programmable}.
 Performing such on chip reconfiguration in PIP through the traditional one-by-one sequential tuning of actuators can introduce significant delay, making it operationally impractical for large switching fabrics and potentially disrupting cluster scheduling and training efficiency.
 In this regard, auto-routing algorithms with fault-tolerant and self-healing capabilities have been explored to develop point-to-point optical interconnects in a programmable photonic circuit, but their application has so far been limited to small-scale circuits with a few actuators~\cite{lopez2020auto}.
 More recently, a novel N$\times$N automated switching algorithm has also been reported theoretically, but experimental validation is still lacking \cite{vanden2023automated}.
-Therefore, there remains room to improve interconnect algorithms in PIP, particularly in efficiently identifying paths in large scale circuits and in supporting more complex communication patterns, while their effectiveness on hardware remains to be validated.
+Therefore, there remains room to improve interconnect algorithms in PIP, particularly in efficiently identifying paths in large-scale circuits and in supporting more complex communication patterns, while their effectiveness on hardware remains to be validated.
 
 % hardware scalability problem.
 Although small scale SiPh switches have been proven, scaling these systems to meet industrial demands introduces fundamental challenges that necessitate new research \cite{tanizawa2015ultra, suzukiUltracompact882014, tanizawa2016ultra, suzuki2025band}.
-The high radix scaling and architecture design present significant difficulties.
+High-radix scaling and architecture design present significant difficulties.
 Supporting modern clusters may require switches with 128$\times$128, 256$\times$256 or even higher ports, involving tens of thousands of integrated actuators on a single chip \cite{patronas2024optical, perez2025large}.
 At this density, cumulative insertion loss and crosstalk become substantial, and conventional circuit topologies are insufficient.
 Designing these systems demands a careful balance between port count, signal integrity, physical footprint, etc.

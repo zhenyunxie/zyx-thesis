@@ -19,7 +19,7 @@ The corresponding performance metrics are analyzed in detail, highlighting the c
 % section interconnect
 \section{Interconnects (1$\times$1)}\label{sec:interconnects}
 Reconfigurable optical interconnects are of great interest in optical networks as they enable flexible connections of terabit data rates with high-performance operation \cite{sato2022prospects, sato2023optical}.
-These interconnects demand reduced latency and energy efficiency between input and output (I/O) ports, and therefore minimal insertion loss and shortest distance is highly desired.
+These interconnects demand reduced latency and energy efficiency between input and output (I/O) ports, and therefore minimal insertion loss and shortest distance are highly desired.
 The software layer demonstrated herein provides an interconnect algorithm based on Dijkstra's algorithm \cite{foead2021systematic, bierlaire_optimization_2018}, which can automatically provide an optimum path configuration.
 This application can also provide self-healing capabilities to allocate alternative optical paths with lower insertion loss when needed.
 \begin{figure}[h]
@@ -27,9 +27,7 @@ This application can also provide self-healing capabilities to allocate alternat
         \includegraphics{figures/ch3-interconnect.pdf}
     \end{center}
     \caption{Optical interconnect experiment.
-        (a) Programmable processor configurations considering different input ports.
-        (b) Colormap of the normalized optical power measured at output ports for different interconnect configurations.
-        The white lines indicate the configuration shown in the schematic of the programmable processor.
+        Programmable processor configurations considering different input ports.
     }\label{fig:ch3-interconnect}
 \end{figure}
 % figure power interconnect
@@ -113,7 +111,7 @@ A simple example of a 1$\times$3 network is demonstrated in Figure~\ref{fig:ch3-
 
     \end{algorithmic}
 \end{algorithm}
-Building upon this intuitive target, our proposed algorithm implements the shortest-path tree circuit based on the pseudocode in Algorithm~\ref{alg:auto_multicast}.
+Building upon this intuitive target, our proposed algorithm implements the shortest-path tree circuit based on the pseudo-code in Algorithm~\ref{alg:auto_multicast}.
 In the latter, the initialization of variables starts in lines 1-3, and the optimal interconnect paths to each output port are found and saved in the set \textit{PATHS} in line 4.
 The tunable coupler (TC) PUCs are selected from the \textit{PATHS} set under the condition that TCs are those PUCs present in more than two paths with differing states between them (line 5),
 as denoted by \eqref{eq:ch3-t_c}:
@@ -189,7 +187,7 @@ Conversely, the edge weight penalty approach uses dynamic graph updates to penal
 Once the weight is updated, the routine will attempt to find a new route in the next iteration.
 The \textit{max\_iter} parameter (see Algorithm~\ref{alg:auto_switch}) regulates the maximum number of iterations for paths re-routing in instances of edge conflicts, when no routing solution exists for certain input/output port combinations.
 The analytical decomposition method offers near-instantaneous solutions by mapping the switch matrix to a Spanke-Benes network on a hexagonal mesh.
-However, its efficiency is traded for port flexibility, which is constrained by the feed-forward architecture.
+However, its efficiency is traded for port flexibility, which is constrained by the feedforward architecture.
 Regarding physical performance, the device's reconfiguration is driven by thermo-optic actuators, achieving microsecond-scale (\textit{μs}) switching speeds—orders of magnitude faster than traditional MEMS-based approaches (\textit{ms}) \cite{1244924}.
 % algorithm
 \begin{algorithm}[h]

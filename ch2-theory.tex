@@ -107,12 +107,12 @@ This corresponds to roughly an order-of-magnitude reduction in speed compared to
         \includegraphics{figures/ch2-ps.pdf}
     \end{center}
     \caption{Cross-sectional schematic of a thermo-optic phase shifter employing a TiN (titanium nitride) heater.
-        (a) Conventional phase shifter (b) Vertical trenched (c) Fully suspended
+        (a) Conventional phase shifter. (b) Vertical trenched. (c) Fully suspended.
     }\label{fig:ch2-ps}
 \end{figure}
 
 \subsection{2$\times$2 programmable unit cell}\label{sub:pucs} % (fold)
-2$\times$2 MZI serves as the physical implementation of the programmable unit cell (PUC), which is defined in this thesis as the fundamental building block of the system.
+A 2$\times$2 MZI serves as the physical implementation of the programmable unit cell (PUC), which is defined in this thesis as the fundamental building block of the system.
 Figure~\ref{fig:ch2-puc} shows the structure of a PUC, which is composed of a symmetric four-port configuration consisting of an initial 50:50 input power splitter, two independent waveguide interference arms of length $L$, at least one active phase shifter integrated into these arms, and a final 50:50 output coupler that recombines the optical fields.
 The operational physics of the device relies on the principle of dual-beam interference, where an incoming optical signal is first divided into two coherent components by the input power splitter (MMI or DC).
 As these two signals propagate through the interference arms, their relative phase relationship is dynamically adjusted via thermo-optic or electro-optic phase shifters, which modify the effective refractive index ($n_{\mathrm{eff}}$) of the waveguide mode to accumulate a specific optical phase $\phi = 2\pi n_{\mathrm{eff}} L / \lambda$.
@@ -187,13 +187,13 @@ In parallel, subwavelength grating (SWG) crossings employ metamaterial engineeri
 
 \section{Photonic mesh architectures}\label{sec:mesh_architectures}
 By leveraging the interconnectivity of the fundamental building blocks detailed in section~\ref{sec:functional_blocks}, a wide variety of photonic mesh architectures can be synthesized to achieve complex and high-dimensional optical functions.
-These topologies are primarily categorized based on their signal flow characteristics into two classes: feedforward meshes, which maintain a unidirectional light path for linear transformations and switching ~\cite{reck1994experimental, miller2013self}; and recirculating meshes, which incorporate feedback loops to enable resource reuse and spectral filtering \cite{zhuang2015programmable, perez2017multipurpose, perez2019integrated}.
+These topologies are primarily categorized based on their signal flow characteristics into two classes: feedforward meshes, which maintain a unidirectional light path for linear transformations and switching \cite{reck1994experimental, miller2013self}; and recirculating meshes, which incorporate feedback loops to enable resource reuse and spectral filtering \cite{zhuang2015programmable, perez2017multipurpose, perez2019integrated}.
 This section explores the structural properties and operational principles of these mesh geometries, which form the physical foundation of software-defined photonic systems.
 
 \subsection{Feedforward mesh}\label{sub:feedforward} % (fold)
 Feedforward meshes are characterized by an acyclic graph structure where optical signals propagate in a strictly unidirectional manner from input to output ports.
 By eliminating feedback loops, these architectures ensure predictable latency and simplified phase control, making them essential topologies in both programmable computing and circuit switching \cite{shen2017deep, suzukiUltracompact882014}.
-While architectures like the Reck and Clements designs have gained significant traction in photonic computing for performing unitary matrix multiplications in optical neural networks ~\cite{reck1994experimental, clements2016optimal},
+While architectures like the Reck and Clements designs have gained significant traction in photonic computing for performing unitary matrix multiplications in optical neural networks \cite{reck1994experimental, clements2016optimal},
 this thesis primarily focuses on the application of feedforward meshes within data center networks.
 
 In this context, the mesh serves as a high-capacity, transparent switching fabric capable of routing massive data streams with minimal power consumption.
